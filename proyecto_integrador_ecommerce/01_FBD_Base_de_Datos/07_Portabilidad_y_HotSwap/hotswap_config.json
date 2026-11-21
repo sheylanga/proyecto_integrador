@@ -1,0 +1,23 @@
+{
+  "project": "DERMA-ECOM - Proyecto Integrador V (TecNM / ITSM)",
+  "active_engine": "sqlserver",
+  "fallback_engine": "postgresql",
+  "auto_failover": true,
+  "health_check_timeout_sec": 5,
+  "engines": {
+    "sqlserver": {
+      "display_name": "Microsoft SQL Server 2022",
+      "server": ".\\SQLEXPRESS03",
+      "database": "EcommerceSaludBellezaDB",
+      "integrated_security": true
+    },
+    "postgresql": {
+      "display_name": "PostgreSQL 17 (Software Libre)",
+      "host": "localhost",
+      "port": 5432,
+      "database": "ecommerce_salud_belleza",
+      "user": "postgres",
+      "psql_path": "C:\\Program Files\\PostgreSQL\\17\\bin\\psql.exe"
+    }
+  }
+}
