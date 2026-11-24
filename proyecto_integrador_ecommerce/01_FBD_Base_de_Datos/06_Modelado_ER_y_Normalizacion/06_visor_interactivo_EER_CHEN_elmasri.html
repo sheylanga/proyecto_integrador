@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<title>DERMA-ECOM — Modelo Conceptual E-R Extendido (Notación Chen / Elmasri & Navathe)</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0f172a; color: #f8fafc; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+  header { background: #1B365D; border-bottom: 2px solid #f59e0b; padding: 10px 16px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+  header h1 { font-size: 15px; font-weight: 700; }
+  header .sub { font-size: 11px; color: #cbd5e1; }
+  .ctrls { margin-left: auto; display: flex; gap: 6px; }
+  .ctrls button { background: #0f172a; color: #f8fafc; border: 1px solid #475569; border-radius: 6px; padding: 5px 10px; font-size: 12px; cursor: pointer; }
+  .ctrls button:hover { border-color: #f59e0b; }
+  .ctrls button.primary { background: #d97706; border-color: #fbbf24; font-weight: 600; color: #fff; }
+  .wrap { flex: 1; position: relative; background: #ffffff; overflow: hidden; }
+  #svg { width: 100%; height: 100%; cursor: grab; display: block; }
+  #svg:active { cursor: grabbing; }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>DERMA-ECOM — Modelo Conceptual: Diagrama E-R Extendido (Notación Chen / Elmasri &amp; Navathe)</h1>
+    <div class="sub">Rectángulos (Fuertes) · Rectángulos Dobles (Débiles) · Rombos (Relaciones 1:1, 1:N, N:M) · Rombos Dobles (Identificadoras) · Óvalos (PK, Parcial, Compuesto, Multivaluado, Derivado) · Círculos (d / o)</div>
+  </div>
+  <div class="ctrls">
+    <button onclick="zoomBy(1.25)">+ Zoom</button>
+    <button onclick="zoomBy(0.8)">- Zoom</button>
+    <button onclick="fitView()">Ajustar Todo</button>
+    <button class="primary" onclick="exportSvg()">Exportar SVG</button>
+  </div>
+</header>
+<div class="wrap">
+  <svg id="svg" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <marker id="arr-sub" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+        <path d="M 0 1 L 10 5 L 0 9 z" fill="#3730a3"/>
+      </marker>
+      <marker id="arr-dash" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+        <path d="M 0 1 L 10 5 L 0 9 z" fill="#dc2626"/>
+      </marker>
+    </defs>
+    <g id="scene"></g>
+  </svg>
+</div>
+<script>
+const D = {"W":2520,"nodes":[{"Id":"e_usuario","Label":"USUARIO","Kind":"strong","X":380,"Y":340,"W":140,"H":46,"Band":1},{"Id":"a_usr_pk","Label":"ID","Kind":"attr_pk","X":230,"Y":250,"W":110,"H":34,"Band":1},{"Id":"a_usr_email","Label":"email","Kind":"attr","X":355,"Y":240,"W":95,"H":34,"Band":1},{"Id":"a_usr_hash","Label":"password_hash","Kind":"attr","X":475,"Y":240,"W":120,"H":34,"Band":1},{"Id":"a_usr_mfa","Label":"mfa_habilitado","Kind":"attr","X":610,"Y":265,"W":115,"H":34,"Band":1},{"Id":"r_asigna_rol","Label":"TIENE_ROL","Kind":"rel","X":180,"Y":340,"W":120,"H":56,"Band":1},{"Id":"e_rol","Label":"ROL","Kind":"strong","X":50,"Y":340,"W":100,"H":44,"Band":1},{"Id":"a_rol_pk","Label":"ID","Kind":"attr_pk","X":50,"Y":260,"W":90,"H":32,"Band":1},{"Id":"r_autoriza","Label":"AUTORIZA","Kind":"rel","X":50,"Y":440,"W":110,"H":54,"Band":1},{"Id":"e_permiso","Label":"PERMISO","Kind":"strong","X":50,"Y":540,"W":115,"H":44,"Band":1},{"Id":"a_perm_pk","Label":"ID","Kind":"attr_pk","X":50,"Y":615,"W":100,"H":32,"Band":1},{"Id":"eer_j1","Label":"o","Kind":"eer_o","X":428,"Y":430,"W":44,"H":44,"Band":1},{"Id":"e_operador","Label":"OPERADOR_INTERNO","Kind":"strong","X":205,"Y":520,"W":155,"H":44,"Band":1},{"Id":"e_cliente","Label":"CLIENTE","Kind":"strong","X":460,"Y":520,"W":140,"H":46,"Band":1},{"Id":"e_afiliado","Label":"AFILIADO_INFLUENCER","Kind":"strong","X":710,"Y":520,"W":175,"H":44,"Band":1},{"Id":"a_cli_pk","Label":"ID","Kind":"attr_pk","X":620,"Y":435,"W":100,"H":32,"Band":1},{"Id":"a_cli_nom","Label":"nombre_completo","Kind":"attr","X":310,"Y":610,"W":130,"H":34,"Band":1},{"Id":"a_cli_nom1","Label":"nombres","Kind":"attr","X":200,"Y":675,"W":90,"H":30,"Band":1},{"Id":"a_cli_nom2","Label":"primer_apellido","Kind":"attr","X":300,"Y":690,"W":115,"H":30,"Band":1},{"Id":"a_cli_nom3","Label":"segundo_apellido","Kind":"attr","X":425,"Y":675,"W":120,"H":30,"Band":1},{"Id":"a_cli_dir","Label":"direcciones","Kind":"attr_multi","X":585,"Y":620,"W":115,"H":36,"Band":1},{"Id":"a_cli_rfc","Label":"rfc / curp","Kind":"attr","X":710,"Y":610,"W":95,"H":32,"Band":1},{"Id":"r_padece","Label":"PADECE","Kind":"rel","X":460,"Y":760,"W":110,"H":54,"Band":1},{"Id":"e_condicion","Label":"CONDICION_DERMATOLOGICA","Kind":"strong","X":200,"Y":765,"W":200,"H":44,"Band":1},{"Id":"a_cond_pk","Label":"ID","Kind":"attr_pk","X":60,"Y":770,"W":105,"H":32,"Band":1},{"Id":"e_perfil","Label":"PERFIL_CUTANEO","Kind":"strong","X":630,"Y":765,"W":150,"H":44,"Band":1},{"Id":"r_tiene_perf","Label":"DEFINE","Kind":"rel","X":595,"Y":680,"W":95,"H":48,"Band":1},{"Id":"r_responde","Label":"RESPONDE","Kind":"rel","X":805,"Y":680,"W":115,"H":52,"Band":1},{"Id":"e_eval","Label":"EVALUACION_DIAGNOSTICO","Kind":"strong","X":830,"Y":765,"W":195,"H":44,"Band":1},{"Id":"r_eval_det","Label":"DETALLA","Kind":"rel_id","X":865,"Y":855,"W":115,"H":54,"Band":1},{"Id":"e_resp_eval","Label":"RESPUESTA_EVALUACION","Kind":"weak","X":830,"Y":950,"W":190,"H":46,"Band":1},{"Id":"e_consent","Label":"CONSENTIMIENTO_Y_ARCO","Kind":"strong","X":500,"Y":950,"W":185,"H":44,"Band":1},{"Id":"r_otorga","Label":"OTORGA / TRAMITA","Kind":"rel","X":535,"Y":855,"W":140,"H":54,"Band":1},{"Id":"e_marca","Label":"MARCA","Kind":"strong","X":1160,"Y":250,"W":115,"H":44,"Band":1},{"Id":"e_lab","Label":"LABORATORIO_FABRICANTE","Kind":"strong","X":1350,"Y":250,"W":195,"H":44,"Band":1},{"Id":"e_subcat","Label":"CATEGORIA / SUBCATEGORIA","Kind":"strong","X":1610,"Y":250,"W":205,"H":44,"Band":1},{"Id":"e_cert","Label":"CERTIFICACION_SANITARIA","Kind":"strong","X":1875,"Y":250,"W":195,"H":44,"Band":1},{"Id":"r_fabrica","Label":"FABRICA","Kind":"rel","X":1170,"Y":335,"W":105,"H":50,"Band":1},{"Id":"r_formula","Label":"FORMULA","Kind":"rel","X":1390,"Y":335,"W":105,"H":50,"Band":1},{"Id":"r_clasif","Label":"CLASIFICA","Kind":"rel","X":1655,"Y":335,"W":110,"H":50,"Band":1},{"Id":"r_avala","Label":"CERTIFICA","Kind":"rel","X":1915,"Y":335,"W":110,"H":50,"Band":1},{"Id":"e_producto","Label":"PRODUCTO_MAESTRO","Kind":"strong","X":1480,"Y":445,"W":175,"H":48,"Band":1},{"Id":"a_prod_pk","Label":"ID","Kind":"attr_pk","X":1280,"Y":452,"W":105,"H":32,"Band":1},{"Id":"a_prod_cof","Label":"registro_cofepris","Kind":"attr","X":1705,"Y":452,"W":130,"H":32,"Band":1},{"Id":"r_contiene_inci","Label":"CONTIENE (N:M)","Kind":"rel","X":1900,"Y":442,"W":135,"H":56,"Band":1},{"Id":"a_inci_conc","Label":"%_concentracion","Kind":"attr","X":2055,"Y":375,"W":125,"H":32,"Band":1},{"Id":"e_inci","Label":"INGREDIENTE_INCI","Kind":"strong","X":2110,"Y":445,"W":160,"H":46,"Band":1},{"Id":"a_inci_pk","Label":"ID","Kind":"attr_pk","X":2310,"Y":400,"W":115,"H":32,"Band":1},{"Id":"a_inci_alerg","Label":"alergenos_quimicos","Kind":"attr_multi","X":2305,"Y":480,"W":140,"H":36,"Band":1},{"Id":"r_presenta","Label":"PRESENTA","Kind":"rel","X":1510,"Y":545,"W":115,"H":54,"Band":1},{"Id":"e_sku","Label":"VARIANTE_SKU","Kind":"strong","X":1495,"Y":650,"W":150,"H":48,"Band":1},{"Id":"a_sku_pk","Label":"ID","Kind":"attr_pk","X":1300,"Y":658,"W":125,"H":32,"Band":1},{"Id":"a_sku_multi","Label":"multimedia_swatches","Kind":"attr_multi","X":1705,"Y":600,"W":150,"H":36,"Band":1},{"Id":"a_sku_precio","Label":"precio_base_menudeo","Kind":"attr","X":1705,"Y":660,"W":150,"H":32,"Band":1},{"Id":"r_integra_kit","Label":"INTEGRA_KIT (N:M)","Kind":"rel","X":1930,"Y":645,"W":145,"H":56,"Band":1},{"Id":"e_kit","Label":"KIT_SET","Kind":"strong","X":2140,"Y":650,"W":120,"H":44,"Band":1},{"Id":"e_rutina","Label":"RUTINA_BELLEZA","Kind":"strong","X":1160,"Y":820,"W":150,"H":44,"Band":1},{"Id":"r_ordena_paso","Label":"CONSTA_DE","Kind":"rel_id","X":1365,"Y":815,"W":120,"H":54,"Band":1},{"Id":"e_rutina_paso","Label":"RUTINA_PASO","Kind":"weak","X":1545,"Y":820,"W":140,"H":46,"Band":1},{"Id":"a_rp_parcial","Label":"orden_paso","Kind":"attr_partial","X":1555,"Y":900,"W":105,"H":32,"Band":1},{"Id":"e_carrito","Label":"CARRITO","Kind":"strong","X":120,"Y":1260,"W":120,"H":46,"Band":2},{"Id":"r_cont_item","Label":"CONTIENE","Kind":"rel_id","X":295,"Y":1255,"W":115,"H":54,"Band":2},{"Id":"e_item_car","Label":"ITEM_CARRITO","Kind":"weak","X":460,"Y":1260,"W":140,"H":46,"Band":2},{"Id":"e_plan","Label":"PLAN_SUSCRIPCION","Kind":"strong","X":110,"Y":1440,"W":165,"H":44,"Band":2},{"Id":"r_contrata","Label":"CONTRATA","Kind":"rel","X":325,"Y":1435,"W":115,"H":54,"Band":2},{"Id":"e_susc","Label":"SUSCRIPCION_CLIENTE","Kind":"strong","X":490,"Y":1440,"W":180,"H":46,"Band":2},{"Id":"e_orden","Label":"ORDEN","Kind":"strong","X":940,"Y":1340,"W":140,"H":48,"Band":2},{"Id":"a_ord_pk","Label":"ID","Kind":"attr_pk","X":780,"Y":1260,"W":95,"H":32,"Band":2},{"Id":"a_ord_folio","Label":"folio_orden","Kind":"attr","X":900,"Y":1245,"W":100,"H":32,"Band":2},{"Id":"a_ord_total","Label":"total_neto","Kind":"attr_derived","X":1030,"Y":1255,"W":110,"H":34,"Band":2},{"Id":"r_desglosa","Label":"DESGLOSA","Kind":"rel_id","X":1145,"Y":1335,"W":120,"H":56,"Band":2},{"Id":"e_ord_det","Label":"ORDEN_DETALLE","Kind":"weak","X":1320,"Y":1340,"W":155,"H":46,"Band":2},{"Id":"a_od_parcial","Label":"numero_partida","Kind":"attr_partial","X":1330,"Y":1260,"W":125,"H":32,"Band":2},{"Id":"r_cancela","Label":"MOTIVA_BAJA","Kind":"rel","X":760,"Y":1435,"W":125,"H":52,"Band":2},{"Id":"e_mot_canc","Label":"MOTIVO_CANCELACION","Kind":"strong","X":725,"Y":1530,"W":185,"H":44,"Band":2},{"Id":"r_evalua_af","Label":"EVALUA_RIESGO","Kind":"rel","X":1140,"Y":1465,"W":135,"H":54,"Band":2},{"Id":"e_antifraude","Label":"EVALUACION_ANTIFRAUDE","Kind":"strong","X":1335,"Y":1470,"W":195,"H":44,"Band":2},{"Id":"r_detona","Label":"DETONA","Kind":"rel","X":1580,"Y":1465,"W":105,"H":52,"Band":2},{"Id":"e_regla_af","Label":"REGLA_ANTIFRAUDE","Kind":"strong","X":1735,"Y":1470,"W":165,"H":44,"Band":2},{"Id":"r_cobra","Label":"COBRA","Kind":"rel","X":955,"Y":1500,"W":110,"H":52,"Band":2},{"Id":"e_tx","Label":"TRANSACCION","Kind":"strong","X":940,"Y":1605,"W":145,"H":46,"Band":2},{"Id":"e_inst_pago","Label":"INSTRUMENTO_PAGO","Kind":"strong","X":380,"Y":1690,"W":175,"H":46,"Band":2},{"Id":"eer_j3","Label":"d","Kind":"eer_d","X":445,"Y":1780,"W":44,"H":44,"Band":2},{"Id":"e_tok","Label":"METODO_PAGO_TOKENIZADO","Kind":"strong","X":90,"Y":1885,"W":195,"H":44,"Band":2},{"Id":"e_wallet","Label":"BILLETERA_ELECTRONICA","Kind":"strong","X":370,"Y":1885,"W":185,"H":44,"Band":2},{"Id":"e_gift","Label":"TARJETA_REGALO_GIFTCARD","Kind":"strong","X":630,"Y":1885,"W":205,"H":44,"Band":2},{"Id":"e_cfdi_sup","Label":"COMPROBANTE_FISCAL_SAT","Kind":"strong","X":1290,"Y":1660,"W":210,"H":48,"Band":2},{"Id":"a_cfdi_uuid","Label":"uuid_sat_fiscal","Kind":"attr_pk","X":1545,"Y":1666,"W":125,"H":32,"Band":2},{"Id":"eer_j2","Label":"d","Kind":"eer_d","X":1373,"Y":1755,"W":44,"H":44,"Band":2},{"Id":"e_factura","Label":"FACTURA_CFDI (Ingreso)","Kind":"strong","X":1060,"Y":1865,"W":180,"H":44,"Band":2},{"Id":"e_rep","Label":"COMPLEMENTO_PAGO (REP)","Kind":"strong","X":1300,"Y":1865,"W":195,"H":44,"Band":2},{"Id":"e_nc","Label":"NOTA_CREDITO (Egreso)","Kind":"strong","X":1545,"Y":1865,"W":185,"H":44,"Band":2},{"Id":"r_fac_part","Label":"CONCEPTUA","Kind":"rel_id","X":1090,"Y":1955,"W":120,"H":52,"Band":2},{"Id":"e_fac_part","Label":"FACTURA_PARTIDA","Kind":"weak","X":1070,"Y":2050,"W":160,"H":46,"Band":2},{"Id":"e_campania","Label":"CAMPANIA","Kind":"strong","X":1980,"Y":1340,"W":135,"H":44,"Band":2},{"Id":"r_lanza","Label":"LANZA","Kind":"rel","X":1995,"Y":1440,"W":105,"H":50,"Band":2},{"Id":"e_cupon","Label":"CUPON","Kind":"strong","X":1985,"Y":1540,"W":125,"H":46,"Band":2},{"Id":"a_cup_pk","Label":"codigo_cupon","Kind":"attr_pk","X":2160,"Y":1546,"W":115,"H":32,"Band":2},{"Id":"r_redime","Label":"REDIME (N:M)","Kind":"rel","X":1980,"Y":1650,"W":130,"H":54,"Band":2},{"Id":"e_prov","Label":"PROVEEDOR","Kind":"strong","X":110,"Y":2320,"W":135,"H":46,"Band":3},{"Id":"a_prov_pk","Label":"ID","Kind":"attr_pk","X":110,"Y":2250,"W":110,"H":32,"Band":3},{"Id":"a_prov_tel","Label":"contactos_ejecutivos","Kind":"attr_multi","X":285,"Y":2250,"W":150,"H":36,"Band":3},{"Id":"r_emite_oc","Label":"EMITE","Kind":"rel","X":315,"Y":2315,"W":100,"H":52,"Band":3},{"Id":"e_oc","Label":"ORDEN_COMPRA","Kind":"strong","X":465,"Y":2320,"W":145,"H":46,"Band":3},{"Id":"r_oc_det","Label":"DETALLA","Kind":"rel_id","X":480,"Y":2415,"W":115,"H":52,"Band":3},{"Id":"e_oc_det","Label":"ORDEN_COMPRA_DETALLE","Kind":"weak","X":440,"Y":2510,"W":195,"H":46,"Band":3},{"Id":"r_recibe","Label":"INGRESA","Kind":"rel","X":665,"Y":2315,"W":105,"H":52,"Band":3},{"Id":"e_recep","Label":"RECEPCION_MERCANCIA","Kind":"strong","X":820,"Y":2320,"W":185,"H":46,"Band":3},{"Id":"r_rec_det","Label":"VERIFICA_QA","Kind":"rel_id","X":855,"Y":2415,"W":120,"H":52,"Band":3},{"Id":"e_rec_det","Label":"RECEPCION_DETALLE","Kind":"weak","X":830,"Y":2510,"W":165,"H":46,"Band":3},{"Id":"e_cedis","Label":"ALMACEN_CEDIS","Kind":"strong","X":1160,"Y":2320,"W":150,"H":46,"Band":3},{"Id":"r_sector","Label":"SECTORIALIZA","Kind":"rel","X":1365,"Y":2315,"W":130,"H":52,"Band":3},{"Id":"e_zona","Label":"ZONA_ALMACEN","Kind":"strong","X":1545,"Y":2320,"W":145,"H":46,"Band":3},{"Id":"r_cont_ubic","Label":"UBICA_RACK","Kind":"rel_id","X":1555,"Y":2415,"W":125,"H":52,"Band":3},{"Id":"e_ubic","Label":"PASILLO_UBICACION","Kind":"weak","X":1535,"Y":2510,"W":165,"H":46,"Band":3},{"Id":"r_almacena","Label":"ALMACENA (N:M)","Kind":"rel","X":1765,"Y":2505,"W":135,"H":54,"Band":3},{"Id":"a_stock","Label":"stock_disponible","Kind":"attr","X":1775,"Y":2430,"W":120,"H":32,"Band":3},{"Id":"e_lote","Label":"LOTE_SANITARIO_FEFO","Kind":"strong","X":1965,"Y":2510,"W":180,"H":48,"Band":3},{"Id":"a_lote_pk","Label":"ID","Kind":"attr_pk","X":2190,"Y":2470,"W":90,"H":32,"Band":3},{"Id":"a_lote_dias","Label":"dias_restantes_vida_util","Kind":"attr_derived","X":2180,"Y":2530,"W":165,"H":34,"Band":3},{"Id":"e_despacho","Label":"DESPACHO_ORDEN","Kind":"strong","X":150,"Y":2740,"W":160,"H":46,"Band":3},{"Id":"a_desp_trk","Label":"eventos_tracking","Kind":"attr_multi","X":155,"Y":2660,"W":135,"H":36,"Band":3},{"Id":"r_embala","Label":"EMBALA","Kind":"rel_id","X":370,"Y":2735,"W":110,"H":54,"Band":3},{"Id":"e_bulto","Label":"PAQUETE_BULTO","Kind":"weak","X":540,"Y":2740,"W":150,"H":48,"Band":3},{"Id":"a_bul_parcial","Label":"codigo_bulto","Kind":"attr_partial","X":545,"Y":2665,"W":110,"H":32,"Band":3},{"Id":"a_bul_dim","Label":"dimensiones_bulto","Kind":"attr","X":445,"Y":2845,"W":135,"H":34,"Band":3},{"Id":"a_bul_d1","Label":"alto_cm","Kind":"attr","X":345,"Y":2915,"W":80,"H":30,"Band":3},{"Id":"a_bul_d2","Label":"ancho_cm","Kind":"attr","X":440,"Y":2930,"W":85,"H":30,"Band":3},{"Id":"a_bul_d3","Label":"largo_cm","Kind":"attr","X":540,"Y":2915,"W":80,"H":30,"Band":3},{"Id":"a_bul_vol","Label":"peso_volumetrico_kg","Kind":"attr_derived","X":650,"Y":2845,"W":150,"H":34,"Band":3},{"Id":"r_transp","Label":"TRANSPORTA","Kind":"rel","X":170,"Y":2840,"W":120,"H":52,"Band":3},{"Id":"e_carrier","Label":"TRANSPORTISTA","Kind":"strong","X":155,"Y":2945,"W":150,"H":44,"Band":3},{"Id":"r_opera_pk","Label":"OPERA_LOCKER","Kind":"rel","X":360,"Y":2940,"W":125,"H":52,"Band":3},{"Id":"e_pickup","Label":"PUNTO_PICKUP","Kind":"strong","X":540,"Y":2990,"W":140,"H":44,"Band":3},{"Id":"e_rma","Label":"SOLICITUD_RMA","Kind":"strong","X":940,"Y":2740,"W":150,"H":46,"Band":3},{"Id":"r_reclama","Label":"RECLAMA","Kind":"rel_id","X":1150,"Y":2735,"W":110,"H":54,"Band":3},{"Id":"e_rma_det","Label":"RMA_DETALLE","Kind":"weak","X":1320,"Y":2740,"W":140,"H":46,"Band":3},{"Id":"e_farma","Label":"REPORTE_FARMACOVIGILANCIA","Kind":"strong","X":940,"Y":2910,"W":215,"H":44,"Band":3},{"Id":"e_ticket","Label":"TICKET_SOPORTE","Kind":"strong","X":1240,"Y":2910,"W":150,"H":44,"Band":3},{"Id":"r_conv","Label":"CONVERSA","Kind":"rel_id","X":1440,"Y":2905,"W":110,"H":52,"Band":3},{"Id":"e_tkt_msg","Label":"TICKET_MENSAJE","Kind":"weak","X":1600,"Y":2910,"W":150,"H":46,"Band":3},{"Id":"e_aud_sup","Label":"EVENTO_FORENSE","Kind":"strong","X":2020,"Y":2720,"W":165,"H":48,"Band":3},{"Id":"a_aud_comp","Label":"auditoria_soft_delete","Kind":"attr","X":2245,"Y":2665,"W":150,"H":34,"Band":3},{"Id":"a_aud_1","Label":"activo","Kind":"attr","X":2225,"Y":2735,"W":70,"H":28,"Band":3},{"Id":"a_aud_2","Label":"fecha_creacion","Kind":"attr","X":2310,"Y":2735,"W":110,"H":28,"Band":3},{"Id":"eer_j4","Label":"d","Kind":"eer_d","X":2080,"Y":2815,"W":44,"H":44,"Band":3},{"Id":"e_bsg","Label":"BITACORA_SEGURIDAD","Kind":"strong","X":1820,"Y":2930,"W":165,"H":44,"Band":3},{"Id":"e_bcd","Label":"BITACORA_CAMBIOS","Kind":"strong","X":2010,"Y":2930,"W":155,"H":44,"Band":3},{"Id":"e_ilog","Label":"INTENTO_LOGIN","Kind":"strong","X":2190,"Y":2930,"W":135,"H":44,"Band":3},{"Id":"e_kdx","Label":"KARDEX_MOVIMIENTO","Kind":"strong","X":1980,"Y":3030,"W":170,"H":44,"Band":3}],"edges":[{"S":"e_usuario","T":"a_usr_pk","Lbl":"","Style":"single","Sub":""},{"S":"e_usuario","T":"a_usr_email","Lbl":"","Style":"single","Sub":""},{"S":"e_usuario","T":"a_usr_hash","Lbl":"","Style":"single","Sub":""},{"S":"e_usuario","T":"a_usr_mfa","Lbl":"","Style":"single","Sub":""},{"S":"e_usuario","T":"r_asigna_rol","Lbl":"(1,N)","Style":"single","Sub":""},{"S":"r_asigna_rol","T":"e_rol","Lbl":"(0,N)","Style":"single","Sub":""},{"S":"e_rol","T":"a_rol_pk","Lbl":"","Style":"single","Sub":""},{"S":"e_rol","T":"r_autoriza","Lbl":"(0,N)","Style":"single","Sub":""},{"S":"r_autoriza","T":"e_permiso","Lbl":"(0,N)","Style":"single","Sub":""},{"S":"e_permiso","T":"a_perm_pk","Lbl":"","Style":"single","Sub":""},{"S":"e_usuario","T":"eer_j1","Lbl":"parcial","Style":"single","Sub":""},{"S":"eer_j1","T":"e_operador","Lbl":"⊂","Style":"eer_sub","Sub":""},{"S":"eer_j1","T":"e_cliente","Lbl":"⊂","Style":"eer_sub","Sub":""},{"S":"eer_j1","T":"e_afiliado","Lbl":"⊂","Style":"eer_sub","Sub":""},{"S":"e_cliente","T":"a_cli_pk","Lbl":"","Style":"single","Sub":""},{"S":"e_cliente","T":"a_cli_nom","Lbl":"","Style":"single","Sub":""},{"S":"a_cli_nom","T":"a_cli_nom1","Lbl":"","Style":"single","Sub":""},{"S":"a_cli_nom","T":"a_cli_nom2","Lbl":"","Style":"single","Sub":""},{"S":"a_cli_nom","T":"a_cli_nom3","Lbl":"","Style":"single","Sub":""},{"S":"e_cliente","T":"a_cli_dir","Lbl":"","Style":"single","Sub":""},{"S":"e_cliente","T":"a_cli_rfc","Lbl":"","Style":"single","Sub":""},{"S":"e_cliente","T":"r_padece","Lbl":"(0,N)","Style":"single","Sub":""},{"S":"r_padece","T":"e_condicion","Lbl":"(0,N)","Style":"single","Sub":""},{"S":"e_condicion","T":"a_cond_pk","Lbl":"","Style":"single","Sub":""},{"S":"e_cliente","T":"r_tiene_perf","Lbl":"(0,1)","Style":"single","Sub":""},{"S":"r_tiene_perf","T":"e_perfil","Lbl":"(1,1)","Style":"double","Sub":""},{"S":"e_cliente","T":"r_responde","Lbl":"(0,N)","Style":"single","Sub":""},{"S":"r_responde","T":"e_eval","Lbl":"(1,1)","Style":"single","Sub":""},{"S":"e_eval","T":"r_eval_det","Lbl":"(1,N)","Style":"single","Sub":""},{"S":"r_eval_det","T":"e_resp_eval","Lbl":"(1,1)","Style":"double","Sub":""},{"S":"e_cliente","T":"r_otorga","Lbl":"(1,N)","Style":"single","Sub":""},{"S":"r_otorga","T":"e_consent","Lbl":"(1,1)","Style":"single","Sub":""},{"S":"e_marca","T":"r_fabrica","Lbl":"(1,N)","Style":"single","Sub":""},{"S":"r_fabrica","T":"e_producto","Lbl":"(1,1)","Style":"single","Sub":""},{"S":"e_lab","T":"r_formula","Lbl":"(1,N)","Style":"single","Sub":""},{"S":"r_formula","T":"e_producto","Lbl":"(1,1)","Style":"single","Sub":""},{"S":"e_subcat","T":"r_clasif","Lbl":"(1,N)","Style":"single","Sub":""},{"S":"r_clasif","T":"e_producto","Lbl":"(1,1)","Style":"single","Sub":""},{"S":"e_cert","T":"r_avala","Lbl":"(0,N)","Style":"single","Sub":""},{"S":"r_avala","T":"e_producto","Lbl":"(0,1)","Style":"single","Sub":""},{"S":"e_producto","T":"a_prod_pk","Lbl":"","Style":"single","Sub":""},{"S":"e_producto","T":"a_prod_cof","Lbl":"","Style":"single","Sub":""},{"S":"e_producto","T":"r_contiene_inci","Lbl":"(1,N)","Style":"single","Sub":""},{"S":"r_contiene_inci","T":"e_inci","Lbl":"(0,N)","Style":"single","Sub":""},{"S":"r_contiene_inci","T":"a_inci_conc","Lbl":"","Style":"single","Sub":""},{"S":"e_inci","T":"a_inci_pk","Lbl":"","Style":"single","Sub":""},{"S":"e_inci","T":"a_inci_alerg","Lbl":"","Style":"single","Sub":""},{"S":"e_producto","T":"r_presenta","Lbl":"(1,N)","Style":"single","Sub":""},{"S":"r_presenta","T":"e_sku","Lbl":"(1,1)","Style":"single","Sub":""},{"S":"e_sku","T":"a_sku_pk","Lbl":"","Style":"single","Sub":""},{"S":"e_sku","T":"a_sku_multi","Lbl":"","Style":"single","Sub":""},{"S":"e_sku","T":"a_sku_precio","Lbl":"","Style":"single","Sub":""},{"S":"e_sku","T":"r_integra_kit","Lbl":"(0,N)","Style":"single","Sub":""},{"S":"r_integra_kit","T":"e_kit","Lbl":"(1,N)","Style":"single","Sub":""},{"S":"e_rutina","T":"r_ordena_paso","Lbl":"(1,N)","Style":"single","Sub":""},{"S":"r_ordena_paso","T":"e_rutina_paso","Lbl":"(1,1)","Style":"double","Sub":""},{"S":"e_rutina_paso","T":"a_rp_parcial","Lbl":"","Style":"single","Sub":""},{"S":"e_cliente","T":"e_carrito","Lbl":"1:N","Style":"dashed","Sub":""},{"S":"e_carrito","T":"r_cont_item","Lbl":"(1,N)","Style":"single","Sub":""},{"S":"r_cont_item","T":"e_item_car","Lbl":"(1,1)","Style":"double","Sub":""},{"S":"e_plan","T":"r_contrata","Lbl":"(0,N)","Style":"single","Sub":""},{"S":"r_contrata","T":"e_susc","Lbl":"(1,1)","Style":"single","Sub":""},{"S":"e_cliente","T":"e_orden","Lbl":"realiza (0,N)","Style":"dashed","Sub":""},{"S":"e_orden","T":"a_ord_pk","Lbl":"","Style":"single","Sub":""},{"S":"e_orden","T":"a_ord_folio","Lbl":"","Style":"single","Sub":""},{"S":"e_orden","T":"a_ord_total","Lbl":"","Style":"single","Sub":""},{"S":"e_orden","T":"r_desglosa","Lbl":"(1,N)","Style":"single","Sub":""},{"S":"r_desglosa","T":"e_ord_det","Lbl":"(1,1)","Style":"double","Sub":""},{"S":"e_ord_det","T":"a_od_parcial","Lbl":"","Style":"single","Sub":""},{"S":"e_ord_det","T":"e_sku","Lbl":"N:1","Style":"dashed","Sub":""},{"S":"e_orden","T":"r_cancela","Lbl":"(0,1)","Style":"single","Sub":""},{"S":"r_cancela","T":"e_mot_canc","Lbl":"(0,N)","Style":"single","Sub":""},{"S":"e_orden","T":"r_evalua_af","Lbl":"(0,1)","Style":"single","Sub":""},{"S":"r_evalua_af","T":"e_antifraude","Lbl":"(1,1)","Style":"single","Sub":""},{"S":"e_antifraude","T":"r_detona","Lbl":"(0,1)","Style":"single","Sub":""},{"S":"r_detona","T":"e_regla_af","Lbl":"(0,N)","Style":"single","Sub":""},{"S":"e_orden","T":"r_cobra","Lbl":"(1,N)","Style":"single","Sub":""},{"S":"r_cobra","T":"e_tx","Lbl":"(1,1)","Style":"single","Sub":""},{"S":"e_tx","T":"e_inst_pago","Lbl":"usa (0,N)","Style":"single","Sub":""},{"S":"e_inst_pago","T":"eer_j3","Lbl":"parcial","Style":"single","Sub":""},{"S":"eer_j3","T":"e_tok","Lbl":"⊂","Style":"eer_sub","Sub":""},{"S":"eer_j3","T":"e_wallet","Lbl":"⊂","Style":"eer_sub","Sub":""},{"S":"eer_j3","T":"e_gift","Lbl":"⊂","Style":"eer_sub","Sub":""},{"S":"e_orden","T":"e_cfdi_sup","Lbl":"factura (0,N)","Style":"single","Sub":""},{"S":"e_cfdi_sup","T":"a_cfdi_uuid","Lbl":"","Style":"single","Sub":""},{"S":"e_cfdi_sup","T":"eer_j2","Lbl":"total","Style":"double","Sub":""},{"S":"eer_j2","T":"e_factura","Lbl":"⊂","Style":"eer_sub","Sub":""},{"S":"eer_j2","T":"e_rep","Lbl":"⊂","Style":"eer_sub","Sub":""},{"S":"eer_j2","T":"e_nc","Lbl":"⊂","Style":"eer_sub","Sub":""},{"S":"e_factura","T":"r_fac_part","Lbl":"(1,N)","Style":"single","Sub":""},{"S":"r_fac_part","T":"e_fac_part","Lbl":"(1,1)","Style":"double","Sub":""},{"S":"e_campania","T":"r_lanza","Lbl":"(0,N)","Style":"single","Sub":""},{"S":"r_lanza","T":"e_cupon","Lbl":"(1,1)","Style":"single","Sub":""},{"S":"e_cupon","T":"a_cup_pk","Lbl":"","Style":"single","Sub":""},{"S":"e_cupon","T":"r_redime","Lbl":"(0,N)","Style":"single","Sub":""},{"S":"r_redime","T":"e_orden","Lbl":"(0,N)","Style":"single","Sub":""},{"S":"e_prov","T":"a_prov_pk","Lbl":"","Style":"single","Sub":""},{"S":"e_prov","T":"a_prov_tel","Lbl":"","Style":"single","Sub":""},{"S":"e_prov","T":"r_emite_oc","Lbl":"(0,N)","Style":"single","Sub":""},{"S":"r_emite_oc","T":"e_oc","Lbl":"(1,1)","Style":"single","Sub":""},{"S":"e_oc","T":"r_oc_det","Lbl":"(1,N)","Style":"single","Sub":""},{"S":"r_oc_det","T":"e_oc_det","Lbl":"(1,1)","Style":"double","Sub":""},{"S":"e_oc","T":"r_recibe","Lbl":"(0,N)","Style":"single","Sub":""},{"S":"r_recibe","T":"e_recep","Lbl":"(1,1)","Style":"single","Sub":""},{"S":"e_recep","T":"r_rec_det","Lbl":"(1,N)","Style":"single","Sub":""},{"S":"r_rec_det","T":"e_rec_det","Lbl":"(1,1)","Style":"double","Sub":""},{"S":"e_cedis","T":"r_sector","Lbl":"(1,N)","Style":"single","Sub":""},{"S":"r_sector","T":"e_zona","Lbl":"(1,1)","Style":"single","Sub":""},{"S":"e_zona","T":"r_cont_ubic","Lbl":"(1,N)","Style":"single","Sub":""},{"S":"r_cont_ubic","T":"e_ubic","Lbl":"(1,1)","Style":"double","Sub":""},{"S":"e_ubic","T":"r_almacena","Lbl":"(0,N)","Style":"single","Sub":""},{"S":"r_almacena","T":"e_lote","Lbl":"(1,N)","Style":"single","Sub":""},{"S":"r_almacena","T":"a_stock","Lbl":"","Style":"single","Sub":""},{"S":"e_lote","T":"a_lote_pk","Lbl":"","Style":"single","Sub":""},{"S":"e_lote","T":"a_lote_dias","Lbl":"","Style":"single","Sub":""},{"S":"e_despacho","T":"a_desp_trk","Lbl":"","Style":"single","Sub":""},{"S":"e_despacho","T":"r_embala","Lbl":"(1,N)","Style":"single","Sub":""},{"S":"r_embala","T":"e_bulto","Lbl":"(1,1)","Style":"double","Sub":""},{"S":"e_bulto","T":"a_bul_parcial","Lbl":"","Style":"single","Sub":""},{"S":"e_bulto","T":"a_bul_dim","Lbl":"","Style":"single","Sub":""},{"S":"a_bul_dim","T":"a_bul_d1","Lbl":"","Style":"single","Sub":""},{"S":"a_bul_dim","T":"a_bul_d2","Lbl":"","Style":"single","Sub":""},{"S":"a_bul_dim","T":"a_bul_d3","Lbl":"","Style":"single","Sub":""},{"S":"e_bulto","T":"a_bul_vol","Lbl":"","Style":"single","Sub":""},{"S":"e_despacho","T":"r_transp","Lbl":"(1,1)","Style":"single","Sub":""},{"S":"r_transp","T":"e_carrier","Lbl":"(0,N)","Style":"single","Sub":""},{"S":"e_carrier","T":"r_opera_pk","Lbl":"(0,N)","Style":"single","Sub":""},{"S":"r_opera_pk","T":"e_pickup","Lbl":"(1,1)","Style":"single","Sub":""},{"S":"e_pickup","T":"e_cedis","Lbl":"abastece (1,1)","Style":"dashed","Sub":""},{"S":"e_rma","T":"r_reclama","Lbl":"(1,N)","Style":"single","Sub":""},{"S":"r_reclama","T":"e_rma_det","Lbl":"(1,1)","Style":"double","Sub":""},{"S":"e_rma","T":"e_orden","Lbl":"devuelve (0,N)","Style":"dashed","Sub":""},{"S":"e_farma","T":"e_lote","Lbl":"reporta_lote","Style":"dashed","Sub":""},{"S":"e_ticket","T":"r_conv","Lbl":"(1,N)","Style":"single","Sub":""},{"S":"r_conv","T":"e_tkt_msg","Lbl":"(1,1)","Style":"double","Sub":""},{"S":"e_aud_sup","T":"a_aud_comp","Lbl":"","Style":"single","Sub":""},{"S":"a_aud_comp","T":"a_aud_1","Lbl":"","Style":"single","Sub":""},{"S":"a_aud_comp","T":"a_aud_2","Lbl":"","Style":"single","Sub":""},{"S":"e_aud_sup","T":"eer_j4","Lbl":"total","Style":"double","Sub":""},{"S":"eer_j4","T":"e_bsg","Lbl":"⊂","Style":"eer_sub","Sub":""},{"S":"eer_j4","T":"e_bcd","Lbl":"⊂","Style":"eer_sub","Sub":""},{"S":"eer_j4","T":"e_ilog","Lbl":"⊂","Style":"eer_sub","Sub":""},{"S":"eer_j4","T":"e_kdx","Lbl":"⊂","Style":"eer_sub","Sub":""}],"H":3360};
+const NS = 'http://www.w3.org/2000/svg';
+const svg = document.getElementById('svg');
+const scene = document.getElementById('scene');
+function el(tag, a, p) { const n = document.createElementNS(NS, tag); for (const [k,v] of Object.entries(a||{})) n.setAttribute(k, v); if (p) p.appendChild(n); return n; }
+
+const gBg = el('g', {}, scene);
+const gEd = el('g', {}, scene);
+const gNd = el('g', {}, scene);
+
+// Banner
+el('rect', { x: 30, y: 20, width: D.W - 60, height: 110, rx: 10, fill: '#1B365D', stroke: '#0f172a', 'stroke-width': 2 }, gBg);
+let t = el('text', { x: D.W/2, y: 55, fill: '#fff', 'font-size': 20, 'font-weight': 'bold', 'text-anchor': 'middle' }, gBg);
+t.textContent = 'DERMA-ECOM — MODELO CONCEPTUAL: DIAGRAMA ENTIDAD-RELACIÓN EXTENDIDO (NOTACIÓN CHEN / ELMASRI)';
+t = el('text', { x: D.W/2, y: 84, fill: '#fde68a', 'font-size': 14, 'text-anchor': 'middle' }, gBg);
+t.textContent = 'TecNM / ITSM · FBD (AEF-1031) Criterio 2.1 · José Luis Luna García (001–050) · Sheyla Estefanía Moncada Guel (051–100) · Eduardo Salazar Martínez (101–150)';
+t = el('text', { x: D.W/2, y: 110, fill: '#e2e8f0', 'font-size': 12, 'text-anchor': 'middle' }, gBg);
+t.textContent = 'Notación Conceptual Pura (antes de transformación a 150 tablas SQL) · 4 Jerarquías EER (o/d) · Entidades Débiles · Atributos Compuestos, Multivaluados y Derivados';
+
+// 3 Bands
+[
+  { y: 155, h: 975, fill: '#f4f8fc', stroke: '#1B365D', title: 'DOMINIO CONCEPTUAL 1 (001–050): Identidad, RBAC, Perfil Clínico-Cutáneo, Catálogo INCI y COFEPRIS — José Luis Luna García' },
+  { y: 1160, h: 995, fill: '#faf5fc', stroke: '#4A2574', title: 'DOMINIO CONCEPTUAL 2 (051–100): Motor Comercial, Suscripciones, Pagos, Antifraude, CFDI 4.0 y Promociones — Sheyla Estefanía Moncada Guel' },
+  { y: 2185, h: 960, fill: '#f3faf5', stroke: '#14532D', title: 'DOMINIO CONCEPTUAL 3 (101–150): Compras, WMS FEFO, Envíos, Postventa RMA, Farmacovigilancia y Auditoría Forense — Eduardo Salazar Martínez' }
+].forEach(b => {
+  el('rect', { x: 30, y: b.y, width: D.W - 60, height: b.h, rx: 10, fill: b.fill, stroke: b.stroke, 'stroke-width': 2 }, gBg);
+  el('rect', { x: 30, y: b.y, width: D.W - 60, height: 32, rx: 10, fill: b.stroke }, gBg);
+  const tx = el('text', { x: 48, y: b.y + 21, fill: '#fff', 'font-size': 13, 'font-weight': 'bold' }, gBg);
+  tx.textContent = b.title;
+});
+
+// Visual Legend at bottom
+el('rect', { x: 30, y: 3170, width: D.W - 60, height: 115, rx: 10, fill: '#fffbeb', stroke: '#b45309', 'stroke-width': 2 }, gBg);
+const lt = el('text', { x: 50, y: 3196, fill: '#78350f', 'font-size': 13, 'font-weight': 'bold' }, gBg);
+lt.textContent = 'LEYENDA OFICIAL — NOTACIÓN CHEN / ELMASRI & NAVATHE (E-R EXTENDIDO):';
+// Legend icons
+const lx = [60, 260, 470, 680, 910, 1130, 1360, 1590, 1830, 2060];
+// 1 Strong
+el('rect', { x: lx[0], y: 3214, width: 120, height: 34, fill: '#dbeafe', stroke: '#1e3a8a', 'stroke-width': 2 }, gBg);
+el('text', { x: lx[0]+60, y: 3235, 'text-anchor': 'middle', 'font-size': 11, 'font-weight': 'bold', fill: '#0f172a' }, gBg).textContent = 'Entidad Fuerte';
+// 2 Weak
+el('rect', { x: lx[1], y: 3214, width: 130, height: 34, fill: '#fef3c7', stroke: '#92400e', 'stroke-width': 2 }, gBg);
+el('rect', { x: lx[1]+4, y: 3218, width: 122, height: 26, fill: 'none', stroke: '#92400e', 'stroke-width': 1.5 }, gBg);
+el('text', { x: lx[1]+65, y: 3235, 'text-anchor': 'middle', 'font-size': 11, 'font-weight': 'bold', fill: '#0f172a' }, gBg).textContent = 'Entidad Débil';
+// 3 Rel
+el('polygon', { points: (lx[2]+60)+',3208 '+(lx[2]+125)+',3231 '+(lx[2]+60)+',3254 '+(lx[2]-5)+',3231', fill: '#dcfce7', stroke: '#166534', 'stroke-width': 1.8 }, gBg);
+el('text', { x: lx[2]+60, y: 3235, 'text-anchor': 'middle', 'font-size': 11, 'font-weight': 'bold', fill: '#052e16' }, gBg).textContent = 'Relación';
+// 4 Rel ID
+el('polygon', { points: (lx[3]+75)+',3206 '+(lx[3]+155)+',3231 '+(lx[3]+75)+',3256 '+(lx[3]-5)+',3231', fill: '#fce7f3', stroke: '#9d174d', 'stroke-width': 2 }, gBg);
+el('polygon', { points: (lx[3]+75)+',3212 '+(lx[3]+146)+',3231 '+(lx[3]+75)+',3250 '+(lx[3]+4)+',3231', fill: 'none', stroke: '#9d174d', 'stroke-width': 1.4 }, gBg);
+el('text', { x: lx[3]+75, y: 3235, 'text-anchor': 'middle', 'font-size': 10, 'font-weight': 'bold', fill: '#500724' }, gBg).textContent = 'Rel. Identif.';
+// 5 PK
+el('ellipse', { cx: lx[4]+65, cy: 3231, rx: 65, ry: 18, fill: '#fff7ed', stroke: '#c2410c', 'stroke-width': 1.8 }, gBg);
+el('text', { x: lx[4]+65, y: 3235, 'text-anchor': 'middle', 'font-size': 11, 'font-weight': 'bold', 'text-decoration': 'underline', fill: '#7c2d12' }, gBg).textContent = 'Atributo Clave';
+// 6 Partial
+el('ellipse', { cx: lx[5]+65, cy: 3231, rx: 68, ry: 18, fill: '#fefce8', stroke: '#a16207', 'stroke-width': 1.5 }, gBg);
+el('text', { x: lx[5]+65, y: 3234, 'text-anchor': 'middle', 'font-size': 10, 'font-weight': 'bold', fill: '#713f12' }, gBg).textContent = 'Clave Parcial';
+el('line', { x1: lx[5]+25, y1: 3238, x2: lx[5]+105, y2: 3238, stroke: '#713f12', 'stroke-width': 1.3, 'stroke-dasharray': '3,2' }, gBg);
+// 7 Multi
+el('ellipse', { cx: lx[6]+68, cy: 3231, rx: 68, ry: 19, fill: '#f3e8ff', stroke: '#6b21a8', 'stroke-width': 1.6 }, gBg);
+el('ellipse', { cx: lx[6]+68, cy: 3231, rx: 62, ry: 14, fill: 'none', stroke: '#6b21a8', 'stroke-width': 1.2 }, gBg);
+el('text', { x: lx[6]+68, y: 3235, 'text-anchor': 'middle', 'font-size': 10, 'font-weight': 'bold', fill: '#3b0764' }, gBg).textContent = 'Multivaluado';
+// 8 Derived
+el('ellipse', { cx: lx[7]+65, cy: 3231, rx: 62, ry: 18, fill: '#ecfeff', stroke: '#0e7490', 'stroke-width': 1.6, 'stroke-dasharray': '5,3' }, gBg);
+el('text', { x: lx[7]+65, y: 3235, 'text-anchor': 'middle', 'font-size': 11, 'font-style': 'italic', fill: '#164e63' }, gBg).textContent = 'Derivado';
+// 9 EER d/o
+el('circle', { cx: lx[8]+25, cy: 3231, r: 17, fill: '#fee2e2', stroke: '#991b1b', 'stroke-width': 2 }, gBg);
+el('text', { x: lx[8]+25, y: 3236, 'text-anchor': 'middle', 'font-size': 14, 'font-weight': 'bold', fill: '#7f1d1d' }, gBg).textContent = 'd';
+el('circle', { cx: lx[8]+70, cy: 3231, r: 17, fill: '#e0e7ff', stroke: '#3730a3', 'stroke-width': 2 }, gBg);
+el('text', { x: lx[8]+70, y: 3236, 'text-anchor': 'middle', 'font-size': 14, 'font-weight': 'bold', fill: '#1e1b4b' }, gBg).textContent = 'o';
+el('text', { x: lx[8]+148, y: 3235, 'text-anchor': 'middle', 'font-size': 11, 'font-weight': 'bold', fill: '#1e293b' }, gBg).textContent = 'Disjunta / Solapada';
+// 10 Participation
+el('line', { x1: lx[9], y1: 3223, x2: lx[9]+55, y2: 3223, stroke: '#9d174d', 'stroke-width': 4 }, gBg);
+el('line', { x1: lx[9], y1: 3223, x2: lx[9]+55, y2: 3223, stroke: '#fffbeb', 'stroke-width': 1.4 }, gBg);
+el('text', { x: lx[9]+65, y: 3227, 'font-size': 11, 'font-weight': 'bold', fill: '#831843' }, gBg).textContent = 'Participación Total (doble)';
+el('line', { x1: lx[9], y1: 3244, x2: lx[9]+55, y2: 3244, stroke: '#dc2626', 'stroke-width': 1.5, 'stroke-dasharray': '6,4' }, gBg);
+el('text', { x: lx[9]+65, y: 3248, 'font-size': 11, 'font-weight': 'bold', fill: '#b91c1c' }, gBg).textContent = 'Vínculo Inter-Dominio';
+
+const nmap = {};
+D.nodes.forEach(n => nmap[n.Id] = n);
+
+// Render Edges
+D.edges.forEach(e => {
+  const s = nmap[e.S], t = nmap[e.T];
+  if (!s || !t) return;
+  const x1 = s.X + s.W/2, y1 = s.Y + s.H/2, x2 = t.X + t.W/2, y2 = t.Y + t.H/2;
+  if (e.Style === 'double') {
+    el('line', { x1, y1, x2, y2, stroke: '#9d174d', 'stroke-width': 5 }, gEd);
+    el('line', { x1, y1, x2, y2, stroke: '#ffffff', 'stroke-width': 1.8 }, gEd);
+  } else if (e.Style === 'dashed') {
+    el('line', { x1, y1, x2, y2, stroke: '#dc2626', 'stroke-width': 1.5, 'stroke-dasharray': '6,4', 'marker-end': 'url(#arr-dash)' }, gEd);
+  } else if (e.Style === 'eer_sub') {
+    el('line', { x1, y1, x2, y2, stroke: '#3730a3', 'stroke-width': 2, 'marker-end': 'url(#arr-sub)' }, gEd);
+  } else {
+    el('line', { x1, y1, x2, y2, stroke: '#475569', 'stroke-width': 1.5 }, gEd);
+  }
+  if (e.Lbl) {
+    const mx = (x1 + x2)/2, my = (y1 + y2)/2;
+    const bg = el('rect', { x: mx - 24, y: my - 9, width: 48, height: 16, rx: 4, fill: 'rgba(255,255,255,0.88)' }, gEd);
+    const lb = el('text', { x: mx, y: my + 3, 'text-anchor': 'middle', 'font-size': e.Style==='eer_sub'?13:10, 'font-weight': 'bold', fill: e.Style==='dashed'?'#b91c1c':(e.Style==='eer_sub'?'#312e81':'#0f172a') }, gEd);
+    lb.textContent = e.Lbl;
+  }
+});
+
+// Render Authentic Chen Shapes
+D.nodes.forEach(n => {
+  const cx = n.X + n.W/2, cy = n.Y + n.H/2;
+  const g = el('g', {}, gNd);
+  if (n.Kind === 'strong') {
+    el('rect', { x: n.X, y: n.Y, width: n.W, height: n.H, fill: '#dbeafe', stroke: '#1e3a8a', 'stroke-width': 2 }, g);
+    el('text', { x: cx, y: cy + 4, 'text-anchor': 'middle', 'font-size': 11, 'font-weight': 'bold', fill: '#0f172a' }, g).textContent = n.Label;
+  } else if (n.Kind === 'weak') {
+    el('rect', { x: n.X, y: n.Y, width: n.W, height: n.H, fill: '#fef3c7', stroke: '#92400e', 'stroke-width': 2 }, g);
+    el('rect', { x: n.X + 4, y: n.Y + 4, width: n.W - 8, height: n.H - 8, fill: 'none', stroke: '#92400e', 'stroke-width': 1.4 }, g);
+    el('text', { x: cx, y: cy + 4, 'text-anchor': 'middle', 'font-size': 11, 'font-weight': 'bold', fill: '#0f172a' }, g).textContent = n.Label;
+  } else if (n.Kind === 'rel' || n.Kind === 'rel_id') {
+    const pts = cx+','+n.Y+' '+(n.X+n.W)+','+cy+' '+cx+','+(n.Y+n.H)+' '+n.X+','+cy;
+    el('polygon', { points: pts, fill: n.Kind==='rel_id'?'#fce7f3':'#dcfce7', stroke: n.Kind==='rel_id'?'#9d174d':'#166534', 'stroke-width': 2 }, g);
+    if (n.Kind === 'rel_id') {
+      const pts2 = cx+','+(n.Y+5)+' '+(n.X+n.W-8)+','+cy+' '+cx+','+(n.Y+n.H-5)+' '+(n.X+8)+','+cy;
+      el('polygon', { points: pts2, fill: 'none', stroke: '#9d174d', 'stroke-width': 1.3 }, g);
+    }
+    el('text', { x: cx, y: cy + 3, 'text-anchor': 'middle', 'font-size': 9.5, 'font-weight': 'bold', fill: n.Kind==='rel_id'?'#500724':'#052e16' }, g).textContent = n.Label;
+  } else if (n.Kind === 'eer_d' || n.Kind === 'eer_o') {
+    el('circle', { cx, cy, r: n.W/2, fill: n.Kind==='eer_d'?'#fee2e2':'#e0e7ff', stroke: n.Kind==='eer_d'?'#991b1b':'#3730a3', 'stroke-width': 2.2 }, g);
+    el('text', { x: cx, y: cy + 5, 'text-anchor': 'middle', 'font-size': 16, 'font-weight': 'bold', fill: n.Kind==='eer_d'?'#7f1d1d':'#1e1b4b' }, g).textContent = n.Label;
+  } else {
+    // Attributes (ovals)
+    const rx = n.W/2, ry = n.H/2;
+    const fill = n.Kind==='attr_pk'?'#fff7ed':(n.Kind==='attr_partial'?'#fefce8':(n.Kind==='attr_multi'?'#f3e8ff':(n.Kind==='attr_derived'?'#ecfeff':'#ffffff')));
+    const stroke = n.Kind==='attr_pk'?'#c2410c':(n.Kind==='attr_partial'?'#a16207':(n.Kind==='attr_multi'?'#6b21a8':(n.Kind==='attr_derived'?'#0e7490':'#475569')));
+    const ea = { cx, cy, rx, ry, fill, stroke, 'stroke-width': n.Kind==='attr' ? 1.3 : 1.7 };
+    if (n.Kind === 'attr_derived') ea['stroke-dasharray'] = '5,3';
+    el('ellipse', ea, g);
+    if (n.Kind === 'attr_multi') el('ellipse', { cx, cy, rx: rx-4, ry: ry-4, fill: 'none', stroke, 'stroke-width': 1.2 }, g);
+    const ta = { x: cx, y: cy + 3, 'text-anchor': 'middle', 'font-size': 10, fill: '#0f172a' };
+    if (n.Kind === 'attr_pk') { ta['font-weight'] = 'bold'; ta['text-decoration'] = 'underline'; ta.fill = '#7c2d12'; }
+    if (n.Kind === 'attr_partial') { ta['font-weight'] = 'bold'; ta.fill = '#713f12'; }
+    if (n.Kind === 'attr_multi') { ta['font-weight'] = 'bold'; ta.fill = '#3b0764'; }
+    if (n.Kind === 'attr_derived') { ta['font-style'] = 'italic'; ta.fill = '#164e63'; }
+    el('text', ta, g).textContent = n.Label;
+    if (n.Kind === 'attr_partial') {
+      el('line', { x1: cx - rx*0.65, y1: cy + 7, x2: cx + rx*0.65, y2: cy + 7, stroke: '#713f12', 'stroke-width': 1.2, 'stroke-dasharray': '3,2' }, g);
+    }
+  }
+});
+
+// Pan & Zoom
+let scale = 0.35, tx = 20, ty = 15, drag = false, sx = 0, sy = 0;
+function upd() { scene.setAttribute('transform', 'translate('+tx+','+ty+') scale('+scale+')'); }
+function fitView() {
+  const r = svg.getBoundingClientRect();
+  scale = Math.min((r.width - 30) / D.W, (r.height - 30) / D.H);
+  tx = (r.width - D.W * scale) / 2; ty = (r.height - D.H * scale) / 2; upd();
+}
+function zoomBy(f) { const r = svg.getBoundingClientRect(); const cx = r.width/2, cy = r.height/2; tx = cx - (cx-tx)*f; ty = cy - (cy-ty)*f; scale *= f; upd(); }
+svg.addEventListener('wheel', e => { e.preventDefault(); const f = e.deltaY<0?1.15:0.87; const r = svg.getBoundingClientRect(); const mx=e.clientX-r.left, my=e.clientY-r.top; tx=mx-(mx-tx)*f; ty=my-(my-ty)*f; scale*=f; upd(); }, { passive: false });
+svg.addEventListener('mousedown', e => { drag = true; sx = e.clientX - tx; sy = e.clientY - ty; });
+window.addEventListener('mousemove', e => { if (!drag) return; tx = e.clientX - sx; ty = e.clientY - sy; upd(); });
+window.addEventListener('mouseup', () => drag = false);
+function exportSvg() {
+  const c = svg.cloneNode(true);
+  c.setAttribute('width', D.W); c.setAttribute('height', D.H); c.setAttribute('viewBox', '0 0 '+D.W+' '+D.H);
+  c.querySelector('#scene').setAttribute('transform', 'translate(0,0) scale(1)');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([new XMLSerializer().serializeToString(c)], { type: 'image/svg+xml;charset=utf-8' }));
+  a.download = 'DERMA_ECOM_MODELO_CONCEPTUAL_CHEN_EER.svg'; a.click();
+}
+fitView();
+</script>
+</body>
+</html>
