@@ -1,0 +1,752 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="3278" height="1415" viewBox="0 0 3278 1415">
+  <defs>
+    <style>
+      text { font-family: "Segoe UI", Arial, sans-serif; }
+      .mono { font-family: Consolas, "Courier New", monospace; font-size: 10px; }
+      .hdr { font-size: 11px; font-weight: 700; fill: #FFFFFF; }
+      .badge { font-family: Consolas, monospace; font-size: 9px; font-weight: 700; }
+    </style>
+    <marker id="cf-many-intra" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="9" markerHeight="9" orient="auto">
+      <path d="M 0 6 L 11 1 M 0 6 L 11 6 M 0 6 L 11 11" stroke="#475569" stroke-width="1.3" fill="none"/>
+    </marker>
+    <marker id="cf-one-intra" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M 7 1 L 7 9 M 3 1 L 3 9" stroke="#475569" stroke-width="1.3" fill="none"/>
+    </marker>
+    <marker id="cf-many-inter" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="9" markerHeight="9" orient="auto">
+      <path d="M 0 6 L 11 1 M 0 6 L 11 6 M 0 6 L 11 11" stroke="#DC2626" stroke-width="1.4" fill="none"/>
+    </marker>
+    <marker id="cf-one-inter" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M 7 1 L 7 9 M 3 1 L 3 9" stroke="#DC2626" stroke-width="1.4" fill="none"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="3278" height="1415" fill="#F8FAFC"/>
+  <rect x="36" y="18" width="3206" height="94" rx="10" fill="#4A2574" stroke="#0F172A" stroke-width="1.5"/>
+  <text x="1639" y="48" text-anchor="middle" fill="#FFFFFF" font-size="20" font-weight="700">DERMA-ECOM — MODELO RELACIONAL (ESQUEMA LÓGICO): SUBMÓDULO 2 (50 TABLAS · 67 FKs)</text>
+  <text x="1639" y="74" text-anchor="middle" fill="#BAE6FD" font-size="13.5" font-weight="600">TecNM / ITSM · FBD (AEF-1031) · Autor: Sheyla Estefanía Moncada Guel · Tablas 051–100 · Esquemas: ventas (23), pagos (13), fiscal (8), promos (6)</text>
+  <text x="1639" y="97" text-anchor="middle" fill="#E2E8F0" font-size="12">Notación Crow&apos;s Foot (1:1, 1:N, 0..1:0..N) · Convención Física DDL: PK = ID (BIGINT IDENTITY) · FKs = ID_* · 7 Columnas de Auditoría / Soft Delete</text>
+  <rect x="36" y="134" width="3206" height="104" rx="8" fill="#FFF1F2" stroke="#FCA5A5" stroke-width="1.4" stroke-dasharray="6,4"/>
+  <text x="50" y="152" fill="#991B1B" font-size="11.5" font-weight="700">REFERENCIAS EXTERNAS (NODOS PUENTE _REF_SM#): 6 tablas de otros submódulos destino de FKs inter-módulo (no se suman a las 50 tablas propias)</text>
+  <g id="fk-edges">
+    <path d="M 1183 193 Q 1140 215 1153 329" fill="none" stroke="#DC2626" stroke-width="1.35" stroke-opacity="0.58" stroke-dasharray="6,4" marker-end="url(#cf-many-inter)"/>
+    <path d="M 1153 329 Q 1315 314 1477 336" fill="none" stroke="#64748B" stroke-width="1.05" stroke-opacity="0.58" marker-end="url(#cf-many-intra)"/>
+    <path d="M 2399 193 Q 1910 218 1477 336" fill="none" stroke="#DC2626" stroke-width="1.35" stroke-opacity="0.58" stroke-dasharray="6,4" marker-end="url(#cf-many-inter)"/>
+    <path d="M 1153 329 Q 1505 339 1801 329" fill="none" stroke="#64748B" stroke-width="1.05" stroke-opacity="0.58" marker-end="url(#cf-one-intra)"/>
+    <path d="M 1183 193 Q 1950 234 2773 366" fill="none" stroke="#DC2626" stroke-width="1.35" stroke-opacity="0.58" stroke-dasharray="6,4" marker-end="url(#cf-many-inter)"/>
+    <path d="M 2125 329 Q 2435 316 2773 366" fill="none" stroke="#64748B" stroke-width="1.05" stroke-opacity="0.58" marker-end="url(#cf-many-intra)"/>
+    <path d="M 2449 322 Q 2611 326 2773 366" fill="none" stroke="#64748B" stroke-width="1.05" stroke-opacity="0.58" marker-end="url(#cf-many-intra)"/>
+    <path d="M 1487 193 Q 2102 234 2773 366" fill="none" stroke="#DC2626" stroke-width="1.35" stroke-opacity="0.58" stroke-dasharray="6,4" marker-end="url(#cf-many-inter)"/>
+    <path d="M 1791 193 Q 2254 234 2773 366" fill="none" stroke="#DC2626" stroke-width="1.35" stroke-opacity="0.58" stroke-dasharray="6,4" marker-end="url(#cf-many-inter)"/>
+    <path d="M 2773 366 Q 2907 302 3097 329" fill="none" stroke="#64748B" stroke-width="1.05" stroke-opacity="0.58" marker-end="url(#cf-many-intra)"/>
+    <path d="M 2399 193 Q 2720 215 3097 329" fill="none" stroke="#DC2626" stroke-width="1.35" stroke-opacity="0.58" stroke-dasharray="6,4" marker-end="url(#cf-many-inter)"/>
+    <path d="M 2773 366 Q 1477 450 181 570" fill="none" stroke="#64748B" stroke-width="1.05" stroke-opacity="0.58" marker-end="url(#cf-many-intra)"/>
+    <path d="M 2773 366 Q 1653 464 505 570" fill="none" stroke="#64748B" stroke-width="1.05" stroke-opacity="0.58" marker-end="url(#cf-many-intra)"/>
+    <path d="M 2399 193 Q 1586 340 829 578" fill="none" stroke="#DC2626" stroke-width="1.35" stroke-opacity="0.58" stroke-dasharray="6,4" marker-end="url(#cf-many-inter)"/>
+    <path d="M 1183 193 Q 1140 354 1153 608" fill="none" stroke="#DC2626" stroke-width="1.35" stroke-opacity="0.58" stroke-dasharray="6,4" marker-end="url(#cf-many-inter)"/>
+    <path d="M 505 329 Q 815 436 1153 608" fill="none" stroke="#64748B" stroke-width="1.05" stroke-opacity="0.58" marker-end="url(#cf-many-intra)"/>
+    <path d="M 1487 193 Q 1292 354 1153 608" fill="none" stroke="#DC2626" stroke-width="1.35" stroke-opacity="0.58" stroke-dasharray="6,4" marker-end="url(#cf-many-inter)"/>
+    <path d="M 1487 193 Q 1292 354 1153 608" fill="none" stroke="#DC2626" stroke-width="1.35" stroke-opacity="0.58" stroke-dasharray="6,4" marker-end="url(#cf-many-inter)"/>
+    <path d="M 829 322 Q 1019 475 1153 608" fill="none" stroke="#64748B" stroke-width="1.05" stroke-opacity="0.58" marker-end="url(#cf-many-intra)"/>
+    <path d="M 1153 608 Q 1287 550 1477 585" fill="none" stroke="#64748B" stroke-width="1.05" stroke-opacity="0.58" marker-end="url(#cf-many-intra)"/>
+    <path d="M 2399 193 Q 1910 343 1477 585" fill="none" stroke="#DC2626" stroke-width="1.35" stroke-opacity="0.58" stroke-dasharray="6,4" marker-end="url(#cf-many-inter)"/>
+    <path d="M 1153 608 Q 1477 571 1801 570" fill="none" stroke="#64748B" stroke-width="1.05" stroke-opacity="0.58" marker-end="url(#cf-many-intra)"/>
+    <path d="M 505 329 Q 1167 446 1801 570" fill="none" stroke="#64748B" stroke-width="1.05" stroke-opacity="0.58" marker-end="url(#cf-many-intra)"/>
+    <path d="M 1153 608 Q 1667 595 2125 562" fill="none" stroke="#64748B" stroke-width="1.05" stroke-opacity="0.58" marker-end="url(#cf-many-intra)"/>
+    <path d="M 1153 608 Q 1773 543 2449 570" fill="none" stroke="#64748B" stroke-width="1.05" stroke-opacity="0.58" marker-end="url(#cf-many-intra)"/>
+    <path d="M 1153 608 Q 1949 557 2773 570" fill="none" stroke="#64748B" stroke-width="1.05" stroke-opacity="0.58" marker-end="url(#cf-many-intra)"/>
+    <path d="M 181 322 Q 1477 428 2773 570" fill="none" stroke="#64748B" stroke-width="1.05" stroke-opacity="0.58" marker-end="url(#cf-many-intra)"/>
+    <path d="M 1153 608 Q 2139 585 3097 570" fill="none" stroke="#64748B" stroke-width="1.05" stroke-opacity="0.58" marker-end="url(#cf-one-intra)"/>
+    <path d="M 1153 329 Q 695 584 181 818" fill="none" stroke="#64748B" stroke-width="1.05" stroke-opacity="0.58" marker-end="url(#cf-many-intra)"/>
+    <path d="M 2399 193 Q 1262 460 181 818" fill="none" stroke="#DC2626" stroke-width="1.35" stroke-opacity="0.58" stroke-dasharray="6,4" marker-end="url(#cf-many-inter)"/>
+    <path d="M 879 193 Q 664 460 505 818" fill="none" stroke="#DC2626" stroke-width="1.35" stroke-opacity="0.58" stroke-dasharray="6,4" marker-end="url(#cf-many-inter)"/>
+    <path d="M 505 818 Q 667 800 829 818" fill="none" stroke="#64748B" stroke-width="1.05" stroke-opacity="0.58" marker-end="url(#cf-many-intra)"/>
+    <path d="M 1153 608 Q 1005 709 829 818" fill="none" stroke="#64748B" stroke-width="1.05" stroke-opacity="0.58" marker-end="url(#cf-one-intra)"/>
+    <path d="M 1153 608 Q 1505 731 1801 834" fill="none" stroke="#64748B" stroke-width="1.05" stroke-opacity="0.58" marker-end="url(#cf-many-intra)"/>
+    <path d="M 1153 804 Q 1449 773 1801 834" fill="none" stroke="#64748B" stroke-width="1.05" stroke-opacity="0.58" marker-end="url(#cf-many-intra)"/>
+    <path d="M 1477 804 Q 1625 787 1801 834" fill="none" stroke="#64748B" stroke-width="1.05" stroke-opacity="0.58" marker-end="url(#cf-many-intra)"/>
+    <path d="M 1801 834 Q 1963 804 2125 811" fill="none" stroke="#64748B" stroke-width="1.05" stroke-opacity="0.58" marker-end="url(#cf-many-intra)"/>
+    <path d="M 1153 608 Q 1815 706 2449 811" fill="none" stroke="#64748B" stroke-width="1.05" stroke-opacity="0.58" marker-end="url(#cf-many-intra)"/>
+    <path d="M 1477 804 Q 1991 818 2449 811" fill="none" stroke="#64748B" stroke-width="1.05" stroke-opacity="0.58" marker-end="url(#cf-many-intra)"/>
+    <path d="M 1183 193 Q 1950 452 2773 804" fill="none" stroke="#DC2626" stroke-width="1.35" stroke-opacity="0.58" stroke-dasharray="6,4" marker-end="url(#cf-one-inter)"/>
+    <path d="M 2773 804 Q 2921 776 3097 811" fill="none" stroke="#64748B" stroke-width="1.05" stroke-opacity="0.58" marker-end="url(#cf-many-intra)"/>
+    <path d="M 1183 193 Q 654 566 181 1030" fill="none" stroke="#DC2626" stroke-width="1.35" stroke-opacity="0.58" stroke-dasharray="6,4" marker-end="url(#cf-many-inter)"/>
+    <path d="M 181 1030 Q 357 1018 505 1014" fill="none" stroke="#64748B" stroke-width="1.05" stroke-opacity="0.58" marker-end="url(#cf-many-intra)"/>
+    <path d="M 1153 608 Q 857 821 505 1014" fill="none" stroke="#64748B" stroke-width="1.05" stroke-opacity="0.58" marker-end="url(#cf-many-intra)"/>
+    <path d="M 1153 608 Q 1125 773 1153 1030" fill="none" stroke="#64748B" stroke-width="1.05" stroke-opacity="0.58" marker-end="url(#cf-one-intra)"/>
+    <path d="M 829 1022 Q 977 994 1153 1030" fill="none" stroke="#64748B" stroke-width="1.05" stroke-opacity="0.58" marker-end="url(#cf-many-intra)"/>
+    <path d="M 1801 834 Q 1639 914 1477 1030" fill="none" stroke="#64748B" stroke-width="1.05" stroke-opacity="0.58" marker-end="url(#cf-many-intra)"/>
+    <path d="M 1801 834 Q 1815 928 1801 1030" fill="none" stroke="#64748B" stroke-width="1.05" stroke-opacity="0.58" marker-end="url(#cf-many-intra)"/>
+    <path d="M 1183 193 Q 1950 569 2773 1037" fill="none" stroke="#DC2626" stroke-width="1.35" stroke-opacity="0.58" stroke-dasharray="6,4" marker-end="url(#cf-many-inter)"/>
+    <path d="M 2125 1022 Q 2421 984 2773 1037" fill="none" stroke="#64748B" stroke-width="1.05" stroke-opacity="0.58" marker-end="url(#cf-many-intra)"/>
+    <path d="M 2449 1022 Q 2597 998 2773 1037" fill="none" stroke="#64748B" stroke-width="1.05" stroke-opacity="0.58" marker-end="url(#cf-many-intra)"/>
+    <path d="M 1153 608 Q 2125 804 3097 1037" fill="none" stroke="#64748B" stroke-width="1.05" stroke-opacity="0.58" marker-end="url(#cf-many-intra)"/>
+    <path d="M 2773 1037 Q 2949 1033 3097 1037" fill="none" stroke="#64748B" stroke-width="1.05" stroke-opacity="0.58" marker-end="url(#cf-many-intra)"/>
+    <path d="M 3097 1037 Q 1667 1138 181 1218" fill="none" stroke="#64748B" stroke-width="1.05" stroke-opacity="0.58" marker-end="url(#cf-many-intra)"/>
+    <path d="M 3097 1037 Q 1773 1089 505 1233" fill="none" stroke="#64748B" stroke-width="1.05" stroke-opacity="0.58" marker-end="url(#cf-many-intra)"/>
+    <path d="M 1801 834 Q 1139 1002 505 1233" fill="none" stroke="#64748B" stroke-width="1.05" stroke-opacity="0.58" marker-end="url(#cf-many-intra)"/>
+    <path d="M 3097 1037 Q 1963 1114 829 1226" fill="none" stroke="#64748B" stroke-width="1.05" stroke-opacity="0.58" marker-end="url(#cf-many-intra)"/>
+    <path d="M 3097 1037 Q 2139 1124 1153 1218" fill="none" stroke="#64748B" stroke-width="1.05" stroke-opacity="0.58" marker-end="url(#cf-many-intra)"/>
+    <path d="M 1477 1218 Q 1667 1236 1801 1233" fill="none" stroke="#64748B" stroke-width="1.05" stroke-opacity="0.58" marker-end="url(#cf-many-intra)"/>
+    <path d="M 181 322 Q 963 732 1801 1233" fill="none" stroke="#64748B" stroke-width="1.05" stroke-opacity="0.58" marker-end="url(#cf-many-intra)"/>
+    <path d="M 1801 1233 Q 1949 1190 2125 1210" fill="none" stroke="#64748B" stroke-width="1.05" stroke-opacity="0.58" marker-end="url(#cf-one-intra)"/>
+    <path d="M 1801 1233 Q 2125 1200 2449 1203" fill="none" stroke="#64748B" stroke-width="1.05" stroke-opacity="0.58" marker-end="url(#cf-many-intra)"/>
+    <path d="M 2095 193 Q 2244 652 2449 1203" fill="none" stroke="#DC2626" stroke-width="1.35" stroke-opacity="0.58" stroke-dasharray="6,4" marker-end="url(#cf-many-inter)"/>
+    <path d="M 1801 1233 Q 2315 1240 2773 1226" fill="none" stroke="#64748B" stroke-width="1.05" stroke-opacity="0.58" marker-end="url(#cf-many-intra)"/>
+    <path d="M 1183 193 Q 1950 664 2773 1226" fill="none" stroke="#DC2626" stroke-width="1.35" stroke-opacity="0.58" stroke-dasharray="6,4" marker-end="url(#cf-many-inter)"/>
+    <path d="M 1153 608 Q 1949 885 2773 1226" fill="none" stroke="#64748B" stroke-width="1.05" stroke-opacity="0.58" marker-end="url(#cf-many-intra)"/>
+    <path d="M 2399 193 Q 2720 660 3097 1218" fill="none" stroke="#DC2626" stroke-width="1.35" stroke-opacity="0.58" stroke-dasharray="6,4" marker-end="url(#cf-many-inter)"/>
+  </g>
+  <g id="external-refs">
+    <rect x="739" y="160" width="280" height="66" rx="6" fill="#FFFFFF" stroke="#DC2626" stroke-width="1.5" stroke-dasharray="5,3"/>
+    <rect x="739" y="160" width="280" height="24" rx="6" fill="#991B1B"/>
+    <text x="747" y="176" class="hdr" font-size="10.5">[004] seguridad.usuarios (SM1)</text>
+    <text x="749" y="202" class="mono" fill="#B45309" font-weight="700">PK  ID : BIGINT</text>
+    <text x="749" y="217" class="mono" fill="#64748B">Tabla externa (Submodulo 1)</text>
+    <rect x="1043" y="160" width="280" height="66" rx="6" fill="#FFFFFF" stroke="#DC2626" stroke-width="1.5" stroke-dasharray="5,3"/>
+    <rect x="1043" y="160" width="280" height="24" rx="6" fill="#991B1B"/>
+    <text x="1051" y="176" class="hdr" font-size="10.5">[013] clientes.clientes (SM1)</text>
+    <text x="1053" y="202" class="mono" fill="#B45309" font-weight="700">PK  ID : BIGINT</text>
+    <text x="1053" y="217" class="mono" fill="#64748B">Tabla externa (Submodulo 1)</text>
+    <rect x="1347" y="160" width="280" height="66" rx="6" fill="#FFFFFF" stroke="#DC2626" stroke-width="1.5" stroke-dasharray="5,3"/>
+    <rect x="1347" y="160" width="280" height="24" rx="6" fill="#991B1B"/>
+    <text x="1355" y="176" class="hdr" font-size="10.5">[014] clientes.direcciones (SM1)</text>
+    <text x="1357" y="202" class="mono" fill="#B45309" font-weight="700">PK  ID : BIGINT</text>
+    <text x="1357" y="217" class="mono" fill="#64748B">Tabla externa (Submodulo 1)</text>
+    <rect x="1651" y="160" width="280" height="66" rx="6" fill="#FFFFFF" stroke="#DC2626" stroke-width="1.5" stroke-dasharray="5,3"/>
+    <rect x="1651" y="160" width="280" height="24" rx="6" fill="#991B1B"/>
+    <text x="1659" y="176" class="hdr" font-size="10.5">[025] clientes.metodos_pago_tokenizados (SM1)</text>
+    <text x="1661" y="202" class="mono" fill="#B45309" font-weight="700">PK  ID : BIGINT</text>
+    <text x="1661" y="217" class="mono" fill="#64748B">Tabla externa (Submodulo 1)</text>
+    <rect x="1955" y="160" width="280" height="66" rx="6" fill="#FFFFFF" stroke="#DC2626" stroke-width="1.5" stroke-dasharray="5,3"/>
+    <rect x="1955" y="160" width="280" height="24" rx="6" fill="#991B1B"/>
+    <text x="1963" y="176" class="hdr" font-size="10.5">[028] catalogo.categorias (SM1)</text>
+    <text x="1965" y="202" class="mono" fill="#B45309" font-weight="700">PK  ID : BIGINT</text>
+    <text x="1965" y="217" class="mono" fill="#64748B">Tabla externa (Submodulo 1)</text>
+    <rect x="2259" y="160" width="280" height="66" rx="6" fill="#FFFFFF" stroke="#DC2626" stroke-width="1.5" stroke-dasharray="5,3"/>
+    <rect x="2259" y="160" width="280" height="24" rx="6" fill="#991B1B"/>
+    <text x="2267" y="176" class="hdr" font-size="10.5">[035] catalogo.variantes_sku (SM1)</text>
+    <text x="2269" y="202" class="mono" fill="#B45309" font-weight="700">PK  ID : BIGINT</text>
+    <text x="2269" y="217" class="mono" fill="#64748B">Tabla externa (Submodulo 1)</text>
+  </g>
+  <g id="own-tables">
+    <rect x="36" y="264" width="290" height="115" rx="6" fill="#F3EEF9" stroke="#4A2574" stroke-width="1.6"/>
+    <rect x="36" y="264" width="290" height="26" rx="6" fill="#4A2574"/>
+    <text x="44" y="281" class="hdr">[051] ventas.tipos_descuento</text>
+    <text x="44" y="306" class="badge" fill="#B45309">PK</text>
+    <text x="82" y="306" class="mono" fill="#B45309" font-weight="700">ID : BIGINT</text>
+    <text x="44" y="321" class="badge" fill="#7E22CE">UQ</text>
+    <text x="82" y="321" class="mono" fill="#7E22CE" font-weight="700">codigo_descuento : NVARCHAR(20)</text>
+    <text x="48" y="336" class="mono" fill="#334155">nombre : NVARCHAR(50)</text>
+    <text x="48" y="351" class="mono" fill="#334155">descripcion : NVARCHAR(200)</text>
+    <text x="48" y="366" class="mono" fill="#64748B">[+7 cols Auditoria / Soft Delete]</text>
+    <rect x="360" y="264" width="290" height="130" rx="6" fill="#F3EEF9" stroke="#4A2574" stroke-width="1.6"/>
+    <rect x="360" y="264" width="290" height="26" rx="6" fill="#4A2574"/>
+    <text x="368" y="281" class="hdr">[052] ventas.estados_orden</text>
+    <text x="368" y="306" class="badge" fill="#B45309">PK</text>
+    <text x="406" y="306" class="mono" fill="#B45309" font-weight="700">ID : BIGINT</text>
+    <text x="368" y="321" class="badge" fill="#7E22CE">UQ</text>
+    <text x="406" y="321" class="mono" fill="#7E22CE" font-weight="700">codigo_estado : NVARCHAR(30)</text>
+    <text x="372" y="336" class="mono" fill="#334155">nombre_estado : NVARCHAR(60)</text>
+    <text x="372" y="351" class="mono" fill="#334155">descripcion : NVARCHAR(255)</text>
+    <text x="372" y="366" class="mono" fill="#334155">es_terminal : BIT</text>
+    <text x="372" y="381" class="mono" fill="#64748B">[+7 cols Auditoria / Soft Delete]</text>
+    <rect x="684" y="264" width="290" height="115" rx="6" fill="#F3EEF9" stroke="#4A2574" stroke-width="1.6"/>
+    <rect x="684" y="264" width="290" height="26" rx="6" fill="#4A2574"/>
+    <text x="692" y="281" class="hdr">[053] ventas.motivos_cancelacion_orden</text>
+    <text x="692" y="306" class="badge" fill="#B45309">PK</text>
+    <text x="730" y="306" class="mono" fill="#B45309" font-weight="700">ID : BIGINT</text>
+    <text x="692" y="321" class="badge" fill="#7E22CE">UQ</text>
+    <text x="730" y="321" class="mono" fill="#7E22CE" font-weight="700">codigo_motivo : NVARCHAR(30)</text>
+    <text x="696" y="336" class="mono" fill="#334155">descripcion_motivo : NVARCHAR(200)</text>
+    <text x="696" y="351" class="mono" fill="#334155">es_atribuible_cliente : BIT</text>
+    <text x="696" y="366" class="mono" fill="#64748B">[+7 cols Auditoria / Soft Delete]</text>
+    <rect x="1008" y="264" width="290" height="130" rx="6" fill="#F3EEF9" stroke="#4A2574" stroke-width="1.6"/>
+    <rect x="1008" y="264" width="290" height="26" rx="6" fill="#4A2574"/>
+    <text x="1016" y="281" class="hdr">[054] ventas.carritos</text>
+    <text x="1016" y="306" class="badge" fill="#B45309">PK</text>
+    <text x="1054" y="306" class="mono" fill="#B45309" font-weight="700">ID : BIGINT</text>
+    <text x="1016" y="321" class="badge" fill="#0369A1">FK</text>
+    <text x="1054" y="321" class="mono" fill="#0369A1" font-weight="700">ID_cliente : BIGINT</text>
+    <text x="1016" y="336" class="badge" fill="#7E22CE">UQ</text>
+    <text x="1054" y="336" class="mono" fill="#7E22CE" font-weight="700">token_sesion_carrito : NVARCHAR(128)</text>
+    <text x="1020" y="351" class="mono" fill="#334155">fecha_ultima_actividad : DATETIME2(3)</text>
+    <text x="1020" y="366" class="mono" fill="#334155">convertido_a_orden : BIT</text>
+    <text x="1020" y="381" class="mono" fill="#64748B">[+7 cols Auditoria / Soft Delete]</text>
+    <rect x="1332" y="264" width="290" height="145" rx="6" fill="#F3EEF9" stroke="#4A2574" stroke-width="1.6"/>
+    <rect x="1332" y="264" width="290" height="26" rx="6" fill="#4A2574"/>
+    <text x="1340" y="281" class="hdr">[055] ventas.items_carrito</text>
+    <text x="1340" y="306" class="badge" fill="#B45309">PK</text>
+    <text x="1378" y="306" class="mono" fill="#B45309" font-weight="700">ID : BIGINT</text>
+    <text x="1340" y="321" class="badge" fill="#0369A1">FK,UQ</text>
+    <text x="1378" y="321" class="mono" fill="#0369A1" font-weight="700">ID_carrito : BIGINT</text>
+    <text x="1340" y="336" class="badge" fill="#0369A1">FK,UQ</text>
+    <text x="1378" y="336" class="mono" fill="#0369A1" font-weight="700">ID_variante_sku : BIGINT</text>
+    <text x="1344" y="351" class="mono" fill="#334155">cantidad : INT</text>
+    <text x="1344" y="366" class="mono" fill="#334155">precio_unitario_capturado : DECIMAL(1…</text>
+    <text x="1344" y="381" class="mono" fill="#334155">fecha_agregado : DATETIME2(3)</text>
+    <text x="1344" y="396" class="mono" fill="#64748B">[+7 cols Auditoria / Soft Delete]</text>
+    <rect x="1656" y="264" width="290" height="130" rx="6" fill="#F3EEF9" stroke="#4A2574" stroke-width="1.6"/>
+    <rect x="1656" y="264" width="290" height="26" rx="6" fill="#4A2574"/>
+    <text x="1664" y="281" class="hdr">[056] ventas.carritos_abandonados_seguimiento</text>
+    <text x="1664" y="306" class="badge" fill="#B45309">PK</text>
+    <text x="1702" y="306" class="mono" fill="#B45309" font-weight="700">ID : BIGINT</text>
+    <text x="1664" y="321" class="badge" fill="#0369A1">FK,UQ</text>
+    <text x="1702" y="321" class="mono" fill="#0369A1" font-weight="700">ID_carrito : BIGINT</text>
+    <text x="1668" y="336" class="mono" fill="#334155">correo_recordatorio_enviado : BIT</text>
+    <text x="1668" y="351" class="mono" fill="#334155">fecha_envio_recordatorio : DATETIME2(…</text>
+    <text x="1668" y="366" class="mono" fill="#334155">recuperado : BIT</text>
+    <text x="1668" y="381" class="mono" fill="#64748B">[+7 cols Auditoria / Soft Delete]</text>
+    <rect x="1980" y="264" width="290" height="130" rx="6" fill="#F3EEF9" stroke="#4A2574" stroke-width="1.6"/>
+    <rect x="1980" y="264" width="290" height="26" rx="6" fill="#4A2574"/>
+    <text x="1988" y="281" class="hdr">[057] ventas.planes_suscripcion</text>
+    <text x="1988" y="306" class="badge" fill="#B45309">PK</text>
+    <text x="2026" y="306" class="mono" fill="#B45309" font-weight="700">ID : BIGINT</text>
+    <text x="1988" y="321" class="badge" fill="#7E22CE">UQ</text>
+    <text x="2026" y="321" class="mono" fill="#7E22CE" font-weight="700">codigo_plan : NVARCHAR(30)</text>
+    <text x="1992" y="336" class="mono" fill="#334155">nombre_plan : NVARCHAR(100)</text>
+    <text x="1992" y="351" class="mono" fill="#334155">descripcion : NVARCHAR(300)</text>
+    <text x="1992" y="366" class="mono" fill="#334155">precio_recurrente_base : DECIMAL(12,2)</text>
+    <text x="1992" y="381" class="mono" fill="#64748B">[+7 cols Auditoria / Soft Delete]</text>
+    <rect x="2304" y="264" width="290" height="115" rx="6" fill="#F3EEF9" stroke="#4A2574" stroke-width="1.6"/>
+    <rect x="2304" y="264" width="290" height="26" rx="6" fill="#4A2574"/>
+    <text x="2312" y="281" class="hdr">[058] ventas.frecuencias_suscripcion</text>
+    <text x="2312" y="306" class="badge" fill="#B45309">PK</text>
+    <text x="2350" y="306" class="mono" fill="#B45309" font-weight="700">ID : BIGINT</text>
+    <text x="2312" y="321" class="badge" fill="#7E22CE">UQ</text>
+    <text x="2350" y="321" class="mono" fill="#7E22CE" font-weight="700">codigo_frecuencia : NVARCHAR(20)</text>
+    <text x="2316" y="336" class="mono" fill="#334155">nombre : NVARCHAR(50)</text>
+    <text x="2316" y="351" class="mono" fill="#334155">intervalo_dias : INT</text>
+    <text x="2316" y="366" class="mono" fill="#64748B">[+7 cols Auditoria / Soft Delete]</text>
+    <rect x="2628" y="264" width="290" height="205" rx="6" fill="#F3EEF9" stroke="#4A2574" stroke-width="1.6"/>
+    <rect x="2628" y="264" width="290" height="26" rx="6" fill="#4A2574"/>
+    <text x="2636" y="281" class="hdr">[059] ventas.suscripciones_cliente</text>
+    <text x="2636" y="306" class="badge" fill="#B45309">PK</text>
+    <text x="2674" y="306" class="mono" fill="#B45309" font-weight="700">ID : BIGINT</text>
+    <text x="2636" y="321" class="badge" fill="#7E22CE">UQ</text>
+    <text x="2674" y="321" class="mono" fill="#7E22CE" font-weight="700">folio_suscripcion : NVARCHAR(35)</text>
+    <text x="2636" y="336" class="badge" fill="#0369A1">FK</text>
+    <text x="2674" y="336" class="mono" fill="#0369A1" font-weight="700">ID_cliente : BIGINT</text>
+    <text x="2636" y="351" class="badge" fill="#0369A1">FK</text>
+    <text x="2674" y="351" class="mono" fill="#0369A1" font-weight="700">ID_plan_suscripcion : BIGINT</text>
+    <text x="2636" y="366" class="badge" fill="#0369A1">FK</text>
+    <text x="2674" y="366" class="mono" fill="#0369A1" font-weight="700">ID_frecuencia_suscripcion : BIGINT</text>
+    <text x="2636" y="381" class="badge" fill="#0369A1">FK</text>
+    <text x="2674" y="381" class="mono" fill="#0369A1" font-weight="700">ID_direccion_entrega : BIGINT</text>
+    <text x="2636" y="396" class="badge" fill="#0369A1">FK</text>
+    <text x="2674" y="396" class="mono" fill="#0369A1" font-weight="700">ID_metodo_tokenizado : BIGINT</text>
+    <text x="2640" y="411" class="mono" fill="#334155">fecha_inicio : DATE</text>
+    <text x="2640" y="426" class="mono" fill="#334155">proxima_fecha_cobro : DATE</text>
+    <text x="2640" y="441" class="mono" fill="#334155">estado_suscripcion : NVARCHAR(20)</text>
+    <text x="2640" y="456" class="mono" fill="#64748B">[+7 cols Auditoria / Soft Delete]</text>
+    <rect x="2952" y="264" width="290" height="130" rx="6" fill="#F3EEF9" stroke="#4A2574" stroke-width="1.6"/>
+    <rect x="2952" y="264" width="290" height="26" rx="6" fill="#4A2574"/>
+    <text x="2960" y="281" class="hdr">[060] ventas.suscripciones_items</text>
+    <text x="2960" y="306" class="badge" fill="#B45309">PK</text>
+    <text x="2998" y="306" class="mono" fill="#B45309" font-weight="700">ID : BIGINT</text>
+    <text x="2960" y="321" class="badge" fill="#0369A1">FK,UQ</text>
+    <text x="2998" y="321" class="mono" fill="#0369A1" font-weight="700">ID_suscripcion_cliente : BIGINT</text>
+    <text x="2960" y="336" class="badge" fill="#0369A1">FK,UQ</text>
+    <text x="2998" y="336" class="mono" fill="#0369A1" font-weight="700">ID_variante_sku : BIGINT</text>
+    <text x="2964" y="351" class="mono" fill="#334155">cantidad : INT</text>
+    <text x="2964" y="366" class="mono" fill="#334155">precio_congelado_suscripcion : DECIMA…</text>
+    <text x="2964" y="381" class="mono" fill="#64748B">[+7 cols Auditoria / Soft Delete]</text>
+    <rect x="36" y="505" width="290" height="130" rx="6" fill="#F3EEF9" stroke="#4A2574" stroke-width="1.6"/>
+    <rect x="36" y="505" width="290" height="26" rx="6" fill="#4A2574"/>
+    <text x="44" y="522" class="hdr">[061] ventas.suscripciones_calendario_entregas</text>
+    <text x="44" y="547" class="badge" fill="#B45309">PK</text>
+    <text x="82" y="547" class="mono" fill="#B45309" font-weight="700">ID : BIGINT</text>
+    <text x="44" y="562" class="badge" fill="#0369A1">FK,UQ</text>
+    <text x="82" y="562" class="mono" fill="#0369A1" font-weight="700">ID_suscripcion_cliente : BIGINT</text>
+    <text x="48" y="577" class="mono" fill="#334155">fecha_programada_despacho : DATE</text>
+    <text x="44" y="592" class="badge" fill="#7E22CE">UQ</text>
+    <text x="82" y="592" class="mono" fill="#7E22CE" font-weight="700">numero_ciclo_periodo : INT</text>
+    <text x="48" y="607" class="mono" fill="#334155">estado_despacho : NVARCHAR(30)</text>
+    <text x="48" y="622" class="mono" fill="#64748B">[+7 cols Auditoria / Soft Delete]</text>
+    <rect x="360" y="505" width="290" height="130" rx="6" fill="#F3EEF9" stroke="#4A2574" stroke-width="1.6"/>
+    <rect x="360" y="505" width="290" height="26" rx="6" fill="#4A2574"/>
+    <text x="368" y="522" class="hdr">[062] ventas.suscripciones_bitacora_estados</text>
+    <text x="368" y="547" class="badge" fill="#B45309">PK</text>
+    <text x="406" y="547" class="mono" fill="#B45309" font-weight="700">ID : BIGINT</text>
+    <text x="368" y="562" class="badge" fill="#0369A1">FK</text>
+    <text x="406" y="562" class="mono" fill="#0369A1" font-weight="700">ID_suscripcion_cliente : BIGINT</text>
+    <text x="372" y="577" class="mono" fill="#334155">estado_anterior : NVARCHAR(20)</text>
+    <text x="372" y="592" class="mono" fill="#334155">estado_nuevo : NVARCHAR(20)</text>
+    <text x="372" y="607" class="mono" fill="#334155">motivo_cambio : NVARCHAR(255)</text>
+    <text x="372" y="622" class="mono" fill="#64748B">[+7 cols Auditoria / Soft Delete]</text>
+    <rect x="684" y="505" width="290" height="145" rx="6" fill="#F3EEF9" stroke="#4A2574" stroke-width="1.6"/>
+    <rect x="684" y="505" width="290" height="26" rx="6" fill="#4A2574"/>
+    <text x="692" y="522" class="hdr">[063] ventas.regalos_por_compra_gwp</text>
+    <text x="692" y="547" class="badge" fill="#B45309">PK</text>
+    <text x="730" y="547" class="mono" fill="#B45309" font-weight="700">ID : BIGINT</text>
+    <text x="692" y="562" class="badge" fill="#7E22CE">UQ</text>
+    <text x="730" y="562" class="mono" fill="#7E22CE" font-weight="700">codigo_promocion_gwp : NVARCHAR(30)</text>
+    <text x="696" y="577" class="mono" fill="#334155">nombre_promocion : NVARCHAR(100)</text>
+    <text x="696" y="592" class="mono" fill="#334155">monto_minimo_requerido : DECIMAL(12,2)</text>
+    <text x="692" y="607" class="badge" fill="#0369A1">FK</text>
+    <text x="730" y="607" class="mono" fill="#0369A1" font-weight="700">ID_variante_sku_regalo : BIGINT</text>
+    <text x="696" y="622" class="mono" fill="#334155">fecha_inicio : DATETIME2(3)</text>
+    <text x="696" y="637" class="mono" fill="#64748B">[+7 cols Auditoria / Soft Delete]</text>
+    <rect x="1008" y="505" width="290" height="205" rx="6" fill="#F3EEF9" stroke="#4A2574" stroke-width="1.6"/>
+    <rect x="1008" y="505" width="290" height="26" rx="6" fill="#4A2574"/>
+    <text x="1016" y="522" class="hdr">[064] ventas.ordenes</text>
+    <text x="1016" y="547" class="badge" fill="#B45309">PK</text>
+    <text x="1054" y="547" class="mono" fill="#B45309" font-weight="700">ID : BIGINT</text>
+    <text x="1016" y="562" class="badge" fill="#7E22CE">UQ</text>
+    <text x="1054" y="562" class="mono" fill="#7E22CE" font-weight="700">folio_orden : NVARCHAR(40)</text>
+    <text x="1016" y="577" class="badge" fill="#0369A1">FK</text>
+    <text x="1054" y="577" class="mono" fill="#0369A1" font-weight="700">ID_cliente : BIGINT</text>
+    <text x="1016" y="592" class="badge" fill="#0369A1">FK</text>
+    <text x="1054" y="592" class="mono" fill="#0369A1" font-weight="700">ID_estado_orden : BIGINT</text>
+    <text x="1016" y="607" class="badge" fill="#0369A1">FK</text>
+    <text x="1054" y="607" class="mono" fill="#0369A1" font-weight="700">ID_motivo_cancelacion : BIGINT</text>
+    <text x="1016" y="622" class="badge" fill="#0369A1">FK</text>
+    <text x="1054" y="622" class="mono" fill="#0369A1" font-weight="700">ID_direccion_envio : BIGINT</text>
+    <text x="1016" y="637" class="badge" fill="#0369A1">FK</text>
+    <text x="1054" y="637" class="mono" fill="#0369A1" font-weight="700">ID_direccion_facturacion : BIGINT</text>
+    <text x="1020" y="652" class="mono" fill="#334155">fecha_orden : DATETIME2(3)</text>
+    <text x="1020" y="667" class="mono" fill="#334155">subtotal_bruto : DECIMAL(12,2)</text>
+    <text x="1020" y="682" class="mono" fill="#334155">total_descuentos : DECIMAL(12,2)</text>
+    <text x="1020" y="697" class="mono" fill="#64748B">[+7 cols Auditoria / Soft Delete]</text>
+    <rect x="1332" y="505" width="290" height="160" rx="6" fill="#F3EEF9" stroke="#4A2574" stroke-width="1.6"/>
+    <rect x="1332" y="505" width="290" height="26" rx="6" fill="#4A2574"/>
+    <text x="1340" y="522" class="hdr">[065] ventas.ordenes_detalles</text>
+    <text x="1340" y="547" class="badge" fill="#B45309">PK</text>
+    <text x="1378" y="547" class="mono" fill="#B45309" font-weight="700">ID : BIGINT</text>
+    <text x="1340" y="562" class="badge" fill="#0369A1">FK,UQ</text>
+    <text x="1378" y="562" class="mono" fill="#0369A1" font-weight="700">ID_orden : BIGINT</text>
+    <text x="1340" y="577" class="badge" fill="#0369A1">FK</text>
+    <text x="1378" y="577" class="mono" fill="#0369A1" font-weight="700">ID_variante_sku : BIGINT</text>
+    <text x="1340" y="592" class="badge" fill="#7E22CE">UQ</text>
+    <text x="1378" y="592" class="mono" fill="#7E22CE" font-weight="700">numero_partida : INT</text>
+    <text x="1344" y="607" class="mono" fill="#334155">cantidad_comprada : INT</text>
+    <text x="1344" y="622" class="mono" fill="#334155">precio_unitario_venta : DECIMAL(12,2)</text>
+    <text x="1344" y="637" class="mono" fill="#334155">costo_unitario_historico : DECIMAL(12…</text>
+    <text x="1344" y="652" class="mono" fill="#64748B">[+7 cols Auditoria / Soft Delete]</text>
+    <rect x="1656" y="505" width="290" height="130" rx="6" fill="#F3EEF9" stroke="#4A2574" stroke-width="1.6"/>
+    <rect x="1656" y="505" width="290" height="26" rx="6" fill="#4A2574"/>
+    <text x="1664" y="522" class="hdr">[066] ventas.ordenes_historial_estados</text>
+    <text x="1664" y="547" class="badge" fill="#B45309">PK</text>
+    <text x="1702" y="547" class="mono" fill="#B45309" font-weight="700">ID : BIGINT</text>
+    <text x="1664" y="562" class="badge" fill="#0369A1">FK</text>
+    <text x="1702" y="562" class="mono" fill="#0369A1" font-weight="700">ID_orden : BIGINT</text>
+    <text x="1664" y="577" class="badge" fill="#0369A1">FK</text>
+    <text x="1702" y="577" class="mono" fill="#0369A1" font-weight="700">ID_estado_orden : BIGINT</text>
+    <text x="1668" y="592" class="mono" fill="#334155">comentario_operativo : NVARCHAR(300)</text>
+    <text x="1668" y="607" class="mono" fill="#334155">fecha_registro : DATETIME2(3)</text>
+    <text x="1668" y="622" class="mono" fill="#64748B">[+7 cols Auditoria / Soft Delete]</text>
+    <rect x="1980" y="505" width="290" height="115" rx="6" fill="#F3EEF9" stroke="#4A2574" stroke-width="1.6"/>
+    <rect x="1980" y="505" width="290" height="26" rx="6" fill="#4A2574"/>
+    <text x="1988" y="522" class="hdr">[067] ventas.ordenes_splits_almacen</text>
+    <text x="1988" y="547" class="badge" fill="#B45309">PK</text>
+    <text x="2026" y="547" class="mono" fill="#B45309" font-weight="700">ID : BIGINT</text>
+    <text x="1988" y="562" class="badge" fill="#0369A1">FK</text>
+    <text x="2026" y="562" class="mono" fill="#0369A1" font-weight="700">ID_orden : BIGINT</text>
+    <text x="1988" y="577" class="badge" fill="#7E22CE">UQ</text>
+    <text x="2026" y="577" class="mono" fill="#7E22CE" font-weight="700">sub_folio_split : NVARCHAR(45)</text>
+    <text x="1992" y="592" class="mono" fill="#334155">estado_split : NVARCHAR(30)</text>
+    <text x="1992" y="607" class="mono" fill="#64748B">[+7 cols Auditoria / Soft Delete]</text>
+    <rect x="2304" y="505" width="290" height="130" rx="6" fill="#F3EEF9" stroke="#4A2574" stroke-width="1.6"/>
+    <rect x="2304" y="505" width="290" height="26" rx="6" fill="#4A2574"/>
+    <text x="2312" y="522" class="hdr">[068] ventas.ordenes_impuestos</text>
+    <text x="2312" y="547" class="badge" fill="#B45309">PK</text>
+    <text x="2350" y="547" class="mono" fill="#B45309" font-weight="700">ID : BIGINT</text>
+    <text x="2312" y="562" class="badge" fill="#0369A1">FK</text>
+    <text x="2350" y="562" class="mono" fill="#0369A1" font-weight="700">ID_orden : BIGINT</text>
+    <text x="2316" y="577" class="mono" fill="#334155">tipo_impuesto : VARCHAR(10)</text>
+    <text x="2316" y="592" class="mono" fill="#334155">tasa_o_cuota : DECIMAL(6,4)</text>
+    <text x="2316" y="607" class="mono" fill="#334155">base_gravable : DECIMAL(12,2)</text>
+    <text x="2316" y="622" class="mono" fill="#64748B">[+7 cols Auditoria / Soft Delete]</text>
+    <rect x="2628" y="505" width="290" height="130" rx="6" fill="#F3EEF9" stroke="#4A2574" stroke-width="1.6"/>
+    <rect x="2628" y="505" width="290" height="26" rx="6" fill="#4A2574"/>
+    <text x="2636" y="522" class="hdr">[069] ventas.ordenes_descuentos</text>
+    <text x="2636" y="547" class="badge" fill="#B45309">PK</text>
+    <text x="2674" y="547" class="mono" fill="#B45309" font-weight="700">ID : BIGINT</text>
+    <text x="2636" y="562" class="badge" fill="#0369A1">FK</text>
+    <text x="2674" y="562" class="mono" fill="#0369A1" font-weight="700">ID_orden : BIGINT</text>
+    <text x="2636" y="577" class="badge" fill="#0369A1">FK</text>
+    <text x="2674" y="577" class="mono" fill="#0369A1" font-weight="700">ID_tipo_descuento : BIGINT</text>
+    <text x="2640" y="592" class="mono" fill="#334155">codigo_promocion_aplicado : NVARCHAR(…</text>
+    <text x="2640" y="607" class="mono" fill="#334155">monto_descontado : DECIMAL(12,2)</text>
+    <text x="2640" y="622" class="mono" fill="#64748B">[+7 cols Auditoria / Soft Delete]</text>
+    <rect x="2952" y="505" width="290" height="130" rx="6" fill="#F3EEF9" stroke="#4A2574" stroke-width="1.6"/>
+    <rect x="2952" y="505" width="290" height="26" rx="6" fill="#4A2574"/>
+    <text x="2960" y="522" class="hdr">[070] ventas.ordenes_notas_instrucciones</text>
+    <text x="2960" y="547" class="badge" fill="#B45309">PK</text>
+    <text x="2998" y="547" class="mono" fill="#B45309" font-weight="700">ID : BIGINT</text>
+    <text x="2960" y="562" class="badge" fill="#0369A1">FK,UQ</text>
+    <text x="2998" y="562" class="mono" fill="#0369A1" font-weight="700">ID_orden : BIGINT</text>
+    <text x="2964" y="577" class="mono" fill="#334155">es_para_regalo : BIT</text>
+    <text x="2964" y="592" class="mono" fill="#334155">mensaje_tarjeta_regalo : NVARCHAR(300)</text>
+    <text x="2964" y="607" class="mono" fill="#334155">instrucciones_entrega_repartidor : NV…</text>
+    <text x="2964" y="622" class="mono" fill="#64748B">[+7 cols Auditoria / Soft Delete]</text>
+    <rect x="36" y="746" width="290" height="145" rx="6" fill="#F3EEF9" stroke="#4A2574" stroke-width="1.6"/>
+    <rect x="36" y="746" width="290" height="26" rx="6" fill="#4A2574"/>
+    <text x="44" y="763" class="hdr">[071] ventas.reservas_temporales_stock</text>
+    <text x="44" y="788" class="badge" fill="#B45309">PK</text>
+    <text x="82" y="788" class="mono" fill="#B45309" font-weight="700">ID : BIGINT</text>
+    <text x="44" y="803" class="badge" fill="#0369A1">FK</text>
+    <text x="82" y="803" class="mono" fill="#0369A1" font-weight="700">ID_carrito : BIGINT</text>
+    <text x="44" y="818" class="badge" fill="#0369A1">FK</text>
+    <text x="82" y="818" class="mono" fill="#0369A1" font-weight="700">ID_variante_sku : BIGINT</text>
+    <text x="48" y="833" class="mono" fill="#334155">cantidad_reservada : INT</text>
+    <text x="48" y="848" class="mono" fill="#334155">fecha_reserva : DATETIME2(3)</text>
+    <text x="48" y="863" class="mono" fill="#334155">fecha_expiracion_reserva : DATETIME2(…</text>
+    <text x="48" y="878" class="mono" fill="#64748B">[+7 cols Auditoria / Soft Delete]</text>
+    <rect x="360" y="746" width="290" height="145" rx="6" fill="#F3EEF9" stroke="#4A2574" stroke-width="1.6"/>
+    <rect x="360" y="746" width="290" height="26" rx="6" fill="#4A2574"/>
+    <text x="368" y="763" class="hdr">[072] ventas.afiliados_influencers</text>
+    <text x="368" y="788" class="badge" fill="#B45309">PK</text>
+    <text x="406" y="788" class="mono" fill="#B45309" font-weight="700">ID : BIGINT</text>
+    <text x="368" y="803" class="badge" fill="#7E22CE">UQ</text>
+    <text x="406" y="803" class="mono" fill="#7E22CE" font-weight="700">codigo_afiliado : NVARCHAR(30)</text>
+    <text x="368" y="818" class="badge" fill="#0369A1">FK</text>
+    <text x="406" y="818" class="mono" fill="#0369A1" font-weight="700">ID_usuario : BIGINT</text>
+    <text x="372" y="833" class="mono" fill="#334155">nombre_canal_red_social : NVARCHAR(10…</text>
+    <text x="372" y="848" class="mono" fill="#334155">porcentaje_comision : DECIMAL(5,2)</text>
+    <text x="372" y="863" class="mono" fill="#334155">clabe_interbancaria : VARCHAR(18)</text>
+    <text x="372" y="878" class="mono" fill="#64748B">[+7 cols Auditoria / Soft Delete]</text>
+    <rect x="684" y="746" width="290" height="145" rx="6" fill="#F3EEF9" stroke="#4A2574" stroke-width="1.6"/>
+    <rect x="684" y="746" width="290" height="26" rx="6" fill="#4A2574"/>
+    <text x="692" y="763" class="hdr">[073] ventas.comisiones_afiliados</text>
+    <text x="692" y="788" class="badge" fill="#B45309">PK</text>
+    <text x="730" y="788" class="mono" fill="#B45309" font-weight="700">ID : BIGINT</text>
+    <text x="692" y="803" class="badge" fill="#0369A1">FK</text>
+    <text x="730" y="803" class="mono" fill="#0369A1" font-weight="700">ID_afiliado : BIGINT</text>
+    <text x="692" y="818" class="badge" fill="#0369A1">FK,UQ</text>
+    <text x="730" y="818" class="mono" fill="#0369A1" font-weight="700">ID_orden : BIGINT</text>
+    <text x="696" y="833" class="mono" fill="#334155">monto_base_calculo : DECIMAL(12,2)</text>
+    <text x="696" y="848" class="mono" fill="#334155">monto_comision : DECIMAL(12,2)</text>
+    <text x="696" y="863" class="mono" fill="#334155">estado_pago : NVARCHAR(20)</text>
+    <text x="696" y="878" class="mono" fill="#64748B">[+7 cols Auditoria / Soft Delete]</text>
+    <rect x="1008" y="746" width="290" height="115" rx="6" fill="#F6ECFB" stroke="#6A1B9A" stroke-width="1.6"/>
+    <rect x="1008" y="746" width="290" height="26" rx="6" fill="#6A1B9A"/>
+    <text x="1016" y="763" class="hdr">[074] pagos.proveedores_pasarela</text>
+    <text x="1016" y="788" class="badge" fill="#B45309">PK</text>
+    <text x="1054" y="788" class="mono" fill="#B45309" font-weight="700">ID : BIGINT</text>
+    <text x="1016" y="803" class="badge" fill="#7E22CE">UQ</text>
+    <text x="1054" y="803" class="mono" fill="#7E22CE" font-weight="700">codigo_pasarela : NVARCHAR(20)</text>
+    <text x="1020" y="818" class="mono" fill="#334155">nombre_comercial : NVARCHAR(60)</text>
+    <text x="1020" y="833" class="mono" fill="#334155">url_webhook : NVARCHAR(250)</text>
+    <text x="1020" y="848" class="mono" fill="#64748B">[+7 cols Auditoria / Soft Delete]</text>
+    <rect x="1332" y="746" width="290" height="115" rx="6" fill="#F6ECFB" stroke="#6A1B9A" stroke-width="1.6"/>
+    <rect x="1332" y="746" width="290" height="26" rx="6" fill="#6A1B9A"/>
+    <text x="1340" y="763" class="hdr">[075] pagos.metodos_pago</text>
+    <text x="1340" y="788" class="badge" fill="#B45309">PK</text>
+    <text x="1378" y="788" class="mono" fill="#B45309" font-weight="700">ID : BIGINT</text>
+    <text x="1340" y="803" class="badge" fill="#7E22CE">UQ</text>
+    <text x="1378" y="803" class="mono" fill="#7E22CE" font-weight="700">codigo_metodo : NVARCHAR(20)</text>
+    <text x="1344" y="818" class="mono" fill="#334155">nombre_metodo : NVARCHAR(60)</text>
+    <text x="1344" y="833" class="mono" fill="#334155">comision_porcentual_fija : DECIMAL(5,…</text>
+    <text x="1344" y="848" class="mono" fill="#64748B">[+7 cols Auditoria / Soft Delete]</text>
+    <rect x="1656" y="746" width="290" height="175" rx="6" fill="#F6ECFB" stroke="#6A1B9A" stroke-width="1.6"/>
+    <rect x="1656" y="746" width="290" height="26" rx="6" fill="#6A1B9A"/>
+    <text x="1664" y="763" class="hdr">[076] pagos.transacciones</text>
+    <text x="1664" y="788" class="badge" fill="#B45309">PK</text>
+    <text x="1702" y="788" class="mono" fill="#B45309" font-weight="700">ID : BIGINT</text>
+    <text x="1664" y="803" class="badge" fill="#7E22CE">UQ</text>
+    <text x="1702" y="803" class="mono" fill="#7E22CE" font-weight="700">folio_transaccion : NVARCHAR(45)</text>
+    <text x="1664" y="818" class="badge" fill="#0369A1">FK</text>
+    <text x="1702" y="818" class="mono" fill="#0369A1" font-weight="700">ID_orden : BIGINT</text>
+    <text x="1664" y="833" class="badge" fill="#0369A1">FK</text>
+    <text x="1702" y="833" class="mono" fill="#0369A1" font-weight="700">ID_proveedor_pasarela : BIGINT</text>
+    <text x="1664" y="848" class="badge" fill="#0369A1">FK</text>
+    <text x="1702" y="848" class="mono" fill="#0369A1" font-weight="700">ID_metodo_pago : BIGINT</text>
+    <text x="1668" y="863" class="mono" fill="#334155">id_transaccion_externa_pasarela : NVA…</text>
+    <text x="1668" y="878" class="mono" fill="#334155">monto_transaccion : DECIMAL(12,2)</text>
+    <text x="1668" y="893" class="mono" fill="#334155">moneda : VARCHAR(3)</text>
+    <text x="1668" y="908" class="mono" fill="#64748B">[+7 cols Auditoria / Soft Delete]</text>
+    <rect x="1980" y="746" width="290" height="130" rx="6" fill="#F6ECFB" stroke="#6A1B9A" stroke-width="1.6"/>
+    <rect x="1980" y="746" width="290" height="26" rx="6" fill="#6A1B9A"/>
+    <text x="1988" y="763" class="hdr">[077] pagos.intentos_cobro</text>
+    <text x="1988" y="788" class="badge" fill="#B45309">PK</text>
+    <text x="2026" y="788" class="mono" fill="#B45309" font-weight="700">ID : BIGINT</text>
+    <text x="1988" y="803" class="badge" fill="#0369A1">FK</text>
+    <text x="2026" y="803" class="mono" fill="#0369A1" font-weight="700">ID_transaccion : BIGINT</text>
+    <text x="1992" y="818" class="mono" fill="#334155">numero_intento : INT</text>
+    <text x="1992" y="833" class="mono" fill="#334155">codigo_respuesta_http : INT</text>
+    <text x="1992" y="848" class="mono" fill="#334155">payload_solicitud_sanitizado : NVARCH…</text>
+    <text x="1992" y="863" class="mono" fill="#64748B">[+7 cols Auditoria / Soft Delete]</text>
+    <rect x="2304" y="746" width="290" height="130" rx="6" fill="#F6ECFB" stroke="#6A1B9A" stroke-width="1.6"/>
+    <rect x="2304" y="746" width="290" height="26" rx="6" fill="#6A1B9A"/>
+    <text x="2312" y="763" class="hdr">[078] pagos.split_multipagos</text>
+    <text x="2312" y="788" class="badge" fill="#B45309">PK</text>
+    <text x="2350" y="788" class="mono" fill="#B45309" font-weight="700">ID : BIGINT</text>
+    <text x="2312" y="803" class="badge" fill="#0369A1">FK</text>
+    <text x="2350" y="803" class="mono" fill="#0369A1" font-weight="700">ID_orden : BIGINT</text>
+    <text x="2312" y="818" class="badge" fill="#0369A1">FK</text>
+    <text x="2350" y="818" class="mono" fill="#0369A1" font-weight="700">ID_metodo_pago : BIGINT</text>
+    <text x="2316" y="833" class="mono" fill="#334155">monto_asignado : DECIMAL(12,2)</text>
+    <text x="2316" y="848" class="mono" fill="#334155">referencia_comprobante : NVARCHAR(80)</text>
+    <text x="2316" y="863" class="mono" fill="#64748B">[+7 cols Auditoria / Soft Delete]</text>
+    <rect x="2628" y="746" width="290" height="115" rx="6" fill="#F6ECFB" stroke="#6A1B9A" stroke-width="1.6"/>
+    <rect x="2628" y="746" width="290" height="26" rx="6" fill="#6A1B9A"/>
+    <text x="2636" y="763" class="hdr">[079] pagos.billetera_electronica</text>
+    <text x="2636" y="788" class="badge" fill="#B45309">PK</text>
+    <text x="2674" y="788" class="mono" fill="#B45309" font-weight="700">ID : BIGINT</text>
+    <text x="2636" y="803" class="badge" fill="#0369A1">FK,UQ</text>
+    <text x="2674" y="803" class="mono" fill="#0369A1" font-weight="700">ID_cliente : BIGINT</text>
+    <text x="2640" y="818" class="mono" fill="#334155">saldo_disponible : DECIMAL(12,2)</text>
+    <text x="2640" y="833" class="mono" fill="#334155">saldo_bloqueado_retenido : DECIMAL(12…</text>
+    <text x="2640" y="848" class="mono" fill="#64748B">[+7 cols Auditoria / Soft Delete]</text>
+    <rect x="2952" y="746" width="290" height="130" rx="6" fill="#F6ECFB" stroke="#6A1B9A" stroke-width="1.6"/>
+    <rect x="2952" y="746" width="290" height="26" rx="6" fill="#6A1B9A"/>
+    <text x="2960" y="763" class="hdr">[080] pagos.movimientos_billetera</text>
+    <text x="2960" y="788" class="badge" fill="#B45309">PK</text>
+    <text x="2998" y="788" class="mono" fill="#B45309" font-weight="700">ID : BIGINT</text>
+    <text x="2960" y="803" class="badge" fill="#0369A1">FK</text>
+    <text x="2998" y="803" class="mono" fill="#0369A1" font-weight="700">ID_billetera : BIGINT</text>
+    <text x="2964" y="818" class="mono" fill="#334155">tipo_movimiento : NVARCHAR(20)</text>
+    <text x="2964" y="833" class="mono" fill="#334155">monto : DECIMAL(12,2)</text>
+    <text x="2964" y="848" class="mono" fill="#334155">saldo_anterior : DECIMAL(12,2)</text>
+    <text x="2964" y="863" class="mono" fill="#64748B">[+7 cols Auditoria / Soft Delete]</text>
+    <rect x="36" y="957" width="290" height="145" rx="6" fill="#F6ECFB" stroke="#6A1B9A" stroke-width="1.6"/>
+    <rect x="36" y="957" width="290" height="26" rx="6" fill="#6A1B9A"/>
+    <text x="44" y="974" class="hdr">[081] pagos.tarjetas_regalo_giftcards</text>
+    <text x="44" y="999" class="badge" fill="#B45309">PK</text>
+    <text x="82" y="999" class="mono" fill="#B45309" font-weight="700">ID : BIGINT</text>
+    <text x="44" y="1014" class="badge" fill="#7E22CE">UQ</text>
+    <text x="82" y="1014" class="mono" fill="#7E22CE" font-weight="700">codigo_giftcard_hash : NVARCHAR(128)</text>
+    <text x="48" y="1029" class="mono" fill="#334155">monto_inicial : DECIMAL(12,2)</text>
+    <text x="48" y="1044" class="mono" fill="#334155">saldo_actual : DECIMAL(12,2)</text>
+    <text x="48" y="1059" class="mono" fill="#334155">fecha_vencimiento : DATE</text>
+    <text x="44" y="1074" class="badge" fill="#0369A1">FK</text>
+    <text x="82" y="1074" class="mono" fill="#0369A1" font-weight="700">ID_cliente_comprador : BIGINT</text>
+    <text x="48" y="1089" class="mono" fill="#64748B">[+7 cols Auditoria / Soft Delete]</text>
+    <rect x="360" y="957" width="290" height="115" rx="6" fill="#F6ECFB" stroke="#6A1B9A" stroke-width="1.6"/>
+    <rect x="360" y="957" width="290" height="26" rx="6" fill="#6A1B9A"/>
+    <text x="368" y="974" class="hdr">[082] pagos.redenciones_giftcards</text>
+    <text x="368" y="999" class="badge" fill="#B45309">PK</text>
+    <text x="406" y="999" class="mono" fill="#B45309" font-weight="700">ID : BIGINT</text>
+    <text x="368" y="1014" class="badge" fill="#0369A1">FK</text>
+    <text x="406" y="1014" class="mono" fill="#0369A1" font-weight="700">ID_giftcard : BIGINT</text>
+    <text x="368" y="1029" class="badge" fill="#0369A1">FK</text>
+    <text x="406" y="1029" class="mono" fill="#0369A1" font-weight="700">ID_orden : BIGINT</text>
+    <text x="372" y="1044" class="mono" fill="#334155">monto_redimido : DECIMAL(12,2)</text>
+    <text x="372" y="1059" class="mono" fill="#64748B">[+7 cols Auditoria / Soft Delete]</text>
+    <rect x="684" y="957" width="290" height="130" rx="6" fill="#F6ECFB" stroke="#6A1B9A" stroke-width="1.6"/>
+    <rect x="684" y="957" width="290" height="26" rx="6" fill="#6A1B9A"/>
+    <text x="692" y="974" class="hdr">[083] pagos.reglas_antifraude</text>
+    <text x="692" y="999" class="badge" fill="#B45309">PK</text>
+    <text x="730" y="999" class="mono" fill="#B45309" font-weight="700">ID : BIGINT</text>
+    <text x="692" y="1014" class="badge" fill="#7E22CE">UQ</text>
+    <text x="730" y="1014" class="mono" fill="#7E22CE" font-weight="700">codigo_regla : NVARCHAR(30)</text>
+    <text x="696" y="1029" class="mono" fill="#334155">descripcion : NVARCHAR(200)</text>
+    <text x="696" y="1044" class="mono" fill="#334155">puntaje_riesgo_asignado : INT</text>
+    <text x="696" y="1059" class="mono" fill="#334155">bloqueo_automatico : BIT</text>
+    <text x="696" y="1074" class="mono" fill="#64748B">[+7 cols Auditoria / Soft Delete]</text>
+    <rect x="1008" y="957" width="290" height="145" rx="6" fill="#F6ECFB" stroke="#6A1B9A" stroke-width="1.6"/>
+    <rect x="1008" y="957" width="290" height="26" rx="6" fill="#6A1B9A"/>
+    <text x="1016" y="974" class="hdr">[084] pagos.evaluaciones_antifraude</text>
+    <text x="1016" y="999" class="badge" fill="#B45309">PK</text>
+    <text x="1054" y="999" class="mono" fill="#B45309" font-weight="700">ID : BIGINT</text>
+    <text x="1016" y="1014" class="badge" fill="#0369A1">FK,UQ</text>
+    <text x="1054" y="1014" class="mono" fill="#0369A1" font-weight="700">ID_orden : BIGINT</text>
+    <text x="1016" y="1029" class="badge" fill="#0369A1">FK</text>
+    <text x="1054" y="1029" class="mono" fill="#0369A1" font-weight="700">ID_regla_antifraude : BIGINT</text>
+    <text x="1020" y="1044" class="mono" fill="#334155">score_riesgo_total : INT</text>
+    <text x="1020" y="1059" class="mono" fill="#334155">nivel_riesgo : NVARCHAR(20)</text>
+    <text x="1020" y="1074" class="mono" fill="#334155">ip_origen : NVARCHAR(45)</text>
+    <text x="1020" y="1089" class="mono" fill="#64748B">[+7 cols Auditoria / Soft Delete]</text>
+    <rect x="1332" y="957" width="290" height="145" rx="6" fill="#F6ECFB" stroke="#6A1B9A" stroke-width="1.6"/>
+    <rect x="1332" y="957" width="290" height="26" rx="6" fill="#6A1B9A"/>
+    <text x="1340" y="974" class="hdr">[085] pagos.contracargos_chargebacks</text>
+    <text x="1340" y="999" class="badge" fill="#B45309">PK</text>
+    <text x="1378" y="999" class="mono" fill="#B45309" font-weight="700">ID : BIGINT</text>
+    <text x="1340" y="1014" class="badge" fill="#0369A1">FK</text>
+    <text x="1378" y="1014" class="mono" fill="#0369A1" font-weight="700">ID_transaccion : BIGINT</text>
+    <text x="1340" y="1029" class="badge" fill="#7E22CE">UQ</text>
+    <text x="1378" y="1029" class="mono" fill="#7E22CE" font-weight="700">folio_disputa_pasarela : NVARCHAR(60)</text>
+    <text x="1344" y="1044" class="mono" fill="#334155">motivo_disputa : NVARCHAR(150)</text>
+    <text x="1344" y="1059" class="mono" fill="#334155">monto_disputado : DECIMAL(12,2)</text>
+    <text x="1344" y="1074" class="mono" fill="#334155">fecha_notificacion : DATETIME2(3)</text>
+    <text x="1344" y="1089" class="mono" fill="#64748B">[+7 cols Auditoria / Soft Delete]</text>
+    <rect x="1656" y="957" width="290" height="145" rx="6" fill="#F6ECFB" stroke="#6A1B9A" stroke-width="1.6"/>
+    <rect x="1656" y="957" width="290" height="26" rx="6" fill="#6A1B9A"/>
+    <text x="1664" y="974" class="hdr">[086] pagos.reembolsos_transaccion</text>
+    <text x="1664" y="999" class="badge" fill="#B45309">PK</text>
+    <text x="1702" y="999" class="mono" fill="#B45309" font-weight="700">ID : BIGINT</text>
+    <text x="1664" y="1014" class="badge" fill="#0369A1">FK</text>
+    <text x="1702" y="1014" class="mono" fill="#0369A1" font-weight="700">ID_transaccion : BIGINT</text>
+    <text x="1664" y="1029" class="badge" fill="#7E22CE">UQ</text>
+    <text x="1702" y="1029" class="mono" fill="#7E22CE" font-weight="700">folio_reembolso_pasarela : NVARCHAR(8…</text>
+    <text x="1668" y="1044" class="mono" fill="#334155">monto_reembolsado : DECIMAL(12,2)</text>
+    <text x="1668" y="1059" class="mono" fill="#334155">motivo_reembolso : NVARCHAR(250)</text>
+    <text x="1668" y="1074" class="mono" fill="#334155">fecha_reembolso : DATETIME2(3)</text>
+    <text x="1668" y="1089" class="mono" fill="#64748B">[+7 cols Auditoria / Soft Delete]</text>
+    <rect x="1980" y="957" width="290" height="130" rx="6" fill="#FDF1EC" stroke="#9A3412" stroke-width="1.6"/>
+    <rect x="1980" y="957" width="290" height="26" rx="6" fill="#9A3412"/>
+    <text x="1988" y="974" class="hdr">[087] fiscal.regimenes_sat</text>
+    <text x="1988" y="999" class="badge" fill="#B45309">PK</text>
+    <text x="2026" y="999" class="mono" fill="#B45309" font-weight="700">ID : BIGINT</text>
+    <text x="1988" y="1014" class="badge" fill="#7E22CE">UQ</text>
+    <text x="2026" y="1014" class="mono" fill="#7E22CE" font-weight="700">clave_regimen_sat : VARCHAR(4)</text>
+    <text x="1992" y="1029" class="mono" fill="#334155">descripcion : NVARCHAR(200)</text>
+    <text x="1992" y="1044" class="mono" fill="#334155">aplica_persona_fisica : BIT</text>
+    <text x="1992" y="1059" class="mono" fill="#334155">aplica_persona_moral : BIT</text>
+    <text x="1992" y="1074" class="mono" fill="#64748B">[+7 cols Auditoria / Soft Delete]</text>
+    <rect x="2304" y="957" width="290" height="130" rx="6" fill="#FDF1EC" stroke="#9A3412" stroke-width="1.6"/>
+    <rect x="2304" y="957" width="290" height="26" rx="6" fill="#9A3412"/>
+    <text x="2312" y="974" class="hdr">[088] fiscal.usos_cfdi</text>
+    <text x="2312" y="999" class="badge" fill="#B45309">PK</text>
+    <text x="2350" y="999" class="mono" fill="#B45309" font-weight="700">ID : BIGINT</text>
+    <text x="2312" y="1014" class="badge" fill="#7E22CE">UQ</text>
+    <text x="2350" y="1014" class="mono" fill="#7E22CE" font-weight="700">clave_uso_cfdi : VARCHAR(5)</text>
+    <text x="2316" y="1029" class="mono" fill="#334155">descripcion : NVARCHAR(150)</text>
+    <text x="2316" y="1044" class="mono" fill="#334155">aplica_fisica : BIT</text>
+    <text x="2316" y="1059" class="mono" fill="#334155">aplica_moral : BIT</text>
+    <text x="2316" y="1074" class="mono" fill="#64748B">[+7 cols Auditoria / Soft Delete]</text>
+    <rect x="2628" y="957" width="290" height="160" rx="6" fill="#FDF1EC" stroke="#9A3412" stroke-width="1.6"/>
+    <rect x="2628" y="957" width="290" height="26" rx="6" fill="#9A3412"/>
+    <text x="2636" y="974" class="hdr">[089] fiscal.datos_fiscales_cliente</text>
+    <text x="2636" y="999" class="badge" fill="#B45309">PK</text>
+    <text x="2674" y="999" class="mono" fill="#B45309" font-weight="700">ID : BIGINT</text>
+    <text x="2636" y="1014" class="badge" fill="#0369A1">FK</text>
+    <text x="2674" y="1014" class="mono" fill="#0369A1" font-weight="700">ID_cliente : BIGINT</text>
+    <text x="2640" y="1029" class="mono" fill="#334155">rfc_emisor : VARCHAR(13)</text>
+    <text x="2640" y="1044" class="mono" fill="#334155">razon_social : NVARCHAR(150)</text>
+    <text x="2640" y="1059" class="mono" fill="#334155">codigo_postal_fiscal : VARCHAR(10)</text>
+    <text x="2636" y="1074" class="badge" fill="#0369A1">FK</text>
+    <text x="2674" y="1074" class="mono" fill="#0369A1" font-weight="700">ID_regimen_sat : BIGINT</text>
+    <text x="2636" y="1089" class="badge" fill="#0369A1">FK</text>
+    <text x="2674" y="1089" class="mono" fill="#0369A1" font-weight="700">ID_uso_cfdi_predeterminado : BIGINT</text>
+    <text x="2640" y="1104" class="mono" fill="#64748B">[+7 cols Auditoria / Soft Delete]</text>
+    <rect x="2952" y="957" width="290" height="160" rx="6" fill="#FDF1EC" stroke="#9A3412" stroke-width="1.6"/>
+    <rect x="2952" y="957" width="290" height="26" rx="6" fill="#9A3412"/>
+    <text x="2960" y="974" class="hdr">[090] fiscal.facturas_cfdi</text>
+    <text x="2960" y="999" class="badge" fill="#B45309">PK</text>
+    <text x="2998" y="999" class="mono" fill="#B45309" font-weight="700">ID : BIGINT</text>
+    <text x="2960" y="1014" class="badge" fill="#0369A1">FK</text>
+    <text x="2998" y="1014" class="mono" fill="#0369A1" font-weight="700">ID_orden : BIGINT</text>
+    <text x="2960" y="1029" class="badge" fill="#0369A1">FK</text>
+    <text x="2998" y="1029" class="mono" fill="#0369A1" font-weight="700">ID_dato_fiscal : BIGINT</text>
+    <text x="2964" y="1044" class="mono" fill="#334155">serie_factura : VARCHAR(10)</text>
+    <text x="2964" y="1059" class="mono" fill="#334155">folio_factura : VARCHAR(20)</text>
+    <text x="2960" y="1074" class="badge" fill="#7E22CE">UQ</text>
+    <text x="2998" y="1074" class="mono" fill="#7E22CE" font-weight="700">uuid_sat_fiscal : UNIQUEIDENTIFIER</text>
+    <text x="2964" y="1089" class="mono" fill="#334155">sello_digital_cfdi : NVARCHAR(MAX)</text>
+    <text x="2964" y="1104" class="mono" fill="#64748B">[+7 cols Auditoria / Soft Delete]</text>
+    <rect x="36" y="1153" width="290" height="130" rx="6" fill="#FDF1EC" stroke="#9A3412" stroke-width="1.6"/>
+    <rect x="36" y="1153" width="290" height="26" rx="6" fill="#9A3412"/>
+    <text x="44" y="1170" class="hdr">[091] fiscal.facturas_partidas</text>
+    <text x="44" y="1195" class="badge" fill="#B45309">PK</text>
+    <text x="82" y="1195" class="mono" fill="#B45309" font-weight="700">ID : BIGINT</text>
+    <text x="44" y="1210" class="badge" fill="#0369A1">FK</text>
+    <text x="82" y="1210" class="mono" fill="#0369A1" font-weight="700">ID_factura : BIGINT</text>
+    <text x="48" y="1225" class="mono" fill="#334155">clave_producto_servicio_sat : VARCHAR…</text>
+    <text x="48" y="1240" class="mono" fill="#334155">clave_unidad_sat : VARCHAR(5)</text>
+    <text x="48" y="1255" class="mono" fill="#334155">cantidad : DECIMAL(12,2)</text>
+    <text x="48" y="1270" class="mono" fill="#64748B">[+7 cols Auditoria / Soft Delete]</text>
+    <rect x="360" y="1153" width="290" height="160" rx="6" fill="#FDF1EC" stroke="#9A3412" stroke-width="1.6"/>
+    <rect x="360" y="1153" width="290" height="26" rx="6" fill="#9A3412"/>
+    <text x="368" y="1170" class="hdr">[092] fiscal.complementos_pago</text>
+    <text x="368" y="1195" class="badge" fill="#B45309">PK</text>
+    <text x="406" y="1195" class="mono" fill="#B45309" font-weight="700">ID : BIGINT</text>
+    <text x="368" y="1210" class="badge" fill="#0369A1">FK</text>
+    <text x="406" y="1210" class="mono" fill="#0369A1" font-weight="700">ID_factura : BIGINT</text>
+    <text x="368" y="1225" class="badge" fill="#0369A1">FK</text>
+    <text x="406" y="1225" class="mono" fill="#0369A1" font-weight="700">ID_transaccion : BIGINT</text>
+    <text x="368" y="1240" class="badge" fill="#7E22CE">UQ</text>
+    <text x="406" y="1240" class="mono" fill="#7E22CE" font-weight="700">uuid_sat_complemento : UNIQUEIDENTIFI…</text>
+    <text x="372" y="1255" class="mono" fill="#334155">numero_parcialidad : INT</text>
+    <text x="372" y="1270" class="mono" fill="#334155">saldo_anterior : DECIMAL(12,2)</text>
+    <text x="372" y="1285" class="mono" fill="#334155">monto_pagado : DECIMAL(12,2)</text>
+    <text x="372" y="1300" class="mono" fill="#64748B">[+7 cols Auditoria / Soft Delete]</text>
+    <rect x="684" y="1153" width="290" height="145" rx="6" fill="#FDF1EC" stroke="#9A3412" stroke-width="1.6"/>
+    <rect x="684" y="1153" width="290" height="26" rx="6" fill="#9A3412"/>
+    <text x="692" y="1170" class="hdr">[093] fiscal.notas_credito</text>
+    <text x="692" y="1195" class="badge" fill="#B45309">PK</text>
+    <text x="730" y="1195" class="mono" fill="#B45309" font-weight="700">ID : BIGINT</text>
+    <text x="692" y="1210" class="badge" fill="#0369A1">FK</text>
+    <text x="730" y="1210" class="mono" fill="#0369A1" font-weight="700">ID_factura : BIGINT</text>
+    <text x="692" y="1225" class="badge" fill="#7E22CE">UQ</text>
+    <text x="730" y="1225" class="mono" fill="#7E22CE" font-weight="700">uuid_sat_nota_credito : UNIQUEIDENTIF…</text>
+    <text x="696" y="1240" class="mono" fill="#334155">motivo_devolucion_sat : VARCHAR(3)</text>
+    <text x="696" y="1255" class="mono" fill="#334155">subtotal_acreditado : DECIMAL(12,2)</text>
+    <text x="696" y="1270" class="mono" fill="#334155">iva_acreditado : DECIMAL(12,2)</text>
+    <text x="696" y="1285" class="mono" fill="#64748B">[+7 cols Auditoria / Soft Delete]</text>
+    <rect x="1008" y="1153" width="290" height="130" rx="6" fill="#FDF1EC" stroke="#9A3412" stroke-width="1.6"/>
+    <rect x="1008" y="1153" width="290" height="26" rx="6" fill="#9A3412"/>
+    <text x="1016" y="1170" class="hdr">[094] fiscal.cancelaciones_cfdi</text>
+    <text x="1016" y="1195" class="badge" fill="#B45309">PK</text>
+    <text x="1054" y="1195" class="mono" fill="#B45309" font-weight="700">ID : BIGINT</text>
+    <text x="1016" y="1210" class="badge" fill="#0369A1">FK</text>
+    <text x="1054" y="1210" class="mono" fill="#0369A1" font-weight="700">ID_factura : BIGINT</text>
+    <text x="1020" y="1225" class="mono" fill="#334155">motivo_cancelacion_sat : VARCHAR(4)</text>
+    <text x="1020" y="1240" class="mono" fill="#334155">uuid_sustitucion : UNIQUEIDENTIFIER</text>
+    <text x="1020" y="1255" class="mono" fill="#334155">acuse_cancelacion_sat : NVARCHAR(MAX)</text>
+    <text x="1020" y="1270" class="mono" fill="#64748B">[+7 cols Auditoria / Soft Delete]</text>
+    <rect x="1332" y="1153" width="290" height="130" rx="6" fill="#FEF6EA" stroke="#B45309" stroke-width="1.6"/>
+    <rect x="1332" y="1153" width="290" height="26" rx="6" fill="#B45309"/>
+    <text x="1340" y="1170" class="hdr">[095] promos.campanias</text>
+    <text x="1340" y="1195" class="badge" fill="#B45309">PK</text>
+    <text x="1378" y="1195" class="mono" fill="#B45309" font-weight="700">ID : BIGINT</text>
+    <text x="1340" y="1210" class="badge" fill="#7E22CE">UQ</text>
+    <text x="1378" y="1210" class="mono" fill="#7E22CE" font-weight="700">codigo_campania : NVARCHAR(30)</text>
+    <text x="1344" y="1225" class="mono" fill="#334155">nombre_campania : NVARCHAR(100)</text>
+    <text x="1344" y="1240" class="mono" fill="#334155">fecha_inicio : DATETIME2(3)</text>
+    <text x="1344" y="1255" class="mono" fill="#334155">fecha_fin : DATETIME2(3)</text>
+    <text x="1344" y="1270" class="mono" fill="#64748B">[+7 cols Auditoria / Soft Delete]</text>
+    <rect x="1656" y="1153" width="290" height="160" rx="6" fill="#FEF6EA" stroke="#B45309" stroke-width="1.6"/>
+    <rect x="1656" y="1153" width="290" height="26" rx="6" fill="#B45309"/>
+    <text x="1664" y="1170" class="hdr">[096] promos.cupones</text>
+    <text x="1664" y="1195" class="badge" fill="#B45309">PK</text>
+    <text x="1702" y="1195" class="mono" fill="#B45309" font-weight="700">ID : BIGINT</text>
+    <text x="1664" y="1210" class="badge" fill="#0369A1">FK</text>
+    <text x="1702" y="1210" class="mono" fill="#0369A1" font-weight="700">ID_campania : BIGINT</text>
+    <text x="1664" y="1225" class="badge" fill="#7E22CE">UQ</text>
+    <text x="1702" y="1225" class="mono" fill="#7E22CE" font-weight="700">codigo_cupon : NVARCHAR(30)</text>
+    <text x="1664" y="1240" class="badge" fill="#0369A1">FK</text>
+    <text x="1702" y="1240" class="mono" fill="#0369A1" font-weight="700">ID_tipo_descuento : BIGINT</text>
+    <text x="1668" y="1255" class="mono" fill="#334155">valor_descuento : DECIMAL(12,2)</text>
+    <text x="1668" y="1270" class="mono" fill="#334155">monto_minimo_compra : DECIMAL(12,2)</text>
+    <text x="1668" y="1285" class="mono" fill="#334155">limite_usos_totales : INT</text>
+    <text x="1668" y="1300" class="mono" fill="#64748B">[+7 cols Auditoria / Soft Delete]</text>
+    <rect x="1980" y="1153" width="290" height="115" rx="6" fill="#FEF6EA" stroke="#B45309" stroke-width="1.6"/>
+    <rect x="1980" y="1153" width="290" height="26" rx="6" fill="#B45309"/>
+    <text x="1988" y="1170" class="hdr">[097] promos.reglas_elegibilidad_cupon</text>
+    <text x="1988" y="1195" class="badge" fill="#B45309">PK</text>
+    <text x="2026" y="1195" class="mono" fill="#B45309" font-weight="700">ID : BIGINT</text>
+    <text x="1988" y="1210" class="badge" fill="#0369A1">FK,UQ</text>
+    <text x="2026" y="1210" class="mono" fill="#0369A1" font-weight="700">ID_cupon : BIGINT</text>
+    <text x="1992" y="1225" class="mono" fill="#334155">solo_primera_compra : BIT</text>
+    <text x="1992" y="1240" class="mono" fill="#334155">excluye_kits_promocionales : BIT</text>
+    <text x="1992" y="1255" class="mono" fill="#64748B">[+7 cols Auditoria / Soft Delete]</text>
+    <rect x="2304" y="1153" width="290" height="100" rx="6" fill="#FEF6EA" stroke="#B45309" stroke-width="1.6"/>
+    <rect x="2304" y="1153" width="290" height="26" rx="6" fill="#B45309"/>
+    <text x="2312" y="1170" class="hdr">[098] promos.cupones_categorias_excluidas</text>
+    <text x="2312" y="1195" class="badge" fill="#B45309">PK</text>
+    <text x="2350" y="1195" class="mono" fill="#B45309" font-weight="700">ID : BIGINT</text>
+    <text x="2312" y="1210" class="badge" fill="#0369A1">FK,UQ</text>
+    <text x="2350" y="1210" class="mono" fill="#0369A1" font-weight="700">ID_cupon : BIGINT</text>
+    <text x="2312" y="1225" class="badge" fill="#0369A1">FK,UQ</text>
+    <text x="2350" y="1225" class="mono" fill="#0369A1" font-weight="700">ID_categoria : BIGINT</text>
+    <text x="2316" y="1240" class="mono" fill="#64748B">[+7 cols Auditoria / Soft Delete]</text>
+    <rect x="2628" y="1153" width="290" height="145" rx="6" fill="#FEF6EA" stroke="#B45309" stroke-width="1.6"/>
+    <rect x="2628" y="1153" width="290" height="26" rx="6" fill="#B45309"/>
+    <text x="2636" y="1170" class="hdr">[099] promos.redenciones_cupones</text>
+    <text x="2636" y="1195" class="badge" fill="#B45309">PK</text>
+    <text x="2674" y="1195" class="mono" fill="#B45309" font-weight="700">ID : BIGINT</text>
+    <text x="2636" y="1210" class="badge" fill="#0369A1">FK</text>
+    <text x="2674" y="1210" class="mono" fill="#0369A1" font-weight="700">ID_cupon : BIGINT</text>
+    <text x="2636" y="1225" class="badge" fill="#0369A1">FK</text>
+    <text x="2674" y="1225" class="mono" fill="#0369A1" font-weight="700">ID_cliente : BIGINT</text>
+    <text x="2636" y="1240" class="badge" fill="#0369A1">FK</text>
+    <text x="2674" y="1240" class="mono" fill="#0369A1" font-weight="700">ID_orden : BIGINT</text>
+    <text x="2640" y="1255" class="mono" fill="#334155">monto_ahorrado : DECIMAL(12,2)</text>
+    <text x="2640" y="1270" class="mono" fill="#334155">fecha_aplicacion : DATETIME2(3)</text>
+    <text x="2640" y="1285" class="mono" fill="#64748B">[+7 cols Auditoria / Soft Delete]</text>
+    <rect x="2952" y="1153" width="290" height="130" rx="6" fill="#FEF6EA" stroke="#B45309" stroke-width="1.6"/>
+    <rect x="2952" y="1153" width="290" height="26" rx="6" fill="#B45309"/>
+    <text x="2960" y="1170" class="hdr">[100] promos.ventas_flash_horarias</text>
+    <text x="2960" y="1195" class="badge" fill="#B45309">PK</text>
+    <text x="2998" y="1195" class="mono" fill="#B45309" font-weight="700">ID : BIGINT</text>
+    <text x="2960" y="1210" class="badge" fill="#0369A1">FK</text>
+    <text x="2998" y="1210" class="mono" fill="#0369A1" font-weight="700">ID_variante_sku : BIGINT</text>
+    <text x="2964" y="1225" class="mono" fill="#334155">precio_oferta_flash : DECIMAL(12,2)</text>
+    <text x="2964" y="1240" class="mono" fill="#334155">stock_destinado_flash : INT</text>
+    <text x="2964" y="1255" class="mono" fill="#334155">stock_vendido_flash : INT</text>
+    <text x="2964" y="1270" class="mono" fill="#64748B">[+7 cols Auditoria / Soft Delete]</text>
+  </g>
+  <rect x="36" y="1353" width="3206" height="44" rx="8" fill="#0F172A"/>
+  <text x="1639" y="1379" text-anchor="middle" fill="#E2E8F0" font-size="12.5" font-weight="600">LEYENDA RELACIONAL:  [PK] Llave Primaria (ID BIGINT IDENTITY)  ·  [FK] Llave Foránea (ID_*)  ·  [UQ] Llave Candidata Única  ·  Línea sólida gris = FK intra-módulo  ·  Línea punteada roja = FK inter-módulo  ·  Total en esta vista: 50 tablas propias · 67 FKs activas</text>
+</svg>
