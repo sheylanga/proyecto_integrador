@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>DERMA-ECOM — Diagrama de Componentes UML 2.5 (AMSI 1.4)</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0f172a; color: #f8fafc; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+  header { background: #1B365D; border-bottom: 2px solid #38bdf8; padding: 10px 16px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+  header h1 { font-size: 15px; font-weight: 700; }
+  header .sub { font-size: 11px; color: #cbd5e1; }
+  .tabs { display: flex; gap: 6px; margin-left: auto; flex-wrap: wrap; }
+  .tabs button { background: #0f172a; color: #e2e8f0; border: 1px solid #475569; border-radius: 6px; padding: 6px 10px; font-size: 12px; cursor: pointer; }
+  .tabs button.active { background: #0284c7; border-color: #38bdf8; color: #fff; font-weight: 700; }
+  .tabs button.export { background: #15803d; border-color: #4ade80; color: #fff; font-weight: 600; }
+  .stage { flex: 1; position: relative; background: #f8fafc; overflow: hidden; }
+  #svgView { width: 100%; height: 100%; display: block; cursor: grab; }
+  #svgView:active { cursor: grabbing; }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>DERMA-ECOM — Diagrama de Componentes UML 2.5 (Arquitectura 5 Capas y Hot-Swap)</h1>
+    <div class="sub">TecNM / ITSM · AMSI (IFE-1005) · Criterio 1.4 (30%) · José Luis Luna García · Sheyla Estefanía Moncada Guel · Eduardo Salazar Martínez</div>
+  </div>
+  <div class="tabs" id="tabBar"></div>
+</header>
+<div class="stage"><svg id="svgView" xmlns="http://www.w3.org/2000/svg"></svg></div>
+<script>
+const PAGES = [{"Id":"uml-comp","Groups":[{"Id":"g1","W":1440,"Color":"#0369A1","Y":115,"X":40,"Bg":"#F0F9FF","Label":"1. Capa de Presentación (Clientes)","H":105},{"Id":"g2","W":1440,"Color":"#1B365D","Y":238,"X":40,"Bg":"#EFF6FF","Label":"2. Capa Perimetral y Seguridad","H":105},{"Id":"g3","W":1440,"Color":"#4A2574","Y":361,"X":40,"Bg":"#FAF5FF","Label":"3. Capa de Lógica de Negocio (Microservicios por Submódulo)","H":155},{"Id":"g4","W":1440,"Color":"#B45309","Y":534,"X":40,"Bg":"#FFFBEB","Label":"4. Capa de Integración y Mensajería","H":95},{"Id":"g5","W":1440,"Color":"#14532D","Y":647,"X":40,"Bg":"#F0FDF4","Label":"5. Capa de Persistencia Multi-SGBD (Hot-Swap SQL Server 2022 \u003c-\u003e PostgreSQL 17)","H":195}],"Color":"#1B365D","Nodes":[{"Y":150,"Id":"n_spa","X":110,"Label":"\u003c\u003ccomponent\u003e\u003e\nWeb SPA Storefront\n(React / Next.js)","Kind":"comp","W":320,"Stroke":"#0369A1","H":56,"Fill":"#E0F2FE"},{"Y":150,"Id":"n_pwa","X":600,"Label":"\u003c\u003ccomponent\u003e\u003e\nPortal Clínico, Fiscal y ARCO\n(Web PWA)","Kind":"comp","W":320,"Stroke":"#0369A1","H":56,"Fill":"#E0F2FE"},{"Y":150,"Id":"n_pda","X":1090,"Label":"\u003c\u003ccomponent\u003e\u003e\nTerminal Móvil WMS / QA\n(Android / Flutter)","Kind":"comp","W":320,"Stroke":"#0369A1","H":56,"Fill":"#E0F2FE"},{"Y":273,"Id":"n_waf","X":110,"Label":"\u003c\u003ccomponent\u003e\u003e\nWAF \u0026 Reverse Proxy\n(TLS 1.3 / OWASP Top 10)","Kind":"comp","W":320,"Stroke":"#1B365D","H":56,"Fill":"#DBEAFE"},{"Y":273,"Id":"n_gw","X":600,"Label":"\u003c\u003ccomponent\u003e\u003e\nAPI Gateway\n(NGINX / Kong · Rate Limit)","Kind":"comp","W":320,"Stroke":"#1B365D","H":56,"Fill":"#DBEAFE"},{"Y":273,"Id":"n_cry","X":1090,"Label":"\u003c\u003ccomponent\u003e\u003e\nCrypto \u0026 Auth Service\n(PBKDF2/bcrypt · TOTP · JWT · HMAC)","Kind":"comp","W":320,"Stroke":"#B45309","H":56,"Fill":"#FEF3C7"},{"Y":400,"Id":"n_sm1","X":85,"Label":"\u003c\u003ccomponent\u003e\u003e SM1 (001-050)\nIAM RBAC · Diagnóstico LFPDPPP\nCatálogo INCI \u0026 COFEPRIS\n(José Luis Luna García)","Kind":"comp","W":405,"Stroke":"#0F4C81","H":98,"Fill":"#E0F2FE"},{"Y":400,"Id":"n_sm2","X":555,"Label":"\u003c\u003ccomponent\u003e\u003e SM2 (051-100)\nCheckout \u0026 Split · Pagos PCI-DSS\nAntifraude · CFDI 4.0 · Promos\n(Sheyla Estefanía Moncada Guel)","Kind":"comp","W":410,"Stroke":"#4A2574","H":98,"Fill":"#F3E8FF"},{"Y":400,"Id":"n_sm3","X":1030,"Label":"\u003c\u003ccomponent\u003e\u003e SM3 (101-150)\nCompras QA · WMS FEFO · IoT 2-8 °C\nEnvíos · RMA · Auditoría Forense\n(Eduardo Salazar Martínez)","Kind":"comp","W":410,"Stroke":"#14532D","H":98,"Fill":"#DCFCE7"},{"Y":568,"Id":"n_red","X":160,"Label":"\u003c\u003ccomponent\u003e\u003e\nRedis Cluster (Sesiones · Rate-Limit · Reservas 15m)","Kind":"comp","W":520,"Stroke":"#B45309","H":48,"Fill":"#FEF3C7"},{"Y":568,"Id":"n_brk","X":820,"Label":"\u003c\u003ccomponent\u003e\u003e\nRabbitMQ / Kafka (Eventos Split · CFDI · IoT · COFEPRIS)","Kind":"comp","W":540,"Stroke":"#B45309","H":48,"Fill":"#FEF3C7"},{"Y":682,"Id":"n_hs","X":320,"Label":"\u003c\u003ccomponent\u003e\u003e\nHot-Swap DB Abstraction Layer (IDataRepositoryMultiSGBD · hotswap_db_manager.ps1)","Kind":"comp","W":880,"Stroke":"#15803D","H":50,"Fill":"#DCFCE7"},{"Y":755,"Id":"n_ss","X":110,"Label":"\u003c\u003cdatabase\u003e\u003e\nSQL Server 2022 (Primario)\n150 Tablas · 183 FKs · TCP 1433","Kind":"db","W":360,"Stroke":"#14532D","H":68,"Fill":"#ECFDF5"},{"Y":755,"Id":"n_pg","X":580,"Label":"\u003c\u003cdatabase\u003e\u003e\nPostgreSQL 17 (Failover Hot-Swap)\n150 Tablas · 183 FKs · TCP 5432","Kind":"db","W":360,"Stroke":"#14532D","H":68,"Fill":"#ECFDF5"},{"Y":755,"Id":"n_obj","X":1050,"Label":"\u003c\u003cstorage\u003e\u003e\nObject Storage S3 / MinIO\nXML/PDF CFDI · COA · Evidencia RMA","Kind":"db","W":360,"Stroke":"#334155","H":68,"Fill":"#F1F5F9"}],"W":1520,"Edges":[{"T":"n_waf","S":"n_spa","Label":"HTTPS :443","Kind":"solid"},{"T":"n_gw","S":"n_pwa","Label":"HTTPS :443","Kind":"solid"},{"T":"n_gw","S":"n_pda","Label":"HTTPS :443","Kind":"solid"},{"T":"n_gw","S":"n_waf","Label":"","Kind":"solid"},{"T":"n_cry","S":"n_gw","Label":"ICryptoHashing","Kind":"solid"},{"T":"n_sm1","S":"n_gw","Label":"","Kind":"solid"},{"T":"n_sm2","S":"n_gw","Label":"","Kind":"solid"},{"T":"n_sm3","S":"n_gw","Label":"","Kind":"solid"},{"T":"n_red","S":"n_sm1","Label":"","Kind":"dash"},{"T":"n_red","S":"n_sm2","Label":"","Kind":"dash"},{"T":"n_brk","S":"n_sm2","Label":"","Kind":"dash"},{"T":"n_brk","S":"n_sm3","Label":"","Kind":"dash"},{"T":"n_hs","S":"n_sm1","Label":"","Kind":"solid"},{"T":"n_hs","S":"n_sm2","Label":"","Kind":"solid"},{"T":"n_hs","S":"n_sm3","Label":"","Kind":"solid"},{"T":"n_ss","S":"n_hs","Label":"Activo :1433","Kind":"solid"},{"T":"n_pg","S":"n_hs","Label":"Failover :5432","Kind":"dash"},{"T":"n_obj","S":"n_sm2","Label":"CFDI XML/PDF","Kind":"dash"},{"T":"n_obj","S":"n_sm3","Label":"COA / RMA","Kind":"dash"}],"Name":"1. Diagrama de Componentes","H":880,"Title":"DIAGRAMA DE COMPONENTES UML 2.5 — ARQUITECTURA POR CAPAS Y HOT-SWAP MULTI-SGBD","Sub":"AMSI (IFE-1005) · Criterio 1.4 (30%) · José Luis Luna García (SM1) · Sheyla E. Moncada Guel (SM2) · Eduardo Salazar Martínez (SM3)"}];
+const NS = 'http://www.w3.org/2000/svg';
+const svg = document.getElementById('svgView');
+const tabBar = document.getElementById('tabBar');
+let curIdx = 0, scale = 0.8, tx = 20, ty = 15, dragging = false, sx = 0, sy = 0;
+
+function el(tag, attrs, parent) { const n = document.createElementNS(NS, tag); for (const [k, v] of Object.entries(attrs || {})) n.setAttribute(k, v); if (parent) parent.appendChild(n); return n; }
+function addText(parent, x, y, text, size, weight, fill) {
+  const lines = text.split('\n');
+  const t = el('text', { x, y: y - ((lines.length - 1) * (size + 2)) / 2, 'text-anchor': 'middle', 'font-size': size, 'font-weight': weight, fill }, parent);
+  lines.forEach((ln, i) => { const ts = el('tspan', { x, dy: i === 0 ? 0 : (size + 3) }, t); ts.textContent = ln.replace('<<', '«').replace('>>', '»'); });
+}
+
+function renderPage(idx) {
+  curIdx = idx;
+  const p = PAGES[idx];
+  svg.innerHTML = '';
+  const defs = el('defs', {}, svg);
+  const m1 = el('marker', { id: 'm-solid', viewBox: '0 0 10 10', refX: 9, refY: 5, markerWidth: 7, markerHeight: 7, orient: 'auto' }, defs);
+  el('path', { d: 'M 0 1 L 10 5 L 0 9 Z', fill: '#334155' }, m1);
+  const m2 = el('marker', { id: 'm-dash', viewBox: '0 0 10 10', refX: 9, refY: 5, markerWidth: 7, markerHeight: 7, orient: 'auto' }, defs);
+  el('path', { d: 'M 1 1 L 9 5 L 1 9', fill: 'none', stroke: '#B45309', 'stroke-width': 1.6 }, m2);
+
+  const scene = el('g', { id: 'scene' }, svg);
+  el('rect', { x: 0, y: 0, width: p.W, height: p.H, fill: '#F8FAFC' }, scene);
+  el('rect', { x: 30, y: 16, width: p.W - 60, height: 78, rx: 10, fill: p.Color }, scene);
+  addText(scene, p.W / 2, 46, p.Title, 15.5, '700', '#FFFFFF');
+  addText(scene, p.W / 2, 74, p.Sub, 11.5, '400', '#BAE6FD');
+
+  p.Groups.forEach(g => {
+    el('rect', { x: g.X, y: g.Y, width: g.W, height: g.H, rx: 8, fill: g.Bg, stroke: g.Color, 'stroke-width': 1.8 }, scene);
+    el('rect', { x: g.X, y: g.Y, width: g.W, height: 26, rx: 8, fill: g.Color }, scene);
+    const gt = el('text', { x: g.X + 12, y: g.Y + 17, fill: '#fff', 'font-size': 11.5, 'font-weight': '700' }, scene); gt.textContent = g.Label;
+  });
+
+  const gEdges = el('g', {}, scene);
+  const gNodes = el('g', {}, scene);
+  const map = {};
+  p.Nodes.forEach(n => {
+    map[n.Id] = n;
+    el('rect', { x: n.X, y: n.Y, width: n.W, height: n.H, rx: n.Kind === 'db' ? 12 : 6, fill: n.Fill, stroke: n.Stroke, 'stroke-width': 1.8 }, gNodes);
+    if (n.Kind === 'comp') {
+      el('rect', { x: n.X - 6, y: n.Y + 10, width: 12, height: 8, fill: n.Fill, stroke: n.Stroke, 'stroke-width': 1.4 }, gNodes);
+      el('rect', { x: n.X - 6, y: n.Y + 24, width: 12, height: 8, fill: n.Fill, stroke: n.Stroke, 'stroke-width': 1.4 }, gNodes);
+    }
+    addText(gNodes, n.X + n.W / 2, n.Y + n.H / 2 + 4, n.Label, 10.5, '700', '#0F172A');
+  });
+
+  p.Edges.forEach(e => {
+    const s = map[e.S], t = map[e.T]; if (!s || !t) return;
+    const x1 = s.X + s.W / 2, y1 = s.Y + s.H / 2, x2 = t.X + t.W / 2, y2 = t.Y + t.H / 2;
+    const isDash = e.Kind === 'dash';
+    const attrs = { x1, y1, x2, y2, stroke: isDash ? '#B45309' : '#334155', 'stroke-width': 1.5, 'marker-end': isDash ? 'url(#m-dash)' : 'url(#m-solid)' };
+    if (isDash) attrs['stroke-dasharray'] = '6,4';
+    el('line', attrs, gEdges);
+    if (e.Label) {
+      const mx = (x1 + x2) / 2, my = (y1 + y2) / 2 - 4;
+      el('rect', { x: mx - 42, y: my - 9, width: 84, height: 13, rx: 3, fill: '#fff', opacity: 0.9 }, gEdges);
+      const lt = el('text', { x: mx, y: my + 1, 'text-anchor': 'middle', 'font-size': 9.5, 'font-weight': '600', fill: attrs.stroke }, gEdges); lt.textContent = e.Label;
+    }
+  });
+
+  fitView();
+  document.querySelectorAll('#tabBar button.tab').forEach((b, i) => b.classList.toggle('active', i === idx));
+}
+
+function updateTransform() { const sc = svg.querySelector('#scene'); if (sc) sc.setAttribute('transform', 'translate(' + tx + ',' + ty + ') scale(' + scale + ')'); }
+function fitView() { const p = PAGES[curIdx], r = svg.getBoundingClientRect(); scale = Math.min((r.width - 30) / p.W, (r.height - 30) / p.H); tx = (r.width - p.W * scale) / 2; ty = (r.height - p.H * scale) / 2; updateTransform(); }
+function exportSvg() {
+  const p = PAGES[curIdx], clone = svg.cloneNode(true);
+  clone.setAttribute('width', p.W); clone.setAttribute('height', p.H); clone.setAttribute('viewBox', '0 0 ' + p.W + ' ' + p.H);
+  clone.querySelector('#scene').setAttribute('transform', 'translate(0,0) scale(1)');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([new XMLSerializer().serializeToString(clone)], { type: 'image/svg+xml;charset=utf-8' }));
+  a.download = 'DERMA_ECOM_' + p.Id.toUpperCase() + '.svg';
+  a.click();
+}
+
+PAGES.forEach((p, i) => { const b = document.createElement('button'); b.className = 'tab'; b.textContent = p.Name; b.onclick = () => renderPage(i); tabBar.appendChild(b); });
+const ex = document.createElement('button'); ex.className = 'export'; ex.textContent = 'Exportar SVG'; ex.onclick = exportSvg; tabBar.appendChild(ex);
+svg.addEventListener('wheel', e => { e.preventDefault(); const f = e.deltaY < 0 ? 1.15 : 0.87, r = svg.getBoundingClientRect(); const mx = e.clientX - r.left, my = e.clientY - r.top; tx = mx - (mx - tx) * f; ty = my - (my - ty) * f; scale *= f; updateTransform(); }, { passive: false });
+svg.addEventListener('mousedown', e => { dragging = true; sx = e.clientX - tx; sy = e.clientY - ty; });
+window.addEventListener('mousemove', e => { if (!dragging) return; tx = e.clientX - sx; ty = e.clientY - sy; updateTransform(); });
+window.addEventListener('mouseup', () => dragging = false);
+window.addEventListener('resize', fitView);
+renderPage(0);
+</script>
+</body>
+</html>

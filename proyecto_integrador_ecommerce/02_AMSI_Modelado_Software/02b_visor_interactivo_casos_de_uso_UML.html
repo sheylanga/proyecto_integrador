@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>DERMA-ECOM — Visor Interactivo de Casos de Uso UML 2.5 (Negocio y Sistema)</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0f172a; color: #f8fafc; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+  header { background: #1B365D; border-bottom: 2px solid #38bdf8; padding: 10px 16px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+  header h1 { font-size: 15px; font-weight: 700; }
+  header .sub { font-size: 11px; color: #cbd5e1; }
+  .tabs { display: flex; gap: 6px; margin-left: auto; flex-wrap: wrap; }
+  .tabs button { background: #0f172a; color: #e2e8f0; border: 1px solid #475569; border-radius: 6px; padding: 6px 10px; font-size: 12px; cursor: pointer; }
+  .tabs button.active { background: #0284c7; border-color: #38bdf8; color: #fff; font-weight: 700; }
+  .tabs button.export { background: #15803d; border-color: #4ade80; color: #fff; font-weight: 600; }
+  .stage { flex: 1; position: relative; background: #f8fafc; overflow: hidden; }
+  #svgView { width: 100%; height: 100%; display: block; cursor: grab; }
+  #svgView:active { cursor: grabbing; }
+  .legend { position: absolute; bottom: 12px; left: 12px; background: rgba(15,23,42,.92); color: #e2e8f0; padding: 8px 14px; border-radius: 8px; font-size: 11px; border: 1px solid #334155; }
+  .info { position: absolute; top: 12px; right: 12px; width: 320px; background: #0f172a; color: #f1f5f9; border: 1px solid #38bdf8; border-radius: 8px; padding: 12px; display: none; font-size: 12px; box-shadow: 0 10px 24px rgba(0,0,0,.35); }
+  .info h3 { color: #38bdf8; font-size: 13px; margin-bottom: 6px; }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>DERMA-ECOM — Diagramas de Casos de Uso UML 2.5 (Negocio y Sistema · 150 Tablas)</h1>
+    <div class="sub">TecNM / ITSM · AMSI (IFE-1005) · José Luis Luna García · Sheyla Estefanía Moncada Guel · Eduardo Salazar Martínez</div>
+  </div>
+  <div class="tabs" id="tabBar"></div>
+</header>
+<div class="stage">
+  <svg id="svgView" xmlns="http://www.w3.org/2000/svg"></svg>
+  <div class="legend">
+    <strong>Sintaxis UML 2.5:</strong>
+    ─── Asociación &nbsp;|&nbsp;
+    <span style="color:#38bdf8">- - &gt; «include»</span> &nbsp;|&nbsp;
+    <span style="color:#fbbf24">- - &gt; «extend»</span> &nbsp;|&nbsp;
+    <span style="color:#93c5fd">──▷ Generalización</span> &nbsp;|&nbsp;
+    Clic en óvalo = Ver tablas BD
+  </div>
+  <div id="infoBox" class="info"></div>
+</div>
+<script>
+const PAGES = [{"UseCases":[{"Y":175,"Meta":"SM1 (001-050) · José Luis Luna García · seguridad, clientes","Id":"cun1","X":490,"Label":"CUN-01: Gestionar Identidad,\nExpediente Cutáneo y Privacidad","W":260,"Stroke":"#0369A1","H":76,"Fill":"#E0F2FE"},{"Y":290,"Meta":"SM1+SM2 · catalogo, comunidad, ventas, promos","Id":"cun2","X":490,"Label":"CUN-02: Comercializar Catálogo\nINCI, Ventas y Suscripciones","W":260,"Stroke":"#6B21A8","H":76,"Fill":"#F3E8FF"},{"Y":290,"Meta":"SM2 (051-100) · Sheyla Moncada · pagos, fiscal","Id":"cun3","X":800,"Label":"CUN-03: Cobrar, Prevenir Fraude\ny Facturar CFDI 4.0","W":250,"Stroke":"#6B21A8","H":76,"Fill":"#F3E8FF"},{"Y":455,"Meta":"SM3 (101-150) · Eduardo Salazar · compras, wms","Id":"cun4","X":490,"Label":"CUN-04: Abastecer, Inspección QA\ny Almacenar por Lote FEFO","W":260,"Stroke":"#15803D","H":76,"Fill":"#DCFCE7"},{"Y":455,"Meta":"SM3 (101-150) · Eduardo Salazar · envios, postventa","Id":"cun5","X":800,"Label":"CUN-05: Despachar Multialmacén,\nRMA y Farmacovigilancia","W":250,"Stroke":"#15803D","H":76,"Fill":"#DCFCE7"},{"Y":620,"Meta":"SM3 · auditoria, sistema · LFPDPPP / CPF 211 bis","Id":"cun6","X":640,"Label":"CUN-06: Auditar Seguridad Forense\ny Cumplimiento Normativo","W":270,"Stroke":"#334155","H":76,"Fill":"#F1F5F9"}],"Id":"dcu-negocio","Edges":[{"T":"a_usr","S":"a_cli","Label":"","Kind":"gen"},{"T":"a_usr","S":"a_afi","Label":"","Kind":"gen"},{"T":"cun1","S":"a_usr","Label":"","Kind":"assoc"},{"T":"cun1","S":"a_cli","Label":"","Kind":"assoc"},{"T":"cun2","S":"a_cli","Label":"","Kind":"assoc"},{"T":"cun2","S":"a_afi","Label":"","Kind":"assoc"},{"T":"cun4","S":"a_prov","Label":"","Kind":"assoc"},{"T":"cun3","S":"cun2","Label":"\u003c\u003cinclude\u003e\u003e","Kind":"include"},{"T":"cun5","S":"cun2","Label":"\u003c\u003cinclude\u003e\u003e","Kind":"include"},{"T":"cun3","S":"cun5","Label":"\u003c\u003cextend\u003e\u003e","Kind":"extend"},{"T":"cun6","S":"cun1","Label":"\u003c\u003cinclude\u003e\u003e","Kind":"include"},{"T":"cun6","S":"cun4","Label":"\u003c\u003cinclude\u003e\u003e","Kind":"include"},{"T":"a_pas","S":"cun3","Label":"","Kind":"assoc"},{"T":"a_sat","S":"cun3","Label":"","Kind":"assoc"},{"T":"a_cof","S":"cun1","Label":"","Kind":"assoc"},{"T":"a_cof","S":"cun5","Label":"","Kind":"assoc"},{"T":"a_log","S":"cun4","Label":"","Kind":"assoc"},{"T":"a_log","S":"cun5","Label":"","Kind":"assoc"}],"Boundary":{"H":640,"Label":"Frontera del Negocio: DERMA-ECOM (Salud Cutánea, Belleza y Cadena de Frío)","Color":"#1B365D","Y":125,"Bg":"#F8FAFC","X":420,"W":680},"W":1520,"Name":"1. DCU Negocio y Actores","H":820,"Title":"DERMA-ECOM — DIAGRAMA DE CASOS DE USO DEL NEGOCIO Y GENERALIZACIÓN DE ACTORES (UML 2.5)","Actors":[{"Label":"Usuario del Sistema\n(seguridad.usuarios)","Kind":"human","Id":"a_usr","Y":160,"X":70},{"Label":"Cliente / Paciente\nDermo","Kind":"human","Id":"a_cli","Y":320,"X":70},{"Label":"Afiliado /\nInfluencer","Kind":"human","Id":"a_afi","Y":470,"X":70},{"Label":"Proveedor /\nLaboratorio","Kind":"human","Id":"a_prov","Y":620,"X":70},{"Label":"\u003c\u003csistema\u003e\u003e\nPasarela PCI-DSS","Kind":"system","Id":"a_pas","Y":210,"X":1240},{"Label":"\u003c\u003csistema\u003e\u003e\nPAC / SAT CFDI 4.0","Kind":"system","Id":"a_sat","Y":370,"X":1240},{"Label":"\u003c\u003corganismo\u003e\u003e\nCOFEPRIS / INAI","Kind":"system","Id":"a_cof","Y":530,"X":1240},{"Label":"\u003c\u003csistema\u003e\u003e\nAPI Paquetería / IoT","Kind":"system","Id":"a_log","Y":670,"X":1240}],"Sub":"TecNM / ITSM · AMSI (IFE-1005) · Criterio 1.2 (25%) · Base de Datos: 150 Tablas · 14 Esquemas"},{"UseCases":[{"Y":175,"Meta":"OBLIGATORIO · seguridad.usuarios, sesiones_activas, intentos_login","Id":"cu01","X":380,"Label":"CU-01: Autenticar Usuario\n(Login Seguro)","W":215,"Stroke":"#1D4ED8","H":70,"Fill":"#DBEAFE"},{"Y":145,"Meta":"seguridad.usuarios (password_hash, password_salt)","Id":"cu01h","X":690,"Label":"CU-01.1: Verificar Hash\ny Salt Criptográfico","W":215,"Stroke":"#2563EB","H":58,"Fill":"#EFF6FF"},{"Y":145,"Meta":"seguridad.sesiones_activas, usuarios_roles, roles_permisos","Id":"cu01s","X":945,"Label":"CU-01.2: Emitir Sesión\ny Cargar Roles RBAC","W":215,"Stroke":"#2563EB","H":58,"Fill":"#EFF6FF"},{"Y":220,"Meta":"seguridad.usuarios (mfa_habilitado, mfa_secreto)","Id":"cu01m","X":690,"Label":"CU-01.3: Validar Código\nMFA TOTP (6 dígitos)","W":215,"Stroke":"#D97706","H":58,"Fill":"#FEF3C7"},{"Y":220,"Meta":"seguridad.intentos_login + auditoria.bitacora_seguridad_global","Id":"cu01b","X":945,"Label":"CU-01.4: Bloquear Cuenta\nFuerza Bruta (5 intentos)","W":220,"Stroke":"#DC2626","H":58,"Fill":"#FEE2E2"},{"Y":280,"Meta":"seguridad.tokens_recuperacion, historial_passwords","Id":"cu01r","X":380,"Label":"CU-01.5: Recuperar Clave\ncon Token de Un Solo Uso","W":215,"Stroke":"#D97706","H":60,"Fill":"#FEF3C7"},{"Y":385,"Meta":"clientes.evaluaciones_diagnostico, perfil_cutaneo, cliente_condiciones","Id":"cu02","X":380,"Label":"CU-02: Realizar Diagnóstico\nClínico Cutáneo","W":220,"Stroke":"#0369A1","H":68,"Fill":"#E0F2FE"},{"Y":355,"Meta":"clientes.consentimientos_privacidad (Art. 9 LFPDPPP)","Id":"cu02c","X":695,"Label":"CU-02.1: Recabar Consentimiento\nExpreso LFPDPPP","W":225,"Stroke":"#0284C7","H":62,"Fill":"#EFF6FF"},{"Y":355,"Meta":"catalogo.alergenos_ingrediente, advertencias_contraindicaciones","Id":"cu02a","X":955,"Label":"CU-02.2: Alertar Alérgenos\nINCI Incompatibles","W":215,"Stroke":"#D97706","H":62,"Fill":"#FEF3C7"},{"Y":475,"Meta":"catalogo.productos_maestros, variantes_sku, formula_ingredientes, registros_sanitarios_cofepris","Id":"cu09","X":695,"Label":"CU-09: Consultar Catálogo,\nFórmula INCI y COFEPRIS","W":225,"Stroke":"#0F766E","H":68,"Fill":"#CCFBF1"},{"Y":485,"Meta":"catalogo.historial_precios_base","Id":"cu09p","X":960,"Label":"CU-09.1: Auditar Historial\nde Precios Base","W":205,"Stroke":"#D97706","H":58,"Fill":"#FEF3C7"},{"Y":515,"Meta":"comunidad.rutinas_belleza, rutinas_pasos, listas_deseos, catalogo.kits_sets","Id":"cu13","X":380,"Label":"CU-13: Gestionar Rutinas,\nKits y Lista de Deseos","W":220,"Stroke":"#0F766E","H":66,"Fill":"#CCFBF1"},{"Y":645,"Meta":"clientes.solicitudes_arco, preferencias_comunicacion","Id":"cu08","X":380,"Label":"CU-08: Tramitar y Resolver\nDerechos ARCO (20 días)","W":230,"Stroke":"#4338CA","H":68,"Fill":"#E0E7FF"}],"Id":"dcu-sm1","Edges":[{"T":"s1_usr","S":"s1_cli","Label":"","Kind":"gen"},{"T":"s1_usr","S":"s1_adm","Label":"","Kind":"gen"},{"T":"cu01","S":"s1_usr","Label":"","Kind":"assoc"},{"T":"cu01h","S":"cu01","Label":"\u003c\u003cinclude\u003e\u003e","Kind":"include"},{"T":"cu01s","S":"cu01","Label":"\u003c\u003cinclude\u003e\u003e","Kind":"include"},{"T":"cu01","S":"cu01m","Label":"\u003c\u003cextend\u003e\u003e","Kind":"extend"},{"T":"cu01","S":"cu01b","Label":"\u003c\u003cextend\u003e\u003e","Kind":"extend"},{"T":"cu01","S":"cu01r","Label":"\u003c\u003cextend\u003e\u003e","Kind":"extend"},{"T":"cu02","S":"s1_cli","Label":"","Kind":"assoc"},{"T":"cu02","S":"s1_der","Label":"","Kind":"assoc"},{"T":"cu02c","S":"cu02","Label":"\u003c\u003cinclude\u003e\u003e","Kind":"include"},{"T":"cu02","S":"cu02a","Label":"\u003c\u003cextend\u003e\u003e","Kind":"extend"},{"T":"cu09","S":"s1_cli","Label":"","Kind":"assoc"},{"T":"cu09","S":"s1_der","Label":"","Kind":"assoc"},{"T":"cu09","S":"s1_qa","Label":"","Kind":"assoc"},{"T":"cu09","S":"cu09p","Label":"\u003c\u003cextend\u003e\u003e","Kind":"extend"},{"T":"cu13","S":"s1_cli","Label":"","Kind":"assoc"},{"T":"cu13","S":"s1_der","Label":"","Kind":"assoc"},{"T":"cu09","S":"cu13","Label":"\u003c\u003cinclude\u003e\u003e","Kind":"include"},{"T":"cu08","S":"s1_cli","Label":"","Kind":"assoc"},{"T":"cu08","S":"s1_adm","Label":"","Kind":"assoc"}],"Boundary":{"H":665,"Label":"Sistema DERMA-ECOM — Submódulo 1 (Tablas 001–050)","Color":"#1B365D","Y":125,"Bg":"#F5F9FC","X":320,"W":890},"W":1520,"Name":"2. SM1 Identidad y Catálogo","H":840,"Title":"SUBMÓDULO 1 — CASOS DE USO UML: IDENTIDAD, PERFIL DERMO-SALUD Y CATÁLOGO INCI (TABLAS 001–050)","Actors":[{"Label":"Usuario del\nSistema","Kind":"human","Id":"s1_usr","Y":180,"X":75},{"Label":"Cliente /\nPaciente Dermo","Kind":"human","Id":"s1_cli","Y":410,"X":75},{"Label":"Administrador\nde Seguridad","Kind":"human","Id":"s1_adm","Y":630,"X":75},{"Label":"Dermoconsultor\nClínico","Kind":"human","Id":"s1_der","Y":320,"X":1310},{"Label":"Químico QA\nSanitario","Kind":"human","Id":"s1_qa","Y":560,"X":1310}],"Sub":"Autor: José Luis Luna García · Esquemas BD: seguridad (10), clientes (15), catalogo (21), comunidad (4) · Incluye CU-01 Login Obligatorio"},{"UseCases":[{"Y":175,"Meta":"ventas.ordenes, ordenes_detalles, ordenes_impuestos, ordenes_descuentos","Id":"cu03","X":360,"Label":"CU-03: Realizar Checkout\ny Generar Orden","W":220,"Stroke":"#6B21A8","H":68,"Fill":"#F3E8FF"},{"Y":145,"Meta":"ventas.reservas_temporales_stock","Id":"cu03r","X":665,"Label":"CU-03.1: Reservar Stock\nTemporal (15 min)","W":210,"Stroke":"#7E22CE","H":56,"Fill":"#FAF5FF"},{"Y":220,"Meta":"pagos.evaluaciones_antifraude, reglas_antifraude","Id":"cu03f","X":665,"Label":"CU-03.2: Evaluar Riesgo\nAntifraude (0-100)","W":210,"Stroke":"#7E22CE","H":56,"Fill":"#FAF5FF"},{"Y":160,"Meta":"pagos.evaluaciones_antifraude, intentos_cobro","Id":"cu03d","X":955,"Label":"CU-03.4: Reto Bancario\n3D-Secure (Score \u003e= 65)","W":220,"Stroke":"#D97706","H":58,"Fill":"#FEF3C7"},{"Y":240,"Meta":"ventas.ordenes_splits_almacen","Id":"cu03s","X":955,"Label":"CU-03.3: Generar Split\nMultialmacén CEDIS","W":220,"Stroke":"#7E22CE","H":56,"Fill":"#FAF5FF"},{"Y":325,"Meta":"pagos.transacciones, intentos_cobro, metodos_pago","Id":"cupag","X":665,"Label":"CU-PAG: Procesar Pago\nElectrónico","W":210,"Stroke":"#3730A3","H":64,"Fill":"#E0E7FF"},{"Y":320,"Meta":"clientes.metodos_pago_tokenizados","Id":"cupt","X":955,"Label":"Tarjeta Tokenizada\nPCI-DSS","W":205,"Stroke":"#4F46E5","H":50,"Fill":"#EEF2FF"},{"Y":385,"Meta":"pagos.billetera_electronica, tarjetas_regalo_giftcards, split_multipagos","Id":"cupb","X":955,"Label":"Billetera Electrónica /\nGiftCard / Split Multipago","W":225,"Stroke":"#4F46E5","H":54,"Fill":"#EEF2FF"},{"Y":295,"Meta":"promos.campanias, cupones, redenciones_cupones, ventas_flash_horarias","Id":"cu10","X":360,"Label":"CU-10: Redimir Cupón,\nGWP y Venta Flash","W":220,"Stroke":"#B45309","H":64,"Fill":"#FEF3C7"},{"Y":405,"Meta":"ventas.suscripciones_cliente, calendario_entregas, bitacora_estados","Id":"cu04","X":360,"Label":"CU-04: Contratar Suscripción\nBeauty-Box","W":220,"Stroke":"#6B21A8","H":64,"Fill":"#F3E8FF"},{"Y":505,"Meta":"ventas.afiliados_influencers, comisiones_afiliados","Id":"cu14","X":360,"Label":"CU-14: Atribuir y Liquidar\nComisiones Afiliado","W":220,"Stroke":"#BE185D","H":62,"Fill":"#FCE7F3"},{"Y":630,"Meta":"fiscal.facturas_cfdi, facturas_partidas, datos_fiscales_cliente","Id":"cu05","X":360,"Label":"CU-05: Emitir Factura\nElectrónica CFDI 4.0","W":225,"Stroke":"#C2410C","H":68,"Fill":"#FFEDD5"},{"Y":595,"Meta":"fiscal.regimenes_sat, usos_cfdi","Id":"cu05v","X":665,"Label":"CU-05.1: Validar RFC, LCO\ny Régimen SAT","W":215,"Stroke":"#EA580C","H":58,"Fill":"#FFF7ED"},{"Y":685,"Meta":"fiscal.notas_credito, complementos_pago, cancelaciones_cfdi","Id":"cu05n","X":665,"Label":"CU-05.2: Nota de Crédito,\nREP y Cancelación CFDI","W":230,"Stroke":"#D97706","H":62,"Fill":"#FEF3C7"}],"Id":"dcu-sm2","Edges":[{"T":"cu03","S":"s2_cli","Label":"","Kind":"assoc"},{"T":"cu10","S":"s2_cli","Label":"","Kind":"assoc"},{"T":"cu04","S":"s2_cli","Label":"","Kind":"assoc"},{"T":"cu05","S":"s2_cli","Label":"","Kind":"assoc"},{"T":"cu14","S":"s2_afi","Label":"","Kind":"assoc"},{"T":"cu05","S":"s2_fac","Label":"","Kind":"assoc"},{"T":"cu05n","S":"s2_fac","Label":"","Kind":"assoc"},{"T":"cu03r","S":"cu03","Label":"\u003c\u003cinclude\u003e\u003e","Kind":"include"},{"T":"cu03f","S":"cu03","Label":"\u003c\u003cinclude\u003e\u003e","Kind":"include"},{"T":"cupag","S":"cu03","Label":"\u003c\u003cinclude\u003e\u003e","Kind":"include"},{"T":"cu03s","S":"cu03","Label":"\u003c\u003cinclude\u003e\u003e","Kind":"include"},{"T":"cu03f","S":"cu03d","Label":"\u003c\u003cextend\u003e\u003e","Kind":"extend"},{"T":"cu03","S":"cu10","Label":"\u003c\u003cextend\u003e\u003e","Kind":"extend"},{"T":"cu03","S":"cu14","Label":"\u003c\u003cextend\u003e\u003e","Kind":"extend"},{"T":"cupag","S":"cu04","Label":"\u003c\u003cinclude\u003e\u003e","Kind":"include"},{"T":"cupag","S":"cupt","Label":"","Kind":"gen"},{"T":"cupag","S":"cupb","Label":"","Kind":"gen"},{"T":"s2_pas","S":"cupag","Label":"","Kind":"assoc"},{"T":"cu05v","S":"cu05","Label":"\u003c\u003cinclude\u003e\u003e","Kind":"include"},{"T":"cu05","S":"cu05n","Label":"\u003c\u003cextend\u003e\u003e","Kind":"extend"},{"T":"s2_sat","S":"cu05","Label":"","Kind":"assoc"},{"T":"s2_sat","S":"cu05n","Label":"","Kind":"assoc"}],"Boundary":{"H":665,"Label":"Sistema DERMA-ECOM — Submódulo 2 (Tablas 051–100)","Color":"#4A2574","Y":125,"Bg":"#FAF6FC","X":310,"W":900},"W":1520,"Name":"3. SM2 Ventas, Pagos y CFDI","H":840,"Title":"SUBMÓDULO 2 — CASOS DE USO UML: VENTAS, SUSCRIPCIONES, PAGOS, ANTIFRAUDE Y CFDI 4.0 (TABLAS 051–100)","Actors":[{"Label":"Cliente /\nComprador","Kind":"human","Id":"s2_cli","Y":220,"X":75},{"Label":"Afiliado /\nInfluencer","Kind":"human","Id":"s2_afi","Y":460,"X":75},{"Label":"Especialista en\nFacturación SAT","Kind":"human","Id":"s2_fac","Y":650,"X":75},{"Label":"\u003c\u003csistema\u003e\u003e\nPasarela PCI-DSS","Kind":"system","Id":"s2_pas","Y":300,"X":1285},{"Label":"\u003c\u003csistema\u003e\u003e\nPAC / SAT CFDI 4.0","Kind":"system","Id":"s2_sat","Y":620,"X":1285}],"Sub":"Autor: Sheyla Estefanía Moncada Guel · Esquemas BD: ventas (23), pagos (13), fiscal (8), promos (6)"},{"UseCases":[{"Y":160,"Meta":"compras.ordenes_compra, recepciones_mercancia, wms.lotes_fabricacion_sanitaria","Id":"cu06","X":360,"Label":"CU-06: Recepcionar OC\ne Ingresar Lote FEFO","W":220,"Stroke":"#15803D","H":66,"Fill":"#DCFCE7"},{"Y":145,"Meta":"compras.inspecciones_sanitarias_qa","Id":"cu06q","X":665,"Label":"CU-06.1: Inspección QA\nSanitaria y COA","W":210,"Stroke":"#059669","H":58,"Fill":"#ECFDF5"},{"Y":145,"Meta":"wms.kardex_movimientos, inventario_lotes_ubicacion","Id":"cu06k","X":955,"Label":"CU-06.2: Registrar Asiento\nen Kardex Inventario","W":215,"Stroke":"#059669","H":58,"Fill":"#ECFDF5"},{"Y":225,"Meta":"wms.mermas_destruccion_sanitaria","Id":"cu06m","X":665,"Label":"CU-06.3: Cuarentena y Acta\nDestrucción COFEPRIS","W":215,"Stroke":"#DC2626","H":58,"Fill":"#FEE2E2"},{"Y":230,"Meta":"wms.monitoreo_temperatura_humedad, alertas_caducidad_proxima, conteos_ciclicos_auditoria","Id":"cu15","X":955,"Label":"CU-15: Monitorear IoT Frío\ny Alertas Caducidad","W":220,"Stroke":"#0369A1","H":64,"Fill":"#E0F2FE"},{"Y":365,"Meta":"envios.despachos_orden, paquetes_bultos, guias_rastreo, eventos_tracking_bitacora","Id":"cu11","X":360,"Label":"CU-11: Despachar Bultos\ny Rastrear Guías","W":220,"Stroke":"#0369A1","H":66,"Fill":"#E0F2FE"},{"Y":340,"Meta":"envios.paquetes_contenido_lotes","Id":"cu11l","X":665,"Label":"CU-11.1: Trazar Lotes FEFO\npor Paquete / Bulto","W":215,"Stroke":"#0284C7","H":58,"Fill":"#F0F9FF"},{"Y":375,"Meta":"envios.puntos_recoleccion_pickup, intentos_entrega_fallidos, incidencias_logisticas","Id":"cu11p","X":955,"Label":"CU-11.2: Entrega Locker Pickup\no Incidencia","W":220,"Stroke":"#D97706","H":60,"Fill":"#FEF3C7"},{"Y":515,"Meta":"postventa.solicitudes_rma, rma_detalles, tickets_soporte","Id":"cu07","X":360,"Label":"CU-07: Gestionar Devolución\nRMA y Retorno","W":220,"Stroke":"#BE123C","H":66,"Fill":"#FFE4E6"},{"Y":495,"Meta":"postventa.inspeccion_sanitaria_retorno","Id":"cu07h","X":665,"Label":"CU-07.1: Dictamen Higiénico\nde Retorno Cuarentena","W":225,"Stroke":"#E11D48","H":60,"Fill":"#FFF1F2"},{"Y":540,"Meta":"postventa.reportes_farmacovigilancia","Id":"cu07f","X":955,"Label":"CU-07.2: Notificar RAM\nFarmacovigilancia COFEPRIS","W":225,"Stroke":"#DC2626","H":62,"Fill":"#FEE2E2"},{"Y":675,"Meta":"auditoria.bitacora_seguridad_global, bitacora_cambios_datos, sistema.parametros_configuracion","Id":"cu12","X":360,"Label":"CU-12: Auditar Bitácora Forense\ny Soft-Delete","W":235,"Stroke":"#334155","H":66,"Fill":"#F1F5F9"},{"Y":680,"Meta":"auditoria.bitacora_seguridad_global (CPF Arts. 211 bis 1-7)","Id":"cu12s","X":680,"Label":"CU-12.1: Sellar Evento con\nFirma HMAC-SHA256","W":225,"Stroke":"#475569","H":58,"Fill":"#E2E8F0"}],"Id":"dcu-sm3","Edges":[{"T":"cu06","S":"s3_wms","Label":"","Kind":"assoc"},{"T":"cu06q","S":"s3_qa","Label":"","Kind":"assoc"},{"T":"cu11","S":"s3_wms","Label":"","Kind":"assoc"},{"T":"cu15","S":"s3_qa","Label":"","Kind":"assoc"},{"T":"cu07","S":"s3_cli","Label":"","Kind":"assoc"},{"T":"cu07h","S":"s3_qa","Label":"","Kind":"assoc"},{"T":"cu12","S":"s3_adm","Label":"","Kind":"assoc"},{"T":"cu06q","S":"cu06","Label":"\u003c\u003cinclude\u003e\u003e","Kind":"include"},{"T":"cu06k","S":"cu06","Label":"\u003c\u003cinclude\u003e\u003e","Kind":"include"},{"T":"cu06q","S":"cu06m","Label":"\u003c\u003cextend\u003e\u003e","Kind":"extend"},{"T":"cu11l","S":"cu11","Label":"\u003c\u003cinclude\u003e\u003e","Kind":"include"},{"T":"cu06k","S":"cu11","Label":"\u003c\u003cinclude\u003e\u003e","Kind":"include"},{"T":"cu11","S":"cu11p","Label":"\u003c\u003cextend\u003e\u003e","Kind":"extend"},{"T":"cu07h","S":"cu07","Label":"\u003c\u003cinclude\u003e\u003e","Kind":"include"},{"T":"cu07","S":"cu07f","Label":"\u003c\u003cextend\u003e\u003e","Kind":"extend"},{"T":"cu12s","S":"cu12","Label":"\u003c\u003cinclude\u003e\u003e","Kind":"include"},{"T":"s3_iot","S":"cu15","Label":"","Kind":"assoc"},{"T":"s3_log","S":"cu11","Label":"","Kind":"assoc"},{"T":"s3_cof","S":"cu07f","Label":"","Kind":"assoc"},{"T":"s3_cof","S":"cu06m","Label":"","Kind":"assoc"}],"Boundary":{"H":665,"Label":"Sistema DERMA-ECOM — Submódulo 3 (Tablas 101–150)","Color":"#14532D","Y":125,"Bg":"#F4FAF6","X":310,"W":900},"W":1520,"Name":"4. SM3 WMS, Envíos y Forense","H":840,"Title":"SUBMÓDULO 3 — CASOS DE USO UML: COMPRAS, WMS FEFO, IOT FRÍO, ENVÍOS, RMA Y FORENSE (TABLAS 101–150)","Actors":[{"Label":"Operador WMS\nCEDIS","Kind":"human","Id":"s3_wms","Y":190,"X":75},{"Label":"Químico QA\nSanitario","Kind":"human","Id":"s3_qa","Y":375,"X":75},{"Label":"Cliente /\nComprador","Kind":"human","Id":"s3_cli","Y":545,"X":75},{"Label":"Administrador\nde Seguridad","Kind":"human","Id":"s3_adm","Y":690,"X":75},{"Label":"\u003c\u003csistema\u003e\u003e\nSensores IoT 2-8 C","Kind":"system","Id":"s3_iot","Y":230,"X":1285},{"Label":"\u003c\u003csistema\u003e\u003e\nAPI Paquetería","Kind":"system","Id":"s3_log","Y":420,"X":1285},{"Label":"\u003c\u003corganismo\u003e\u003e\nPortal COFEPRIS","Kind":"system","Id":"s3_cof","Y":600,"X":1285}],"Sub":"Autor: Eduardo Salazar Martínez · Esquemas BD: compras (12), wms (14), envios (12), postventa (7), auditoria (3), sistema (2)"}];
+const NS = 'http://www.w3.org/2000/svg';
+const svg = document.getElementById('svgView');
+const tabBar = document.getElementById('tabBar');
+const infoBox = document.getElementById('infoBox');
+let curIdx = 0, scale = 0.85, tx = 20, ty = 15, dragging = false, sx = 0, sy = 0;
+
+function el(tag, attrs, parent) {
+  const n = document.createElementNS(NS, tag);
+  for (const [k, v] of Object.entries(attrs || {})) n.setAttribute(k, v);
+  if (parent) parent.appendChild(n);
+  return n;
+}
+
+function addMultilineText(parent, x, y, text, size, weight, fill) {
+  const lines = text.split('\n');
+  const t = el('text', { x, y: y - ((lines.length - 1) * (size + 2)) / 2, 'text-anchor': 'middle', 'font-size': size, 'font-weight': weight, fill }, parent);
+  lines.forEach((ln, i) => {
+    const ts = el('tspan', { x, dy: i === 0 ? 0 : (size + 3) }, t);
+    ts.textContent = ln;
+  });
+}
+
+function drawStickActor(parent, a) {
+  const g = el('g', {}, parent);
+  const cx = a.X + 20, top = a.Y;
+  el('circle', { cx, cy: top + 12, r: 10, fill: '#EFF6FF', stroke: '#1E3A8A', 'stroke-width': 2 }, g);
+  el('line', { x1: cx, y1: top + 22, x2: cx, y2: top + 48, stroke: '#1E3A8A', 'stroke-width': 2 }, g);
+  el('line', { x1: cx - 16, y1: top + 32, x2: cx + 16, y2: top + 32, stroke: '#1E3A8A', 'stroke-width': 2 }, g);
+  el('line', { x1: cx, y1: top + 48, x2: cx - 14, y2: top + 68, stroke: '#1E3A8A', 'stroke-width': 2 }, g);
+  el('line', { x1: cx, y1: top + 48, x2: cx + 14, y2: top + 68, stroke: '#1E3A8A', 'stroke-width': 2 }, g);
+  addMultilineText(g, cx, top + 84, a.Label, 11, '700', '#0F172A');
+  return { cx, cy: top + 36, w: 40, h: 72 };
+}
+
+function drawSystemActor(parent, a) {
+  const g = el('g', {}, parent);
+  el('rect', { x: a.X, y: a.Y, width: 165, height: 54, rx: 4, fill: '#FEF9C3', stroke: '#854D0E', 'stroke-width': 1.8 }, g);
+  addMultilineText(g, a.X + 82, a.Y + 30, a.Label, 11, '700', '#422006');
+  return { cx: a.X + 82, cy: a.Y + 27, w: 165, h: 54 };
+}
+
+function renderPage(idx) {
+  curIdx = idx;
+  infoBox.style.display = 'none';
+  const p = PAGES[idx];
+  svg.innerHTML = '';
+  const defs = el('defs', {}, svg);
+  const mkOpen = (id, color) => {
+    const m = el('marker', { id, viewBox: '0 0 10 10', refX: 9, refY: 5, markerWidth: 8, markerHeight: 8, orient: 'auto' }, defs);
+    el('path', { d: 'M 1 1 L 9 5 L 1 9', fill: 'none', stroke: color, 'stroke-width': 1.6 }, m);
+  };
+  mkOpen('m-inc', '#0369A1');
+  mkOpen('m-ext', '#B45309');
+  const mg = el('marker', { id: 'm-gen', viewBox: '0 0 12 12', refX: 11, refY: 6, markerWidth: 10, markerHeight: 10, orient: 'auto' }, defs);
+  el('path', { d: 'M 1 1 L 11 6 L 1 11 Z', fill: '#FFFFFF', stroke: '#1E3A8A', 'stroke-width': 1.6 }, mg);
+
+  const scene = el('g', { id: 'scene' }, svg);
+  el('rect', { x: 0, y: 0, width: p.W, height: p.H, fill: '#F8FAFC' }, scene);
+
+  // Banner
+  el('rect', { x: 30, y: 18, width: p.W - 60, height: 84, rx: 10, fill: p.Boundary.Color }, scene);
+  addMultilineText(scene, p.W / 2, 48, p.Title, 16, '700', '#FFFFFF');
+  addMultilineText(scene, p.W / 2, 78, p.Sub, 12, '400', '#BAE6FD');
+
+  // Boundary
+  const b = p.Boundary;
+  el('rect', { x: b.X, y: b.Y, width: b.W, height: b.H, rx: 10, fill: b.Bg, stroke: b.Color, 'stroke-width': 2 }, scene);
+  el('rect', { x: b.X, y: b.Y, width: b.W, height: 32, rx: 10, fill: b.Color }, scene);
+  const bt = el('text', { x: b.X + 16, y: b.Y + 21, fill: '#FFFFFF', 'font-size': 12.5, 'font-weight': '700' }, scene);
+  bt.textContent = b.Label;
+
+  const gEdges = el('g', {}, scene);
+  const gNodes = el('g', {}, scene);
+  const centers = {};
+
+  p.Actors.forEach(a => {
+    centers[a.Id] = a.Kind === 'human' ? drawStickActor(gNodes, a) : drawSystemActor(gNodes, a);
+  });
+
+  p.UseCases.forEach(u => {
+    const g = el('g', { cursor: 'pointer' }, gNodes);
+    const cx = u.X + u.W / 2, cy = u.Y + u.H / 2;
+    el('ellipse', { cx, cy, rx: u.W / 2, ry: u.H / 2, fill: u.Fill, stroke: u.Stroke, 'stroke-width': 2 }, g);
+    addMultilineText(g, cx, cy + 4, u.Label, 11, '700', '#0F172A');
+    g.addEventListener('click', ev => {
+      ev.stopPropagation();
+      infoBox.innerHTML = '<h3>' + u.Label.replace(/\n/g, ' ') + '</h3><div><strong>Trazabilidad BD / Módulo:</strong><br>' + u.Meta + '</div>';
+      infoBox.style.display = 'block';
+    });
+    centers[u.Id] = { cx, cy, w: u.W, h: u.H };
+  });
+
+  p.Edges.forEach(e => {
+    const s = centers[e.S], t = centers[e.T];
+    if (!s || !t) return;
+    const dx = t.cx - s.cx, dy = t.cy - s.cy, dist = Math.hypot(dx, dy) || 1;
+    const ux = dx / dist, uy = dy / dist;
+    const x1 = s.cx + ux * (s.w * 0.42), y1 = s.cy + uy * (s.h * 0.42);
+    const x2 = t.cx - ux * (t.w * 0.48), y2 = t.cy - uy * (t.h * 0.48);
+    const attrs = { x1, y1, x2, y2, 'stroke-width': 1.5 };
+    if (e.Kind === 'assoc') { attrs.stroke = '#475569'; }
+    else if (e.Kind === 'include') { attrs.stroke = '#0369A1'; attrs['stroke-dasharray'] = '6,4'; attrs['marker-end'] = 'url(#m-inc)'; }
+    else if (e.Kind === 'extend') { attrs.stroke = '#B45309'; attrs['stroke-dasharray'] = '6,4'; attrs['marker-end'] = 'url(#m-ext)'; }
+    else if (e.Kind === 'gen') { attrs.stroke = '#1E3A8A'; attrs['stroke-width'] = 1.8; attrs['marker-end'] = 'url(#m-gen)'; }
+    el('line', attrs, gEdges);
+    if (e.Label) {
+      const mx = (x1 + x2) / 2, my = (y1 + y2) / 2 - 4;
+      const lbl = e.Label.replace('<<', '«').replace('>>', '»');
+      el('rect', { x: mx - 34, y: my - 10, width: 68, height: 14, rx: 3, fill: '#FFFFFF', opacity: 0.9 }, gEdges);
+      const txEl = el('text', { x: mx, y: my + 1, 'text-anchor': 'middle', 'font-size': 10, 'font-style': 'italic', 'font-weight': '600', fill: attrs.stroke }, gEdges);
+      txEl.textContent = lbl;
+    }
+  });
+
+  fitView();
+  document.querySelectorAll('#tabBar button.tab').forEach((btn, i) => btn.classList.toggle('active', i === idx));
+}
+
+function updateTransform() {
+  const sc = svg.querySelector('#scene');
+  if (sc) sc.setAttribute('transform', 'translate(' + tx + ',' + ty + ') scale(' + scale + ')');
+}
+function fitView() {
+  const p = PAGES[curIdx], r = svg.getBoundingClientRect();
+  scale = Math.min((r.width - 30) / p.W, (r.height - 30) / p.H);
+  tx = (r.width - p.W * scale) / 2;
+  ty = (r.height - p.H * scale) / 2;
+  updateTransform();
+}
+function exportSvg() {
+  const p = PAGES[curIdx];
+  const clone = svg.cloneNode(true);
+  clone.setAttribute('width', p.W);
+  clone.setAttribute('height', p.H);
+  clone.setAttribute('viewBox', '0 0 ' + p.W + ' ' + p.H);
+  clone.querySelector('#scene').setAttribute('transform', 'translate(0,0) scale(1)');
+  const blob = new Blob([new XMLSerializer().serializeToString(clone)], { type: 'image/svg+xml;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'DERMA_ECOM_UML_' + p.Id.toUpperCase() + '.svg';
+  a.click();
+}
+
+PAGES.forEach((p, i) => {
+  const b = document.createElement('button');
+  b.className = 'tab';
+  b.textContent = p.Name;
+  b.onclick = () => renderPage(i);
+  tabBar.appendChild(b);
+});
+const exBtn = document.createElement('button');
+exBtn.className = 'export';
+exBtn.textContent = 'Exportar SVG';
+exBtn.onclick = exportSvg;
+tabBar.appendChild(exBtn);
+
+svg.addEventListener('click', () => infoBox.style.display = 'none');
+svg.addEventListener('wheel', e => {
+  e.preventDefault();
+  const f = e.deltaY < 0 ? 1.15 : 0.87, r = svg.getBoundingClientRect();
+  const mx = e.clientX - r.left, my = e.clientY - r.top;
+  tx = mx - (mx - tx) * f; ty = my - (my - ty) * f; scale *= f;
+  updateTransform();
+}, { passive: false });
+svg.addEventListener('mousedown', e => { dragging = true; sx = e.clientX - tx; sy = e.clientY - ty; });
+window.addEventListener('mousemove', e => { if (!dragging) return; tx = e.clientX - sx; ty = e.clientY - sy; updateTransform(); });
+window.addEventListener('mouseup', () => dragging = false);
+window.addEventListener('resize', fitView);
+
+renderPage(0);
+</script>
+</body>
+</html>

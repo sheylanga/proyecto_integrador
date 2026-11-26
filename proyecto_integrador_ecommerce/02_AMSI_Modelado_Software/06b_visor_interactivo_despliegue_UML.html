@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>DERMA-ECOM — Diagrama de Despliegue UML 2.5 (VLSM 10.40.0.0/16)</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0f172a; color: #f8fafc; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+  header { background: #1B365D; border-bottom: 2px solid #38bdf8; padding: 10px 16px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+  header h1 { font-size: 15px; font-weight: 700; }
+  header .sub { font-size: 11px; color: #cbd5e1; }
+  .tabs { display: flex; gap: 6px; margin-left: auto; flex-wrap: wrap; }
+  .tabs button { background: #0f172a; color: #e2e8f0; border: 1px solid #475569; border-radius: 6px; padding: 6px 10px; font-size: 12px; cursor: pointer; }
+  .tabs button.active { background: #0284c7; border-color: #38bdf8; color: #fff; font-weight: 700; }
+  .tabs button.export { background: #15803d; border-color: #4ade80; color: #fff; font-weight: 600; }
+  .stage { flex: 1; position: relative; background: #f8fafc; overflow: hidden; }
+  #svgView { width: 100%; height: 100%; display: block; cursor: grab; }
+  #svgView:active { cursor: grabbing; }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>DERMA-ECOM — Diagrama de Despliegue Físico UML 2.5 (Topología VLSM 10.40.0.0/16)</h1>
+    <div class="sub">TecNM / ITSM · AMSI (IFE-1005) · Criterio 1.4 (30%) · José Luis Luna García · Sheyla Estefanía Moncada Guel · Eduardo Salazar Martínez</div>
+  </div>
+  <div class="tabs" id="tabBar"></div>
+</header>
+<div class="stage"><svg id="svgView" xmlns="http://www.w3.org/2000/svg"></svg></div>
+<script>
+const PAGES = [{"Id":"uml-deploy","Groups":[{"Id":"dg_wan","W":1440,"Color":"#475569","Y":115,"X":40,"Bg":"#F8FAFC","Label":"Zona WAN / Servicios Externos Regulados","H":105},{"Id":"dg_v20","W":700,"Color":"#0369A1","Y":255,"X":40,"Bg":"#F0F9FF","Label":"VLAN 20 — DMZ Web y Aplicaciones (10.40.4.0/25 · GW .1)","H":250},{"Id":"dg_v10","W":700,"Color":"#14532D","Y":255,"X":780,"Bg":"#F0FDF4","Label":"VLAN 10 — Granja BD Multi-SGBD Aislada (10.40.5.0/26)","H":250},{"Id":"dg_v30","W":700,"Color":"#0F766E","Y":545,"X":40,"Bg":"#F0FDFA","Label":"VLAN 30 — CEDIS WMS e IoT Frío 2-8 °C (10.40.2.0/24)","H":295},{"Id":"dg_v40","W":700,"Color":"#4A2574","Y":545,"X":780,"Bg":"#FAF5FF","Label":"VLAN 40 SOC/NOC (10.40.5.64/27) · VLAN 50 Corp (10.40.0.0/23) · VLAN 99 Mgmt","H":295}],"Color":"#14532D","Nodes":[{"Y":150,"Id":"d_cli","X":70,"Label":"\u003c\u003cdevice\u003e\u003e\nClientes Web / Móvil\nTLS 1.3 :443","Kind":"node","W":240,"Stroke":"#334155","H":54,"Fill":"#E2E8F0"},{"Y":150,"Id":"d_fw","X":380,"Label":"\u003c\u003cdevice\u003e\u003e\nFirewall / Router ISR 4331\nACL + VPN IPsec","Kind":"node","W":260,"Stroke":"#DC2626","H":54,"Fill":"#FEE2E2"},{"Y":150,"Id":"d_pas","X":710,"Label":"\u003c\u003cexternal\u003e\u003e\nPasarela PCI-DSS\n(Stripe / MP)","Kind":"node","W":210,"Stroke":"#B45309","H":54,"Fill":"#FEF3C7"},{"Y":150,"Id":"d_sat","X":960,"Label":"\u003c\u003cexternal\u003e\u003e\nPAC / SAT CFDI 4.0\nSOAP/REST","Kind":"node","W":210,"Stroke":"#C2410C","H":54,"Fill":"#FFEDD5"},{"Y":150,"Id":"d_cof","X":1210,"Label":"\u003c\u003cexternal\u003e\u003e\nPaquetería \u0026 COFEPRIS\nWebhooks / RAM","Kind":"node","W":240,"Stroke":"#15803D","H":54,"Fill":"#DCFCE7"},{"Y":300,"Id":"d_lb","X":75,"Label":"\u003c\u003cexecutionEnvironment\u003e\u003e\nNGINX / WAF Ingress\n10.40.4.10 (:443)","Kind":"node","W":290,"Stroke":"#0369A1","H":68,"Fill":"#E0F2FE"},{"Y":300,"Id":"d_ap1","X":415,"Label":"\u003c\u003cexecutionEnvironment\u003e\u003e\nApp Node 01 (Docker)\nSM1 + SM2 · 10.40.4.20","Kind":"node","W":290,"Stroke":"#1D4ED8","H":68,"Fill":"#DBEAFE"},{"Y":405,"Id":"d_ap2","X":225,"Label":"\u003c\u003cexecutionEnvironment\u003e\u003e\nApp Node 02 (Docker)\nSM3 + Redis + RabbitMQ · 10.40.4.21","Kind":"node","W":350,"Stroke":"#1D4ED8","H":72,"Fill":"#DBEAFE"},{"Y":300,"Id":"d_ss","X":815,"Label":"\u003c\u003cdevice\u003e\u003e\nServidor SQL Server 2022\nPrimario OLTP · 10.40.5.10 :1433","Kind":"db","W":300,"Stroke":"#14532D","H":72,"Fill":"#DCFCE7"},{"Y":300,"Id":"d_pg","X":1150,"Label":"\u003c\u003cdevice\u003e\u003e\nServidor PostgreSQL 17\nHot-Swap Libre · 10.40.5.11 :5432","Kind":"db","W":300,"Stroke":"#14532D","H":72,"Fill":"#DCFCE7"},{"Y":410,"Id":"d_san","X":885,"Label":"\u003c\u003cdevice\u003e\u003e\nAlmacenamiento SAN RAID 10 + Object Storage S3/MinIO\n10.40.5.20","Kind":"db","W":490,"Stroke":"#059669","H":68,"Fill":"#ECFDF5"},{"Y":595,"Id":"d_sw","X":75,"Label":"\u003c\u003cdevice\u003e\u003e\nSwitch Acceso Catalyst 2960\nPort Security Sticky MAC · 10.40.2.2","Kind":"node","W":300,"Stroke":"#0F766E","H":70,"Fill":"#CCFBF1"},{"Y":595,"Id":"d_iot","X":415,"Label":"\u003c\u003cdevice\u003e\u003e\nGateway Industrial IoT\nMQTT/TLS :8883 · 10.40.2.30","Kind":"node","W":290,"Stroke":"#0F766E","H":70,"Fill":"#CCFBF1"},{"Y":715,"Id":"d_pda","X":75,"Label":"\u003c\u003cdevice\u003e\u003e\nTerminales PDA Zebra\nSurtido FEFO / QA","Kind":"node","W":290,"Stroke":"#0369A1","H":68,"Fill":"#E0F2FE"},{"Y":715,"Id":"d_sen","X":415,"Label":"\u003c\u003cdevice\u003e\u003e\nSensores BLE 5.0 Cámara Fría\nTelemetría 2-8 °C","Kind":"node","W":290,"Stroke":"#B45309","H":68,"Fill":"#FEF3C7"},{"Y":595,"Id":"d_bas","X":815,"Label":"\u003c\u003cdevice\u003e\u003e\nHost Bastión SSH / VPN\nVLAN 40 · 10.40.5.70","Kind":"node","W":295,"Stroke":"#4A2574","H":70,"Fill":"#F3E8FF"},{"Y":595,"Id":"d_sie","X":1150,"Label":"\u003c\u003cdevice\u003e\u003e\nSIEM / Syslog Wazuh\nVLAN 40 · 10.40.5.71 :6514","Kind":"node","W":295,"Stroke":"#4A2574","H":70,"Fill":"#F3E8FF"},{"Y":715,"Id":"d_crp","X":815,"Label":"\u003c\u003cdevice\u003e\u003e\nEstaciones Dermoconsultores, QA y Fiscal\nVLAN 50 · 10.40.0.0/23","Kind":"node","W":305,"Stroke":"#6D28D9","H":70,"Fill":"#EDE9FE"},{"Y":715,"Id":"d_cct","X":1155,"Label":"\u003c\u003cdevice\u003e\u003e\nCCTV \u0026 Biométrico SITE\nVLAN 60 · 10.40.4.128/25","Kind":"node","W":290,"Stroke":"#334155","H":70,"Fill":"#F1F5F9"}],"W":1520,"Edges":[{"T":"d_fw","S":"d_cli","Label":"HTTPS :443","Kind":"solid"},{"T":"d_lb","S":"d_fw","Label":"ACL DMZ","Kind":"solid"},{"T":"d_ap1","S":"d_lb","Label":"HTTP/2","Kind":"solid"},{"T":"d_ap2","S":"d_lb","Label":"HTTP/2","Kind":"solid"},{"T":"d_ss","S":"d_ap1","Label":"TDS :1433","Kind":"solid"},{"T":"d_ss","S":"d_ap2","Label":"TDS :1433","Kind":"solid"},{"T":"d_pg","S":"d_ap1","Label":"Hot-Swap :5432","Kind":"dash"},{"T":"d_san","S":"d_ss","Label":"FC RAID10","Kind":"solid"},{"T":"d_san","S":"d_pg","Label":"FC RAID10","Kind":"solid"},{"T":"d_pas","S":"d_ap1","Label":"REST","Kind":"dash"},{"T":"d_sat","S":"d_ap1","Label":"SOAP","Kind":"dash"},{"T":"d_cof","S":"d_ap2","Label":"Webhooks","Kind":"dash"},{"T":"d_pda","S":"d_sw","Label":"","Kind":"solid"},{"T":"d_iot","S":"d_sw","Label":"","Kind":"solid"},{"T":"d_sen","S":"d_iot","Label":"BLE 2.4GHz","Kind":"dash"},{"T":"d_ap2","S":"d_iot","Label":"MQTT/TLS :8883","Kind":"solid"},{"T":"d_ss","S":"d_bas","Label":"SSH/Admin","Kind":"dash"},{"T":"d_ss","S":"d_sie","Label":"Syslog :6514","Kind":"dash"},{"T":"d_lb","S":"d_crp","Label":"HTTPS :443","Kind":"solid"}],"Name":"2. Diagrama de Despliegue (VLSM)","H":880,"Title":"DIAGRAMA DE DESPLIEGUE UML 2.5 — TOPOLOGÍA REAL VLSM 10.40.0.0/16 Y SEPARACIÓN DE SERVIDORES","Sub":"Sincronizado 100% con RC (IFD-1020) · VLAN 10 BD · VLAN 20 DMZ · VLAN 30 WMS/IoT · VLAN 40 SOC/NOC · VLAN 50 Corp · VLAN 60 CCTV · VLAN 99 Mgmt"}];
+const NS = 'http://www.w3.org/2000/svg';
+const svg = document.getElementById('svgView');
+const tabBar = document.getElementById('tabBar');
+let curIdx = 0, scale = 0.8, tx = 20, ty = 15, dragging = false, sx = 0, sy = 0;
+
+function el(tag, attrs, parent) { const n = document.createElementNS(NS, tag); for (const [k, v] of Object.entries(attrs || {})) n.setAttribute(k, v); if (parent) parent.appendChild(n); return n; }
+function addText(parent, x, y, text, size, weight, fill) {
+  const lines = text.split('\n');
+  const t = el('text', { x, y: y - ((lines.length - 1) * (size + 2)) / 2, 'text-anchor': 'middle', 'font-size': size, 'font-weight': weight, fill }, parent);
+  lines.forEach((ln, i) => { const ts = el('tspan', { x, dy: i === 0 ? 0 : (size + 3) }, t); ts.textContent = ln.replace('<<', '«').replace('>>', '»'); });
+}
+
+function renderPage(idx) {
+  curIdx = idx;
+  const p = PAGES[idx];
+  svg.innerHTML = '';
+  const defs = el('defs', {}, svg);
+  const m1 = el('marker', { id: 'm-solid', viewBox: '0 0 10 10', refX: 9, refY: 5, markerWidth: 7, markerHeight: 7, orient: 'auto' }, defs);
+  el('path', { d: 'M 0 1 L 10 5 L 0 9 Z', fill: '#334155' }, m1);
+  const m2 = el('marker', { id: 'm-dash', viewBox: '0 0 10 10', refX: 9, refY: 5, markerWidth: 7, markerHeight: 7, orient: 'auto' }, defs);
+  el('path', { d: 'M 1 1 L 9 5 L 1 9', fill: 'none', stroke: '#B45309', 'stroke-width': 1.6 }, m2);
+
+  const scene = el('g', { id: 'scene' }, svg);
+  el('rect', { x: 0, y: 0, width: p.W, height: p.H, fill: '#F8FAFC' }, scene);
+  el('rect', { x: 30, y: 16, width: p.W - 60, height: 78, rx: 10, fill: p.Color }, scene);
+  addText(scene, p.W / 2, 46, p.Title, 15.5, '700', '#FFFFFF');
+  addText(scene, p.W / 2, 74, p.Sub, 11.5, '400', '#BAE6FD');
+
+  p.Groups.forEach(g => {
+    el('rect', { x: g.X, y: g.Y, width: g.W, height: g.H, rx: 8, fill: g.Bg, stroke: g.Color, 'stroke-width': 1.8 }, scene);
+    el('rect', { x: g.X, y: g.Y, width: g.W, height: 26, rx: 8, fill: g.Color }, scene);
+    const gt = el('text', { x: g.X + 12, y: g.Y + 17, fill: '#fff', 'font-size': 11.5, 'font-weight': '700' }, scene); gt.textContent = g.Label;
+  });
+
+  const gEdges = el('g', {}, scene);
+  const gNodes = el('g', {}, scene);
+  const map = {};
+  p.Nodes.forEach(n => {
+    map[n.Id] = n;
+    el('rect', { x: n.X, y: n.Y, width: n.W, height: n.H, rx: n.Kind === 'db' ? 12 : 6, fill: n.Fill, stroke: n.Stroke, 'stroke-width': 1.8 }, gNodes);
+    if (n.Kind === 'comp') {
+      el('rect', { x: n.X - 6, y: n.Y + 10, width: 12, height: 8, fill: n.Fill, stroke: n.Stroke, 'stroke-width': 1.4 }, gNodes);
+      el('rect', { x: n.X - 6, y: n.Y + 24, width: 12, height: 8, fill: n.Fill, stroke: n.Stroke, 'stroke-width': 1.4 }, gNodes);
+    }
+    addText(gNodes, n.X + n.W / 2, n.Y + n.H / 2 + 4, n.Label, 10.5, '700', '#0F172A');
+  });
+
+  p.Edges.forEach(e => {
+    const s = map[e.S], t = map[e.T]; if (!s || !t) return;
+    const x1 = s.X + s.W / 2, y1 = s.Y + s.H / 2, x2 = t.X + t.W / 2, y2 = t.Y + t.H / 2;
+    const isDash = e.Kind === 'dash';
+    const attrs = { x1, y1, x2, y2, stroke: isDash ? '#B45309' : '#334155', 'stroke-width': 1.5, 'marker-end': isDash ? 'url(#m-dash)' : 'url(#m-solid)' };
+    if (isDash) attrs['stroke-dasharray'] = '6,4';
+    el('line', attrs, gEdges);
+    if (e.Label) {
+      const mx = (x1 + x2) / 2, my = (y1 + y2) / 2 - 4;
+      el('rect', { x: mx - 42, y: my - 9, width: 84, height: 13, rx: 3, fill: '#fff', opacity: 0.9 }, gEdges);
+      const lt = el('text', { x: mx, y: my + 1, 'text-anchor': 'middle', 'font-size': 9.5, 'font-weight': '600', fill: attrs.stroke }, gEdges); lt.textContent = e.Label;
+    }
+  });
+
+  fitView();
+  document.querySelectorAll('#tabBar button.tab').forEach((b, i) => b.classList.toggle('active', i === idx));
+}
+
+function updateTransform() { const sc = svg.querySelector('#scene'); if (sc) sc.setAttribute('transform', 'translate(' + tx + ',' + ty + ') scale(' + scale + ')'); }
+function fitView() { const p = PAGES[curIdx], r = svg.getBoundingClientRect(); scale = Math.min((r.width - 30) / p.W, (r.height - 30) / p.H); tx = (r.width - p.W * scale) / 2; ty = (r.height - p.H * scale) / 2; updateTransform(); }
+function exportSvg() {
+  const p = PAGES[curIdx], clone = svg.cloneNode(true);
+  clone.setAttribute('width', p.W); clone.setAttribute('height', p.H); clone.setAttribute('viewBox', '0 0 ' + p.W + ' ' + p.H);
+  clone.querySelector('#scene').setAttribute('transform', 'translate(0,0) scale(1)');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([new XMLSerializer().serializeToString(clone)], { type: 'image/svg+xml;charset=utf-8' }));
+  a.download = 'DERMA_ECOM_' + p.Id.toUpperCase() + '.svg';
+  a.click();
+}
+
+PAGES.forEach((p, i) => { const b = document.createElement('button'); b.className = 'tab'; b.textContent = p.Name; b.onclick = () => renderPage(i); tabBar.appendChild(b); });
+const ex = document.createElement('button'); ex.className = 'export'; ex.textContent = 'Exportar SVG'; ex.onclick = exportSvg; tabBar.appendChild(ex);
+svg.addEventListener('wheel', e => { e.preventDefault(); const f = e.deltaY < 0 ? 1.15 : 0.87, r = svg.getBoundingClientRect(); const mx = e.clientX - r.left, my = e.clientY - r.top; tx = mx - (mx - tx) * f; ty = my - (my - ty) * f; scale *= f; updateTransform(); }, { passive: false });
+svg.addEventListener('mousedown', e => { dragging = true; sx = e.clientX - tx; sy = e.clientY - ty; });
+window.addEventListener('mousemove', e => { if (!dragging) return; tx = e.clientX - sx; ty = e.clientY - sy; updateTransform(); });
+window.addEventListener('mouseup', () => dragging = false);
+window.addEventListener('resize', fitView);
+renderPage(0);
+</script>
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>DERMA-ECOM — Visor Interactivo de Diagramas de Actividades UML 2.5 (AMSI)</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0f172a; color: #f8fafc; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+  header { background: #1B365D; border-bottom: 2px solid #38bdf8; padding: 10px 16px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+  header h1 { font-size: 15px; font-weight: 700; }
+  header .sub { font-size: 11px; color: #cbd5e1; }
+  .tabs { display: flex; gap: 6px; margin-left: auto; flex-wrap: wrap; }
+  .tabs button { background: #0f172a; color: #e2e8f0; border: 1px solid #475569; border-radius: 6px; padding: 6px 10px; font-size: 12px; cursor: pointer; }
+  .tabs button.active { background: #0284c7; border-color: #38bdf8; color: #fff; font-weight: 700; }
+  .tabs button.export { background: #15803d; border-color: #4ade80; color: #fff; font-weight: 600; }
+  .stage { flex: 1; position: relative; background: #f8fafc; overflow: hidden; }
+  #svgView { width: 100%; height: 100%; display: block; cursor: grab; }
+  #svgView:active { cursor: grabbing; }
+  .legend { position: absolute; bottom: 12px; left: 12px; background: rgba(15,23,42,.92); color: #e2e8f0; padding: 8px 14px; border-radius: 8px; font-size: 11px; border: 1px solid #334155; }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>DERMA-ECOM — Diagramas de Actividades UML 2.5 (Carriles, Decisiones y Fork/Join)</h1>
+    <div class="sub">TecNM / ITSM · AMSI (IFE-1005) · José Luis Luna García · Sheyla Estefanía Moncada Guel · Eduardo Salazar Martínez</div>
+  </div>
+  <div class="tabs" id="tabBar"></div>
+</header>
+<div class="stage">
+  <svg id="svgView" xmlns="http://www.w3.org/2000/svg"></svg>
+  <div class="legend">
+    <strong>Sintaxis UML 2.5:</strong>
+    ● Inicio &nbsp;|&nbsp; ◉ Fin &nbsp;|&nbsp; ▢ Acción &nbsp;|&nbsp; ◇ Decisión [guarda] &nbsp;|&nbsp; ▬ Fork / Join Paralelo
+  </div>
+</div>
+<script>
+const PAGES = [{"Lanes":[{"Id":"l1","W":350,"Color":"#1E3A8A","Y":115,"X":40,"Bg":"#EFF6FF","Label":"Usuario / Cliente","H":710},{"Id":"l2","W":560,"Color":"#1B365D","Y":115,"X":390,"Bg":"#F8FAFC","Label":"Sistema Auth \u0026 Criptografía","H":710},{"Id":"l3","W":490,"Color":"#0F4C81","Y":115,"X":950,"Bg":"#F0F9FF","Label":"Base de Datos \u0026 Auditoría HMAC","H":710}],"Id":"da-01","Edges":[{"T":"a1","S":"s","Label":""},{"T":"a2","S":"a1","Label":""},{"T":"d1","S":"a2","Label":""},{"T":"a5","S":"d1","Label":"[No: Bloqueada]"},{"T":"a3","S":"d1","Label":"[Sí]"},{"T":"d2","S":"a3","Label":""},{"T":"a4","S":"d2","Label":"[No]"},{"T":"d3","S":"a4","Label":""},{"T":"a5","S":"d3","Label":"[Sí]"},{"T":"a1","S":"d3","Label":"[No: Reintento]"},{"T":"e1","S":"a5","Label":""},{"T":"d4","S":"d2","Label":"[Sí]"},{"T":"a6","S":"d4","Label":"[Sí]"},{"T":"a7","S":"a6","Label":"[TOTP OK]"},{"T":"a7","S":"d4","Label":"[No]"},{"T":"a8","S":"a7","Label":"[Test Cutáneo]"},{"T":"a9","S":"a8","Label":"[Consentimiento OK]"},{"T":"e2","S":"a9","Label":""}],"Color":"#1B365D","Nodes":[{"Id":"s","Label":"","Y":165,"H":28,"Kind":"start","X":200,"W":28},{"X":95,"Id":"a1","Kind":"action","Label":"Ingresar email y contraseña\n(Canal TLS 1.3)","Y":225,"W":240,"Stroke":"#1D4ED8","H":52,"Fill":"#DBEAFE"},{"X":445,"Id":"a2","Kind":"action","Label":"Consultar seguridad.usuarios\ny validar bloqueo","Y":225,"W":235,"Stroke":"#0369A1","H":52,"Fill":"#E0F2FE"},{"Id":"d1","Label":"¿Activa y sin\nbloqueo?","Y":215,"H":72,"Kind":"dec","X":745,"W":125},{"X":445,"Id":"a3","Kind":"action","Label":"Verificar hash + password_salt\n(PBKDF2/bcrypt)","Y":330,"W":235,"Stroke":"#B45309","H":52,"Fill":"#FEF3C7"},{"Id":"d2","Label":"¿Hash\nválido?","Y":320,"H":72,"Kind":"dec","X":755,"W":105},{"X":1020,"Id":"a4","Kind":"action","Label":"Incrementar fallos en BD\nseguridad.intentos_login","Y":325,"W":240,"Stroke":"#DC2626","H":52,"Fill":"#FEE2E2"},{"Id":"d3","Label":"¿Fallos\n\u003e= 5?","Y":315,"H":72,"Kind":"dec","X":1305,"W":100},{"X":1020,"Id":"a5","Kind":"action","Label":"Bloquear 15 min + Firma HMAC\nauditoria.bitacora_seguridad","Y":430,"W":270,"Stroke":"#DC2626","H":56,"Fill":"#FEE2E2"},{"Id":"e1","Label":"","Y":444,"H":28,"Kind":"end","X":1340,"W":28},{"Id":"d4","Label":"¿MFA\nactivo?","Y":435,"H":70,"Kind":"dec","X":510,"W":105},{"X":95,"Id":"a6","Kind":"action","Label":"Ingresar código TOTP\n6 dígitos (RFC 6238)","Y":444,"W":240,"Stroke":"#D97706","H":52,"Fill":"#FEF3C7"},{"X":1020,"Id":"a7","Kind":"action","Label":"Crear sesión + cargar RBAC\nseguridad.sesiones_activas","Y":545,"W":260,"Stroke":"#15803D","H":54,"Fill":"#DCFCE7"},{"X":95,"Id":"a8","Kind":"action","Label":"Aceptar Aviso LFPDPPP (Art. 9)\ny responder Test Cutáneo","Y":620,"W":245,"Stroke":"#0369A1","H":56,"Fill":"#E0F2FE"},{"X":1020,"Id":"a9","Kind":"action","Label":"Guardar consentimiento y\nclientes.perfil_cutaneo","Y":645,"W":260,"Stroke":"#15803D","H":54,"Fill":"#DCFCE7"},{"Id":"e2","Label":"","Y":658,"H":28,"Kind":"end","X":1340,"W":28}],"W":1480,"Name":"1. Login y Dermo (DA-01)","H":860,"Title":"DA-01: DIAGRAMA DE ACTIVIDADES UML 2.5 — LOGIN CRIPTOGRÁFICO, MFA TOTP Y DIAGNÓSTICO LFPDPPP","Sub":"AMSI (IFE-1005) · Autor: José Luis Luna García (SM1: Tablas 001–050) · seguridad.usuarios, intentos_login, sesiones_activas, clientes.perfil_cutaneo"},{"Lanes":[{"Id":"l1","W":310,"Color":"#4A2574","Y":115,"X":40,"Bg":"#FAF5FF","Label":"Cliente Comprador","H":710},{"Id":"l2","W":640,"Color":"#6A1B9A","Y":115,"X":350,"Bg":"#FDF4FF","Label":"Motor Comercial \u0026 Antifraude","H":710},{"Id":"l3","W":450,"Color":"#9A3412","Y":115,"X":990,"Bg":"#FFF7ED","Label":"Pasarela PCI-DSS \u0026 PAC SAT","H":710}],"Id":"da-02","Edges":[{"T":"b1","S":"s","Label":""},{"T":"b2","S":"b1","Label":""},{"T":"b3","S":"b2","Label":""},{"T":"b4","S":"b3","Label":""},{"T":"d1","S":"b4","Label":""},{"T":"br","S":"d1","Label":"[\u003e= 85]"},{"T":"ef","S":"br","Label":""},{"T":"b5","S":"d1","Label":"[\u003c 85]"},{"T":"d2","S":"b5","Label":""},{"T":"b3","S":"d2","Label":"[No: 402]"},{"T":"fk","S":"d2","Label":"[Sí: 200]"},{"T":"p1","S":"fk","Label":""},{"T":"p2","S":"fk","Label":""},{"T":"p3","S":"fk","Label":""},{"T":"jn","S":"p1","Label":""},{"T":"jn","S":"p2","Label":""},{"T":"jn","S":"p3","Label":""},{"T":"b6","S":"jn","Label":""},{"T":"e2","S":"b6","Label":""}],"Color":"#4A2574","Nodes":[{"Id":"s","Label":"","Y":160,"H":28,"Kind":"start","X":180,"W":28},{"X":75,"Id":"b1","Kind":"action","Label":"Confirmar carrito + dirección\ny cupón opcional","Y":215,"W":240,"Stroke":"#6B21A8","H":52,"Fill":"#F3E8FF"},{"X":385,"Id":"b2","Kind":"action","Label":"Reservar stock 15 min\nventas.reservas_temporales","Y":215,"W":250,"Stroke":"#3730A3","H":52,"Fill":"#E0E7FF"},{"X":1050,"Id":"b3","Kind":"action","Label":"Tokenizar tarjeta en SDK\n(Sin PAN ni CVV en BD)","Y":215,"W":260,"Stroke":"#B45309","H":52,"Fill":"#FEF3C7"},{"X":385,"Id":"b4","Kind":"action","Label":"Evaluar riesgo antifraude\npagos.evaluaciones_antifraude","Y":305,"W":250,"Stroke":"#6B21A8","H":52,"Fill":"#F3E8FF"},{"Id":"d1","Label":"Score\nRiesgo","Y":295,"H":72,"Kind":"dec","X":720,"W":110},{"X":75,"Id":"br","Kind":"action","Label":"Rechazar y liberar stock\n(motivos_cancelacion)","Y":320,"W":235,"Stroke":"#DC2626","H":52,"Fill":"#FEE2E2"},{"Id":"ef","Label":"","Y":405,"H":28,"Kind":"end","X":180,"W":28},{"X":1050,"Id":"b5","Kind":"action","Label":"Ejecutar cobro idempotente\n(+ 3D-Secure si \u003e= 65)","Y":325,"W":260,"Stroke":"#B45309","H":54,"Fill":"#FEF3C7"},{"Id":"d2","Label":"¿Cobro\naprobado?","Y":415,"H":70,"Kind":"dec","X":1125,"W":110},{"Id":"fk","Label":"","Y":515,"H":8,"Kind":"fork","X":410,"W":530},{"X":375,"Id":"p1","Kind":"action","Label":"Guardar ventas.ordenes\ny pagos.transacciones","Y":555,"W":215,"Stroke":"#15803D","H":52,"Fill":"#DCFCE7"},{"X":625,"Id":"p2","Kind":"action","Label":"Crear Split Multialmacén\n(MTY / CDMX)","Y":555,"W":215,"Stroke":"#15803D","H":52,"Fill":"#DCFCE7"},{"X":1050,"Id":"p3","Kind":"action","Label":"Timbrar CFDI 4.0 SAT\n(fiscal.facturas_cfdi)","Y":555,"W":260,"Stroke":"#C2410C","H":52,"Fill":"#FFEDD5"},{"Id":"jn","Label":"","Y":645,"H":8,"Kind":"fork","X":410,"W":530},{"X":520,"Id":"b6","Kind":"action","Label":"Notificar confirmación + XML/PDF\nsistema.notificaciones","Y":685,"W":300,"Stroke":"#0369A1","H":52,"Fill":"#E0F2FE"},{"Id":"e2","Label":"","Y":765,"H":28,"Kind":"end","X":656,"W":28}],"W":1480,"Name":"2. Checkout y CFDI (DA-02)","H":860,"Title":"DA-02: DIAGRAMA DE ACTIVIDADES UML 2.5 — CHECKOUT, ANTIFRAUDE, PAGO PCI-DSS, SPLIT Y CFDI 4.0","Sub":"AMSI (IFE-1005) · Autor: Sheyla Estefanía Moncada Guel (SM2: Tablas 051–100) · Con bifurcación paralela Fork / Join"},{"Lanes":[{"Id":"l1","W":420,"Color":"#14532D","Y":115,"X":40,"Bg":"#F0FDF4","Label":"Operador WMS CEDIS","H":690},{"Id":"l2","W":500,"Color":"#0F766E","Y":115,"X":460,"Bg":"#F0FDFA","Label":"Químico QA \u0026 Telemetría IoT","H":690},{"Id":"l3","W":480,"Color":"#334155","Y":115,"X":960,"Bg":"#F8FAFC","Label":"Sistema WMS FEFO \u0026 COFEPRIS","H":690}],"Id":"da-03","Edges":[{"T":"c1","S":"s","Label":""},{"T":"c2","S":"c1","Label":"[CUARENTENA_QA]"},{"T":"d1","S":"c2","Label":""},{"T":"cq","S":"d1","Label":"[No: \u003e 8 °C]"},{"T":"er","S":"cq","Label":""},{"T":"c3","S":"d1","Label":"[Sí]"},{"T":"d2","S":"c3","Label":""},{"T":"cq","S":"d2","Label":"[No]"},{"T":"c4","S":"d2","Label":"[Sí]"},{"T":"c5","S":"c4","Label":""},{"T":"c6","S":"c5","Label":""},{"T":"eo","S":"c6","Label":""}],"Color":"#14532D","Nodes":[{"Id":"s","Label":"","Y":160,"H":28,"Kind":"start","X":235,"W":28},{"X":105,"Id":"c1","Kind":"action","Label":"Escanear OC y conteo ciego\ncompras.recepciones","Y":220,"W":280,"Stroke":"#15803D","H":54,"Fill":"#DCFCE7"},{"X":560,"Id":"c2","Kind":"action","Label":"Consultar telemetría IoT\nwms.monitoreo_temp","Y":220,"W":280,"Stroke":"#0369A1","H":54,"Fill":"#E0F2FE"},{"Id":"d1","Label":"¿Rango\n2-8 °C?","Y":315,"H":72,"Kind":"dec","X":645,"W":110},{"X":555,"Id":"c3","Kind":"action","Label":"Inspección QA: pH, sellos y COA\ncompras.inspecciones_qa","Y":430,"W":290,"Stroke":"#0F766E","H":56,"Fill":"#CCFBF1"},{"Id":"d2","Label":"¿QA\nAprobado?","Y":525,"H":72,"Kind":"dec","X":645,"W":110},{"X":1030,"Id":"cq","Kind":"action","Label":"Aislar en Cuarentena y emitir\nActa Destrucción COFEPRIS","Y":325,"W":320,"Stroke":"#DC2626","H":56,"Fill":"#FEE2E2"},{"Id":"er","Label":"","Y":420,"H":28,"Kind":"end","X":1175,"W":28},{"X":1030,"Id":"c4","Kind":"action","Label":"Crear lote sanitario FEFO\nwms.lotes_fabricacion","Y":535,"W":310,"Stroke":"#15803D","H":54,"Fill":"#DCFCE7"},{"X":105,"Id":"c5","Kind":"action","Label":"Ubicar tarima en rack físico\nwms.pasillos_ubicaciones","Y":625,"W":280,"Stroke":"#15803D","H":54,"Fill":"#DCFCE7"},{"X":1025,"Id":"c6","Kind":"action","Label":"Registrar asiento Kardex + habilitar FEFO\nwms.kardex_movimientos","Y":635,"W":320,"Stroke":"#0369A1","H":56,"Fill":"#E0F2FE"},{"Id":"eo","Label":"","Y":730,"H":28,"Kind":"end","X":1175,"W":28}],"W":1480,"Name":"3. Recepción QA y FEFO (DA-03)","H":840,"Title":"DA-03: DIAGRAMA DE ACTIVIDADES UML 2.5 — RECEPCIÓN CEDIS, IOT CADENA DE FRÍO, QA Y ALTA FEFO","Sub":"AMSI (IFE-1005) · Autor: Eduardo Salazar Martínez (SM3: Tablas 101–150) · compras.*, wms.lotes_fabricacion_sanitaria, kardex_movimientos"},{"Lanes":[{"Id":"l1","W":330,"Color":"#9F1239","Y":115,"X":40,"Bg":"#FFF1F2","Label":"Cliente / Paciente","H":690},{"Id":"l2","W":540,"Color":"#BE123C","Y":115,"X":370,"Bg":"#F8FAFC","Label":"Químico QA \u0026 Portal COFEPRIS","H":690},{"Id":"l3","W":530,"Color":"#4A2574","Y":115,"X":910,"Bg":"#FAF5FF","Label":"Pagos, Fiscal CFDI \u0026 Postventa","H":690}],"Id":"da-04","Edges":[{"T":"r1","S":"s","Label":""},{"T":"r2","S":"r1","Label":""},{"T":"r3","S":"r2","Label":""},{"T":"d1","S":"r3","Label":""},{"T":"r4","S":"d1","Label":"[Sí: RAM]"},{"T":"r5","S":"d1","Label":"[No]"},{"T":"fk","S":"r4","Label":""},{"T":"fk","S":"r5","Label":""},{"T":"f1","S":"fk","Label":""},{"T":"f2","S":"fk","Label":""},{"T":"jn","S":"f1","Label":""},{"T":"jn","S":"f2","Label":""},{"T":"r6","S":"jn","Label":""},{"T":"e1","S":"r6","Label":""}],"Color":"#9F1239","Nodes":[{"Id":"s","Label":"","Y":160,"H":28,"Kind":"start","X":190,"W":28},{"X":75,"Id":"r1","Kind":"action","Label":"Solicitar RMA + evidencia fotos\npostventa.solicitudes_rma","Y":220,"W":260,"Stroke":"#BE123C","H":54,"Fill":"#FFE4E6"},{"X":985,"Id":"r2","Kind":"action","Label":"Emitir guía retorno prepagada\nenvios.guias_rastreo","Y":220,"W":290,"Stroke":"#0369A1","H":54,"Fill":"#E0F2FE"},{"X":485,"Id":"r3","Kind":"action","Label":"Inspección higiénica retorno\npostventa.inspeccion_retorno","Y":305,"W":300,"Stroke":"#BE123C","H":54,"Fill":"#FFE4E6"},{"Id":"d1","Label":"¿Reacción\nAdversa RAM?","Y":390,"H":72,"Kind":"dec","X":580,"W":110},{"X":440,"Id":"r4","Kind":"action","Label":"Notificar Farmacovigilancia COFEPRIS\n+ Destrucción Inmediata","Y":505,"W":340,"Stroke":"#DC2626","H":56,"Fill":"#FEE2E2"},{"X":75,"Id":"r5","Kind":"action","Label":"Evaluar sello intacto -\u003e Reingreso\nWMS o Destrucción Sanitaria","Y":485,"W":260,"Stroke":"#B45309","H":56,"Fill":"#FEF3C7"},{"Id":"fk","Label":"","Y":455,"H":8,"Kind":"fork","X":960,"W":420},{"X":935,"Id":"f1","Kind":"action","Label":"Reembolso bancario / Billetera\npagos.reembolsos_transaccion","Y":495,"W":225,"Stroke":"#15803D","H":56,"Fill":"#DCFCE7"},{"X":1195,"Id":"f2","Kind":"action","Label":"Nota de Crédito CFDI Egreso\nfiscal.notas_credito","Y":495,"W":220,"Stroke":"#C2410C","H":56,"Fill":"#FFEDD5"},{"Id":"jn","Label":"","Y":590,"H":8,"Kind":"fork","X":960,"W":420},{"X":1020,"Id":"r6","Kind":"action","Label":"Notificar resolución y cerrar ticket\npostventa.tickets_soporte","Y":635,"W":300,"Stroke":"#0369A1","H":54,"Fill":"#E0F2FE"},{"Id":"e1","Label":"","Y":730,"H":28,"Kind":"end","X":1156,"W":28}],"W":1480,"Name":"4. RMA y COFEPRIS (DA-04)","H":840,"Title":"DA-04: DIAGRAMA DE ACTIVIDADES UML 2.5 — DEVOLUCIÓN RMA, FARMACOVIGILANCIA COFEPRIS Y REEMBOLSO","Sub":"AMSI (IFE-1005) · Autores: Eduardo Salazar Martínez (SM3) y Sheyla E. Moncada Guel (SM2) · Con Fork / Join de cierre financiero"}];
+const NS = 'http://www.w3.org/2000/svg';
+const svg = document.getElementById('svgView');
+const tabBar = document.getElementById('tabBar');
+let curIdx = 0, scale = 0.8, tx = 20, ty = 15, dragging = false, sx = 0, sy = 0;
+
+function el(tag, attrs, parent) { const n = document.createElementNS(NS, tag); for (const [k, v] of Object.entries(attrs || {})) n.setAttribute(k, v); if (parent) parent.appendChild(n); return n; }
+function addText(parent, x, y, text, size, weight, fill) {
+  const lines = text.split('\n');
+  const t = el('text', { x, y: y - ((lines.length - 1) * (size + 2)) / 2, 'text-anchor': 'middle', 'font-size': size, 'font-weight': weight, fill }, parent);
+  lines.forEach((ln, i) => { const ts = el('tspan', { x, dy: i === 0 ? 0 : (size + 3) }, t); ts.textContent = ln; });
+}
+
+function renderPage(idx) {
+  curIdx = idx;
+  const p = PAGES[idx];
+  svg.innerHTML = '';
+  const defs = el('defs', {}, svg);
+  const m = el('marker', { id: 'm-arr', viewBox: '0 0 10 10', refX: 9, refY: 5, markerWidth: 8, markerHeight: 8, orient: 'auto' }, defs);
+  el('path', { d: 'M 1 1 L 9 5 L 1 9', fill: 'none', stroke: '#334155', 'stroke-width': 1.7 }, m);
+
+  const scene = el('g', { id: 'scene' }, svg);
+  el('rect', { x: 0, y: 0, width: p.W, height: p.H, fill: '#F8FAFC' }, scene);
+  el('rect', { x: 30, y: 16, width: p.W - 60, height: 78, rx: 10, fill: p.Color }, scene);
+  addText(scene, p.W / 2, 46, p.Title, 15, '700', '#FFFFFF');
+  addText(scene, p.W / 2, 74, p.Sub, 11.5, '400', '#BAE6FD');
+
+  p.Lanes.forEach(l => {
+    el('rect', { x: l.X, y: l.Y, width: l.W, height: l.H, fill: l.Bg, stroke: l.Color, 'stroke-width': 1.6 }, scene);
+    el('rect', { x: l.X, y: l.Y, width: l.W, height: 30, fill: l.Color }, scene);
+    const lt = el('text', { x: l.X + l.W / 2, y: l.Y + 20, 'text-anchor': 'middle', fill: '#fff', 'font-size': 12, 'font-weight': '700' }, scene);
+    lt.textContent = l.Label;
+  });
+
+  const gEdges = el('g', {}, scene);
+  const gNodes = el('g', {}, scene);
+  const map = {};
+  p.Nodes.forEach(n => {
+    map[n.Id] = n;
+    const cx = n.X + n.W / 2, cy = n.Y + n.H / 2;
+    if (n.Kind === 'start') {
+      el('circle', { cx, cy, r: 13, fill: '#0F172A' }, gNodes);
+    } else if (n.Kind === 'end') {
+      el('circle', { cx, cy, r: 14, fill: '#FFFFFF', stroke: '#0F172A', 'stroke-width': 2.4 }, gNodes);
+      el('circle', { cx, cy, r: 9, fill: '#0F172A' }, gNodes);
+    } else if (n.Kind === 'fork') {
+      el('rect', { x: n.X, y: n.Y, width: n.W, height: n.H, rx: 2, fill: '#0F172A' }, gNodes);
+    } else if (n.Kind === 'dec') {
+      const pts = `${cx},${n.Y} ${n.X + n.W},${cy} ${cx},${n.Y + n.H} ${n.X},${cy}`;
+      el('polygon', { points: pts, fill: '#FEF9C3', stroke: '#B45309', 'stroke-width': 2 }, gNodes);
+      addText(gNodes, cx, cy + 4, n.Label, 10, '700', '#0F172A');
+    } else {
+      el('rect', { x: n.X, y: n.Y, width: n.W, height: n.H, rx: 14, fill: n.Fill, stroke: n.Stroke, 'stroke-width': 1.8 }, gNodes);
+      addText(gNodes, cx, cy + 4, n.Label, 10.5, '700', '#0F172A');
+    }
+  });
+
+  p.Edges.forEach(e => {
+    const s = map[e.S], t = map[e.T]; if (!s || !t) return;
+    const x1 = s.X + s.W / 2, y1 = s.Y + s.H / 2, x2 = t.X + t.W / 2, y2 = t.Y + t.H / 2;
+    el('line', { x1, y1, x2, y2, stroke: '#334155', 'stroke-width': 1.6, 'marker-end': 'url(#m-arr)' }, gEdges);
+    if (e.Label) {
+      const mx = (x1 + x2) / 2, my = (y1 + y2) / 2 - 4;
+      const tw = e.Label.length * 6.2 + 10;
+      el('rect', { x: mx - tw / 2, y: my - 9, width: tw, height: 13, rx: 3, fill: '#fff', opacity: 0.92 }, gEdges);
+      const lt = el('text', { x: mx, y: my + 1, 'text-anchor': 'middle', 'font-size': 9.5, 'font-weight': '700', fill: '#1E293B' }, gEdges);
+      lt.textContent = e.Label;
+    }
+  });
+
+  fitView();
+  document.querySelectorAll('#tabBar button.tab').forEach((b, i) => b.classList.toggle('active', i === idx));
+}
+
+function updateTransform() { const sc = svg.querySelector('#scene'); if (sc) sc.setAttribute('transform', 'translate(' + tx + ',' + ty + ') scale(' + scale + ')'); }
+function fitView() { const p = PAGES[curIdx], r = svg.getBoundingClientRect(); scale = Math.min((r.width - 30) / p.W, (r.height - 30) / p.H); tx = (r.width - p.W * scale) / 2; ty = (r.height - p.H * scale) / 2; updateTransform(); }
+function exportSvg() {
+  const p = PAGES[curIdx], clone = svg.cloneNode(true);
+  clone.setAttribute('width', p.W); clone.setAttribute('height', p.H); clone.setAttribute('viewBox', '0 0 ' + p.W + ' ' + p.H);
+  clone.querySelector('#scene').setAttribute('transform', 'translate(0,0) scale(1)');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([new XMLSerializer().serializeToString(clone)], { type: 'image/svg+xml;charset=utf-8' }));
+  a.download = 'DERMA_ECOM_UML_' + p.Id.toUpperCase() + '.svg';
+  a.click();
+}
+
+PAGES.forEach((p, i) => { const b = document.createElement('button'); b.className = 'tab'; b.textContent = p.Name; b.onclick = () => renderPage(i); tabBar.appendChild(b); });
+const ex = document.createElement('button'); ex.className = 'export'; ex.textContent = 'Exportar SVG'; ex.onclick = exportSvg; tabBar.appendChild(ex);
+svg.addEventListener('wheel', e => { e.preventDefault(); const f = e.deltaY < 0 ? 1.15 : 0.87, r = svg.getBoundingClientRect(); const mx = e.clientX - r.left, my = e.clientY - r.top; tx = mx - (mx - tx) * f; ty = my - (my - ty) * f; scale *= f; updateTransform(); }, { passive: false });
+svg.addEventListener('mousedown', e => { dragging = true; sx = e.clientX - tx; sy = e.clientY - ty; });
+window.addEventListener('mousemove', e => { if (!dragging) return; tx = e.clientX - sx; ty = e.clientY - sy; updateTransform(); });
+window.addEventListener('mouseup', () => dragging = false);
+window.addEventListener('resize', fitView);
+renderPage(0);
+</script>
+</body>
+</html>

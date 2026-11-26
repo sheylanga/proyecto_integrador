@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>DERMA-ECOM — Visor Interactivo de Diagramas de Clases UML 2.5 (AMSI 1.4)</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0f172a; color: #f8fafc; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+  header { background: #1B365D; border-bottom: 2px solid #38bdf8; padding: 10px 16px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+  header h1 { font-size: 15px; font-weight: 700; }
+  header .sub { font-size: 11px; color: #cbd5e1; }
+  .tabs { display: flex; gap: 6px; margin-left: auto; flex-wrap: wrap; }
+  .tabs button { background: #0f172a; color: #e2e8f0; border: 1px solid #475569; border-radius: 6px; padding: 6px 10px; font-size: 12px; cursor: pointer; }
+  .tabs button.active { background: #0284c7; border-color: #38bdf8; color: #fff; font-weight: 700; }
+  .tabs button.export { background: #15803d; border-color: #4ade80; color: #fff; font-weight: 600; }
+  .stage { flex: 1; position: relative; background: #f8fafc; overflow: hidden; }
+  #svgView { width: 100%; height: 100%; display: block; cursor: grab; }
+  #svgView:active { cursor: grabbing; }
+  .legend { position: absolute; bottom: 12px; left: 12px; background: rgba(15,23,42,.92); color: #e2e8f0; padding: 8px 14px; border-radius: 8px; font-size: 11px; border: 1px solid #334155; }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>DERMA-ECOM — Diagramas de Clases UML 2.5 (Dominio, Seguridad RBAC e Interfaces)</h1>
+    <div class="sub">TecNM / ITSM · AMSI (IFE-1005) · Criterio 1.4 (30%) · José Luis Luna García · Sheyla Estefanía Moncada Guel · Eduardo Salazar Martínez</div>
+  </div>
+  <div class="tabs" id="tabBar"></div>
+</header>
+<div class="stage">
+  <svg id="svgView" xmlns="http://www.w3.org/2000/svg"></svg>
+  <div class="legend">
+    <strong>Sintaxis UML 2.5:</strong>
+    ──▷ Herencia &nbsp;|&nbsp; ◆── Composición &nbsp;|&nbsp; ◇── Agregación &nbsp;|&nbsp; ──&gt; Asociación &nbsp;|&nbsp; - - &gt; Dependencia &nbsp;|&nbsp;
+    Visibilidad: <code>+</code> público · <code>-</code> privado · <code>#</code> protegido
+  </div>
+</div>
+<script>
+const PAGES = [{"Classes":[{"Y":120,"Name":"EntidadAuditable","Id":"ent","X":560,"Attrs":["#ID : Long (PK)"," #activo : Boolean","#fechaCreacion : DateTime","#creadoPor : Long","#fechaBaja : DateTime?"],"Meths":["+activar() : void","+desactivar(idOp: Long, mot: String) : void","+estaActivo() : Boolean"],"W":320,"Stereo":"\u003c\u003cabstract\u003e\u003e","H":165,"Hdr":"#334155","Bg":"#F8FAFC"},{"Y":130,"Name":"ICryptoHashingService","Id":"icry","X":1020,"Attrs":[],"Meths":["+generarSalt(bytes: Int) : String","+verificarHash(pass, salt, hash) : Boolean","+validarTotp(sec, cod) : Boolean","+generarFirmaHMAC(payload) : String"],"W":310,"Stereo":"\u003c\u003cinterface\u003e\u003e","H":145,"Hdr":"#B45309","Bg":"#FFFBEB"},{"Y":340,"Name":"Usuario","Id":"usr","X":60,"Attrs":["-uuidUsuario : UUID","-email : String [UQ]","-passwordHash : String","-passwordSalt : String","-cuentaBloqueada : Boolean","-intentosFallidos : Int","-mfaHabilitado : Boolean"],"Meths":["+autenticar(pass, svc) : Boolean","+bloquearPorFuerzaBruta() : void","+reiniciarIntentos() : void"],"W":290,"Stereo":"","H":205,"Hdr":"#1B365D","Bg":"#EFF6FF"},{"Y":350,"Name":"Rol","Id":"rol","X":410,"Attrs":["-codigoRol : String [UQ]","-nombreRol : String","-nivelJerarquico : Int"],"Meths":["+asignarPermiso(p: Permiso) : void","+revocarPermiso(p: Permiso) : void"],"W":250,"Stereo":"","H":155,"Hdr":"#1B365D","Bg":"#EFF6FF"},{"Y":350,"Name":"Permiso","Id":"perm","X":720,"Attrs":["-clavePermiso : String [UQ]","-moduloSistema : String","-accion : String"],"Meths":["+validarAcceso(accion: String) : Boolean"],"W":250,"Stereo":"","H":145,"Hdr":"#1B365D","Bg":"#EFF6FF"},{"Y":340,"Name":"BitacoraAcceso","Id":"bit","X":1030,"Attrs":["-ID_usuario : Long [FK]","-emailIngresado : String","-direccionIp : String","-userAgent : String","-resultado : String"],"Meths":["+registrarIntento() : void"],"W":290,"Stereo":"","H":165,"Hdr":"#1B365D","Bg":"#EFF6FF"},{"Y":620,"Name":"Cliente","Id":"cli","X":60,"Attrs":["-ID_usuario : Long [FK,UQ]","-nombres : String","-primerApellido : String","-curp : String","-rfc : String"],"Meths":["+otorgarConsentimiento() : void","+tramitarSolicitudARCO(tipo) : void"],"W":280,"Stereo":"","H":175,"Hdr":"#0F4C81","Bg":"#EAF4FC"},{"Y":620,"Name":"PerfilCutaneo","Id":"perf","X":400,"Attrs":["-ID_cliente : Long [FK,UQ]","-ID_tipo_piel : Long [FK]","-sensibilidadSolar : String","-nivelOleosidad : String","-consentimientoSensibles : Boolean"],"Meths":["+evaluarCompatibilidad(prod) : Boolean"],"W":270,"Stereo":"","H":175,"Hdr":"#0F4C81","Bg":"#EAF4FC"},{"Y":620,"Name":"Categoria","Id":"cat","X":730,"Attrs":["-codigoCategoria : String [UQ]","-nombreCategoria : String","-ID_categoria_padre : Long [FK]","-nivelArbol : Int"],"Meths":["+obtenerSubcategorias() : List"],"W":250,"Stereo":"","H":155,"Hdr":"#006D77","Bg":"#E8F6F7"},{"Y":560,"Name":"ProductoMaestro","Id":"prod","X":1030,"Attrs":["-ID_marca : Long [FK]","-ID_subcategoria : Long [FK]","-ID_laboratorio : Long [FK]","-ID_certificacion_sanitaria : Long [FK]","-codigoProducto : String [UQ]"],"Meths":["+validarRegistroCOFEPRIS() : Boolean"],"W":285,"Stereo":"","H":175,"Hdr":"#006D77","Bg":"#E8F6F7"},{"Y":775,"Name":"VarianteSKU","Id":"sku","X":1030,"Attrs":["-ID_producto : Long [FK]","-skuCodigo : String [UQ]","-precioBaseMenudeo : Decimal","-costoEstandarCompra : Decimal"],"Meths":["+actualizarPrecio(nuevo: Decimal) : void"],"W":285,"Stereo":"","H":150,"Hdr":"#006D77","Bg":"#E8F6F7"},{"Y":620,"Name":"IngredienteINCI","Id":"inci","X":1345,"Attrs":["-codigoCas : String","-nombreInci : String [UQ]","-esComedogenico : Boolean","-esAlergenoFrecuente : Boolean"],"Meths":["+verificarAlerta(perfil) : Boolean"],"W":210,"Stereo":"","H":150,"Hdr":"#2A9D8F","Bg":"#EAF8F6"}],"Id":"cls-sm1","Edges":[{"T":"ent","S":"usr","Label":"","Kind":"inherit"},{"T":"ent","S":"rol","Label":"","Kind":"inherit"},{"T":"ent","S":"perm","Label":"","Kind":"inherit"},{"T":"ent","S":"bit","Label":"","Kind":"inherit"},{"T":"icry","S":"usr","Label":"\u003c\u003cuse\u003e\u003e","Kind":"dep"},{"T":"rol","S":"usr","Label":"1..* : 1..*","Kind":"agg"},{"T":"perm","S":"rol","Label":"1..* : 1..*","Kind":"agg"},{"T":"bit","S":"usr","Label":"1 : 0..*","Kind":"comp"},{"T":"cli","S":"usr","Label":"1 : 0..1","Kind":"assoc"},{"T":"perf","S":"cli","Label":"1 : 0..1","Kind":"comp"},{"T":"prod","S":"cat","Label":"1 : 0..*","Kind":"agg"},{"T":"sku","S":"prod","Label":"1 : 1..*","Kind":"comp"},{"T":"inci","S":"prod","Label":"1..* : 1..*","Kind":"agg"}],"Color":"#1B365D","W":1580,"Name":"1. SM1 Seguridad y Catálogo","H":980,"Title":"DIAGRAMA DE CLASES UML 2.5 — SUBMÓDULO 1: SEGURIDAD RBAC, PERFIL DERMO Y CATÁLOGO INCI","Sub":"AMSI (IFE-1005) · Criterio 1.4 (30%) · Autor: José Luis Luna García (Tablas 001–050) · Layer Supertype: EntidadAuditable (PK = ID)"},{"Classes":[{"Y":135,"Name":"IPaymentGateway","Id":"ipgw","X":1160,"Attrs":[],"Meths":["+tokenizarInstrumento(p) : String","+ejecutarCobro(tok, monto, key) : Boolean","+procesarReembolso(ref, monto) : Boolean"],"W":310,"Stereo":"\u003c\u003cinterface\u003e\u003e","H":130,"Hdr":"#B45309","Bg":"#FFFBEB"},{"Y":560,"Name":"ITaxStampingPAC","Id":"ipac","X":1160,"Attrs":[],"Meths":["+validarLCO(rfc, cp) : Boolean","+timbrarXmlCFDI40(xml) : String","+cancelarCFDI(uuid, motivo) : Boolean"],"W":310,"Stereo":"\u003c\u003cinterface\u003e\u003e","H":130,"Hdr":"#9A3412","Bg":"#FFF7ED"},{"Y":290,"Name":"OrdenVenta","Id":"ord","X":60,"Attrs":["-ID_cliente : Long [FK]","-ID_estado_orden : Long [FK]","-ID_direccion_envio : Long [FK]","-ID_motivo_cancelacion : Long [FK]","-folioOrden : String [UQ]","-subtotalMercancia : Decimal","-totalNeto : Decimal"],"Meths":["+calcularTotales() : void","+generarSplitsAlmacen() : List","+cancelar(idMotivo: Long) : void"],"W":295,"Stereo":"","H":215,"Hdr":"#4A2574","Bg":"#F3EEF9"},{"Y":130,"Name":"OrdenDetalle","Id":"odet","X":430,"Attrs":["-ID_orden : Long [FK]","-ID_variante_sku : Long [FK]","-numeroPartida : Int","-cantidadComprada : Int","-precioUnitarioVenta : Decimal"],"Meths":["+calcularSubtotalLinea() : Decimal"],"W":280,"Stereo":"","H":175,"Hdr":"#4A2574","Bg":"#F3EEF9"},{"Y":335,"Name":"OrdenSplitAlmacen","Id":"ospl","X":430,"Attrs":["-ID_orden : Long [FK]","-codigoSplit : String [UQ]","-almacenAsignado : String","-estadoSplit : String"],"Meths":["+despacharSplit() : void"],"W":280,"Stereo":"","H":150,"Hdr":"#4A2574","Bg":"#F3EEF9"},{"Y":130,"Name":"EvaluacionAntifraude","Id":"afra","X":780,"Attrs":["-ID_orden : Long [FK,UQ]","-ID_regla_antifraude : Long [FK]","-scoreRiesgoTotal : Int","-nivelRiesgo : String","-requiere3DS : Boolean"],"Meths":["+evaluarReglas() : Int"],"W":295,"Stereo":"","H":165,"Hdr":"#6A1B9A","Bg":"#F6ECFB"},{"Y":335,"Name":"TransaccionPago","Id":"tx","X":780,"Attrs":["-ID_orden : Long [FK]","-ID_proveedor_pasarela : Long [FK]","-ID_metodo_pago : Long [FK]","-referenciaPasarela : String","-montoCobrado : Decimal","-estadoPago : String"],"Meths":["+procesarConPasarela(gw) : Boolean"],"W":295,"Stereo":"","H":180,"Hdr":"#6A1B9A","Bg":"#F6ECFB"},{"Y":585,"Name":"SuscripcionCliente","Id":"susc","X":60,"Attrs":["-ID_cliente : Long [FK]","-ID_plan_suscripcion : Long [FK]","-ID_frecuencia_suscripcion : Long [FK]","-estadoSuscripcion : String","-fechaProximoCobro : Date"],"Meths":["+ejecutarCobroRecurrente(gw) : Boolean","+pausarSuscripcion() : void"],"W":295,"Stereo":"","H":175,"Hdr":"#4A2574","Bg":"#F3EEF9"},{"Y":560,"Name":"CuponPromocion","Id":"cup","X":430,"Attrs":["-ID_campania : Long [FK]","-ID_tipo_descuento : Long [FK]","-codigoCupon : String [UQ]","-valorDescuento : Decimal","-usosActuales : Int"],"Meths":["+validarElegibilidad(ord) : Boolean"],"W":280,"Stereo":"","H":170,"Hdr":"#B45309","Bg":"#FEF6EA"},{"Y":560,"Name":"FacturaCFDI","Id":"cfdi","X":780,"Attrs":["-ID_orden : Long [FK]","-ID_dato_fiscal : Long [FK]","-uuidSatFiscal : UUID [UQ]","-serieFactura : String","-folioFactura : String","-estadoCfdi : String"],"Meths":["+generarXmlAnexo20() : String","+timbrar(pac) : Boolean"],"W":295,"Stereo":"","H":185,"Hdr":"#9A3412","Bg":"#FDF1EC"}],"Id":"cls-sm2","Edges":[{"T":"odet","S":"ord","Label":"1 : 1..*","Kind":"comp"},{"T":"ospl","S":"ord","Label":"1 : 1..*","Kind":"comp"},{"T":"afra","S":"ord","Label":"1 : 0..1","Kind":"comp"},{"T":"tx","S":"ord","Label":"1 : 1..*","Kind":"comp"},{"T":"cfdi","S":"ord","Label":"1 : 0..1","Kind":"assoc"},{"T":"ord","S":"cup","Label":"0..* : 0..*","Kind":"assoc"},{"T":"ipgw","S":"tx","Label":"\u003c\u003cuse\u003e\u003e","Kind":"dep"},{"T":"ipgw","S":"susc","Label":"\u003c\u003cuse\u003e\u003e","Kind":"dep"},{"T":"ipac","S":"cfdi","Label":"\u003c\u003cuse\u003e\u003e","Kind":"dep"}],"Color":"#4A2574","W":1520,"Name":"2. SM2 Ventas, Pagos y CFDI","H":880,"Title":"DIAGRAMA DE CLASES UML 2.5 — SUBMÓDULO 2: VENTAS, SUSCRIPCIONES, PAGOS, ANTIFRAUDE Y CFDI 4.0","Sub":"AMSI (IFE-1005) · Criterio 1.4 (30%) · Autor: Sheyla Estefanía Moncada Guel (Tablas 051–100) · Todas heredan de EntidadAuditable (PK = ID)"},{"Classes":[{"Y":135,"Name":"IFefoAllocationService","Id":"ifefo","X":1150,"Attrs":[],"Meths":["+seleccionarLotesFEFO(sku, cant) : List","+verificarExcursionTermica(zona) : Boolean"],"W":310,"Stereo":"\u003c\u003cinterface\u003e\u003e","H":120,"Hdr":"#15803D","Bg":"#F0FDF4"},{"Y":135,"Name":"Proveedor","Id":"prov","X":60,"Attrs":["-codigoProveedor : String [UQ]","-razonSocial : String","-rfcProveedor : String [UQ]","-paisOrigen : String"],"Meths":["+evaluarSLA() : Decimal"],"W":265,"Stereo":"","H":155,"Hdr":"#14532D","Bg":"#ECF7F0"},{"Y":135,"Name":"OrdenCompraProveedor","Id":"ocp","X":400,"Attrs":["-ID_proveedor : Long [FK]","-ID_estado_oc : Long [FK]","-folioOc : String [UQ]","-totalOc : Decimal"],"Meths":["+emitirAProveedor() : void"],"W":280,"Stereo":"","H":155,"Hdr":"#14532D","Bg":"#ECF7F0"},{"Y":135,"Name":"InspeccionSanitariaQA","Id":"qa","X":760,"Attrs":["-ID_recepcion_detalle : Long [FK]","-temperaturaArriboC : Decimal","-dictamenQa : String","-certificadoCoaUrl : String"],"Meths":["+aprobarOLlevarACuarentena() : Boolean"],"W":295,"Stereo":"","H":160,"Hdr":"#14532D","Bg":"#ECF7F0"},{"Y":360,"Name":"AlmacenCEDIS","Id":"cedis","X":60,"Attrs":["-codigoAlmacen : String [UQ]","-nombreAlmacen : String","-ciudad : String","-tieneCamaraFria : Boolean"],"Meths":["+consultarCapacidad() : Int"],"W":265,"Stereo":"","H":160,"Hdr":"#166534","Bg":"#EDF8F1"},{"Y":355,"Name":"LoteSanitario","Id":"lote","X":400,"Attrs":["-ID_variante_sku : Long [FK]","-numeroLoteFabricante : String","-fechaFabricacion : Date","-fechaCaducidad : Date","-estatusSanitario : String"],"Meths":["+diasRestantesVidaUtil() : Int","+marcarDestruccionCOFEPRIS() : void"],"W":285,"Stereo":"","H":180,"Hdr":"#166534","Bg":"#EDF8F1"},{"Y":590,"Name":"TelemetriaIoT","Id":"iot","X":60,"Attrs":["-ID_zona_almacen : Long [FK]","-temperaturaCelsius : Decimal","-humedadRelativaPorc : Decimal","-alertaFueraDeRango : Boolean"],"Meths":["+evaluarRango2a8C() : Boolean"],"W":265,"Stereo":"","H":160,"Hdr":"#0369A1","Bg":"#EBF6FC"},{"Y":355,"Name":"DespachoOrden","Id":"desp","X":760,"Attrs":["-ID_orden_split : Long [FK]","-ID_transportista : Long [FK]","-ID_servicio_envio : Long [FK]","-estadoEnvio : String"],"Meths":["+generarGuiaRastreo() : String"],"W":295,"Stereo":"","H":170,"Hdr":"#0369A1","Bg":"#EBF6FC"},{"Y":590,"Name":"SolicitudRMA","Id":"rma","X":400,"Attrs":["-ID_orden : Long [FK]","-ID_motivo_rma : Long [FK]","-folioRma : String [UQ]","-estadoRma : String"],"Meths":["+dictaminarHigieneRetorno() : void"],"W":285,"Stereo":"","H":165,"Hdr":"#9F1239","Bg":"#FDEFF3"},{"Y":590,"Name":"ReporteFarmacovigilancia","Id":"ram","X":760,"Attrs":["-ID_cliente : Long [FK]","-ID_producto : Long [FK]","-ID_lote : Long [FK]","-severidadClinica : String","-notificadoACofepris : Boolean"],"Meths":["+enviarNotificacionCOFEPRIS() : Boolean"],"W":295,"Stereo":"","H":180,"Hdr":"#9F1239","Bg":"#FDEFF3"},{"Y":590,"Name":"BitacoraSeguridadGlobal","Id":"bseg","X":1150,"Attrs":["-ID_tipo_evento : Long [FK]","-ID_usuario : Long [FK]","-direccionIp : String","-firmaIntegridadHash : String"],"Meths":["+verificarIntegridadHMAC() : Boolean"],"W":310,"Stereo":"","H":170,"Hdr":"#334155","Bg":"#F1F5F9"}],"Id":"cls-sm3","Edges":[{"T":"ocp","S":"prov","Label":"1 : 0..*","Kind":"assoc"},{"T":"qa","S":"ocp","Label":"1 : 0..*","Kind":"comp"},{"T":"lote","S":"cedis","Label":"1 : 0..*","Kind":"agg"},{"T":"iot","S":"cedis","Label":"1 : 0..*","Kind":"comp"},{"T":"ifefo","S":"desp","Label":"\u003c\u003cuse\u003e\u003e","Kind":"dep"},{"T":"lote","S":"desp","Label":"1 : 1..*","Kind":"agg"},{"T":"ram","S":"rma","Label":"1 : 0..1","Kind":"assoc"},{"T":"lote","S":"ram","Label":"0..* : 1","Kind":"assoc"},{"T":"rma","S":"bseg","Label":"\u003c\u003caudit\u003e\u003e","Kind":"dep"}],"Color":"#14532D","W":1520,"Name":"3. SM3 WMS, Envíos y Forense","H":880,"Title":"DIAGRAMA DE CLASES UML 2.5 — SUBMÓDULO 3: COMPRAS, WMS FEFO, IOT FRÍO, ENVÍOS, RMA Y FORENSE","Sub":"AMSI (IFE-1005) · Criterio 1.4 (30%) · Autor: Eduardo Salazar Martínez (Tablas 101–150) · Todas heredan de EntidadAuditable (PK = ID)"}];
+const NS = 'http://www.w3.org/2000/svg';
+const svg = document.getElementById('svgView');
+const tabBar = document.getElementById('tabBar');
+let curIdx = 0, scale = 0.8, tx = 20, ty = 15, dragging = false, sx = 0, sy = 0;
+
+function el(tag, attrs, parent) {
+  const n = document.createElementNS(NS, tag);
+  for (const [k, v] of Object.entries(attrs || {})) n.setAttribute(k, v);
+  if (parent) parent.appendChild(n);
+  return n;
+}
+
+function renderPage(idx) {
+  curIdx = idx;
+  const p = PAGES[idx];
+  svg.innerHTML = '';
+  const defs = el('defs', {}, svg);
+  const mInh = el('marker', { id: 'm-inh', viewBox: '0 0 12 12', refX: 11, refY: 6, markerWidth: 10, markerHeight: 10, orient: 'auto' }, defs);
+  el('path', { d: 'M 1 1 L 11 6 L 1 11 Z', fill: '#FFFFFF', stroke: '#334155', 'stroke-width': 1.6 }, mInh);
+  const mOpen = el('marker', { id: 'm-open', viewBox: '0 0 10 10', refX: 9, refY: 5, markerWidth: 8, markerHeight: 8, orient: 'auto' }, defs);
+  el('path', { d: 'M 1 1 L 9 5 L 1 9', fill: 'none', stroke: '#334155', 'stroke-width': 1.5 }, mOpen);
+  const mComp = el('marker', { id: 'm-comp', viewBox: '0 0 14 10', refX: 1, refY: 5, markerWidth: 12, markerHeight: 9, orient: 'auto' }, defs);
+  el('path', { d: 'M 1 5 L 7 1 L 13 5 L 7 9 Z', fill: '#0F172A', stroke: '#0F172A' }, mComp);
+  const mAgg = el('marker', { id: 'm-agg', viewBox: '0 0 14 10', refX: 1, refY: 5, markerWidth: 12, markerHeight: 9, orient: 'auto' }, defs);
+  el('path', { d: 'M 1 5 L 7 1 L 13 5 L 7 9 Z', fill: '#FFFFFF', stroke: '#1E3A8A', 'stroke-width': 1.5 }, mAgg);
+
+  const scene = el('g', { id: 'scene' }, svg);
+  el('rect', { x: 0, y: 0, width: p.W, height: p.H, fill: '#F8FAFC' }, scene);
+
+  // Banner
+  el('rect', { x: 30, y: 16, width: p.W - 60, height: 78, rx: 10, fill: p.Color }, scene);
+  const t1 = el('text', { x: p.W / 2, y: 46, 'text-anchor': 'middle', fill: '#fff', 'font-size': 15.5, 'font-weight': '700' }, scene); t1.textContent = p.Title;
+  const t2 = el('text', { x: p.W / 2, y: 72, 'text-anchor': 'middle', fill: '#BAE6FD', 'font-size': 11.5 }, scene); t2.textContent = p.Sub;
+
+  const gEdges = el('g', {}, scene);
+  const gNodes = el('g', {}, scene);
+  const map = {};
+
+  p.Classes.forEach(c => {
+    map[c.Id] = c;
+    const g = el('g', {}, gNodes);
+    const hdrH = c.Stereo ? 38 : 28;
+    el('rect', { x: c.X, y: c.Y, width: c.W, height: c.H, rx: 5, fill: c.Bg, stroke: c.Hdr, 'stroke-width': 1.8 }, g);
+    el('rect', { x: c.X, y: c.Y, width: c.W, height: hdrH, rx: 5, fill: c.Hdr }, g);
+    if (c.Stereo) {
+      const st = el('text', { x: c.X + c.W / 2, y: c.Y + 14, 'text-anchor': 'middle', fill: '#E2E8F0', 'font-size': 9.5, 'font-style': 'italic' }, g);
+      st.textContent = c.Stereo.replace('<<', '«').replace('>>', '»');
+      const nm = el('text', { x: c.X + c.W / 2, y: c.Y + 30, 'text-anchor': 'middle', fill: '#fff', 'font-size': 12, 'font-weight': '700' }, g);
+      nm.textContent = c.Name;
+    } else {
+      const nm = el('text', { x: c.X + c.W / 2, y: c.Y + 19, 'text-anchor': 'middle', fill: '#fff', 'font-size': 12, 'font-weight': '700' }, g);
+      nm.textContent = c.Name;
+    }
+    let y = c.Y + hdrH + 14;
+    c.Attrs.forEach(a => {
+      const at = el('text', { x: c.X + 8, y, 'font-family': 'Consolas, monospace', 'font-size': 10, fill: '#1E293B' }, g);
+      at.textContent = a;
+      y += 14;
+    });
+    if (c.Attrs.length > 0) {
+      el('line', { x1: c.X, y1: y - 8, x2: c.X + c.W, y2: y - 8, stroke: c.Hdr, 'stroke-width': 1, opacity: 0.5 }, g);
+      y += 4;
+    }
+    c.Meths.forEach(m => {
+      const mt = el('text', { x: c.X + 8, y, 'font-family': 'Consolas, monospace', 'font-size': 10, fill: '#0F172A', 'font-weight': '600' }, g);
+      mt.textContent = m;
+      y += 14;
+    });
+  });
+
+  p.Edges.forEach(e => {
+    const s = map[e.S], t = map[e.T]; if (!s || !t) return;
+    const x1 = s.X + s.W / 2, y1 = s.Y + s.H / 2, x2 = t.X + t.W / 2, y2 = t.Y + t.H / 2;
+    const attrs = { x1, y1, x2, y2, 'stroke-width': 1.6 };
+    if (e.Kind === 'inherit') { attrs.stroke = '#334155'; attrs['marker-end'] = 'url(#m-inh)'; }
+    else if (e.Kind === 'comp') { attrs.stroke = '#0F172A'; attrs['marker-start'] = 'url(#m-comp)'; attrs['marker-end'] = 'url(#m-open)'; }
+    else if (e.Kind === 'agg') { attrs.stroke = '#1E3A8A'; attrs['marker-start'] = 'url(#m-agg)'; attrs['marker-end'] = 'url(#m-open)'; }
+    else if (e.Kind === 'dep') { attrs.stroke = '#B45309'; attrs['stroke-dasharray'] = '6,4'; attrs['marker-end'] = 'url(#m-open)'; }
+    else { attrs.stroke = '#475569'; attrs['marker-end'] = 'url(#m-open)'; }
+    el('line', attrs, gEdges);
+    if (e.Label) {
+      const mx = (x1 + x2) / 2, my = (y1 + y2) / 2 - 4;
+      el('rect', { x: mx - 34, y: my - 10, width: 68, height: 14, rx: 3, fill: '#fff', opacity: 0.9 }, gEdges);
+      const lt = el('text', { x: mx, y: my + 1, 'text-anchor': 'middle', 'font-size': 10, 'font-weight': '600', fill: attrs.stroke }, gEdges);
+      lt.textContent = e.Label.replace('<<', '«').replace('>>', '»');
+    }
+  });
+
+  fitView();
+  document.querySelectorAll('#tabBar button.tab').forEach((b, i) => b.classList.toggle('active', i === idx));
+}
+
+function updateTransform() { const sc = svg.querySelector('#scene'); if (sc) sc.setAttribute('transform', 'translate(' + tx + ',' + ty + ') scale(' + scale + ')'); }
+function fitView() {
+  const p = PAGES[curIdx], r = svg.getBoundingClientRect();
+  scale = Math.min((r.width - 30) / p.W, (r.height - 30) / p.H);
+  tx = (r.width - p.W * scale) / 2; ty = (r.height - p.H * scale) / 2;
+  updateTransform();
+}
+function exportSvg() {
+  const p = PAGES[curIdx], clone = svg.cloneNode(true);
+  clone.setAttribute('width', p.W); clone.setAttribute('height', p.H); clone.setAttribute('viewBox', '0 0 ' + p.W + ' ' + p.H);
+  clone.querySelector('#scene').setAttribute('transform', 'translate(0,0) scale(1)');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([new XMLSerializer().serializeToString(clone)], { type: 'image/svg+xml;charset=utf-8' }));
+  a.download = 'DERMA_ECOM_UML_' + p.Id.toUpperCase() + '.svg';
+  a.click();
+}
+
+PAGES.forEach((p, i) => { const b = document.createElement('button'); b.className = 'tab'; b.textContent = p.Name; b.onclick = () => renderPage(i); tabBar.appendChild(b); });
+const ex = document.createElement('button'); ex.className = 'export'; ex.textContent = 'Exportar SVG'; ex.onclick = exportSvg; tabBar.appendChild(ex);
+svg.addEventListener('wheel', e => {
+  e.preventDefault(); const f = e.deltaY < 0 ? 1.15 : 0.87, r = svg.getBoundingClientRect();
+  const mx = e.clientX - r.left, my = e.clientY - r.top;
+  tx = mx - (mx - tx) * f; ty = my - (my - ty) * f; scale *= f; updateTransform();
+}, { passive: false });
+svg.addEventListener('mousedown', e => { dragging = true; sx = e.clientX - tx; sy = e.clientY - ty; });
+window.addEventListener('mousemove', e => { if (!dragging) return; tx = e.clientX - sx; ty = e.clientY - sy; updateTransform(); });
+window.addEventListener('mouseup', () => dragging = false);
+window.addEventListener('resize', fitView);
+renderPage(0);
+</script>
+</body>
+</html>

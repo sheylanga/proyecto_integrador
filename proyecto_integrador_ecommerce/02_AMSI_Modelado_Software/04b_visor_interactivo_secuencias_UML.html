@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>DERMA-ECOM — Visor Interactivo de Diagramas de Secuencia UML 2.5 (AMSI 1.3)</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0f172a; color: #f8fafc; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+  header { background: #1B365D; border-bottom: 2px solid #38bdf8; padding: 10px 16px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+  header h1 { font-size: 15px; font-weight: 700; }
+  header .sub { font-size: 11px; color: #cbd5e1; }
+  .tabs { display: flex; gap: 6px; margin-left: auto; flex-wrap: wrap; }
+  .tabs button { background: #0f172a; color: #e2e8f0; border: 1px solid #475569; border-radius: 6px; padding: 6px 10px; font-size: 12px; cursor: pointer; }
+  .tabs button.active { background: #0284c7; border-color: #38bdf8; color: #fff; font-weight: 700; }
+  .tabs button.export { background: #15803d; border-color: #4ade80; color: #fff; font-weight: 600; }
+  .stage { flex: 1; position: relative; background: #f8fafc; overflow: hidden; }
+  #svgView { width: 100%; height: 100%; display: block; cursor: grab; }
+  #svgView:active { cursor: grabbing; }
+  .legend { position: absolute; bottom: 12px; left: 12px; background: rgba(15,23,42,.92); color: #e2e8f0; padding: 8px 14px; border-radius: 8px; font-size: 11px; border: 1px solid #334155; }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>DERMA-ECOM — Diagramas de Secuencia UML 2.5 (Login Criptográfico y Transacciones Clave)</h1>
+    <div class="sub">TecNM / ITSM · AMSI (IFE-1005) · Criterio 1.3 (25%) · José Luis Luna García · Sheyla Estefanía Moncada Guel · Eduardo Salazar Martínez</div>
+  </div>
+  <div class="tabs" id="tabBar"></div>
+</header>
+<div class="stage">
+  <svg id="svgView" xmlns="http://www.w3.org/2000/svg"></svg>
+  <div class="legend">
+    <strong>Sintaxis UML 2.5:</strong>
+    ──▶ Mensaje síncrono &nbsp;|&nbsp;
+    - - &gt; Retorno / Respuesta &nbsp;|&nbsp;
+    [alt / opt] Fragmentos combinados &nbsp;|&nbsp;
+    Rueda = Zoom · Arrastrar = Mover
+  </div>
+</div>
+<script>
+const SEQS = [{"Id":"seq-login","Color":"#1B365D","Title":"DS-01: AUTENTICACIÓN SEGURA DE USUARIO — LOGIN CRIPTOGRÁFICO, MFA TOTP Y BLOQUEO (CU-01 OBLIGATORIO)","Name":"1. Login Criptográfico (CU-01)","Frames":[{"EndMsg":6,"Label":"alt [Contraseña incorrecta / \u003e= 5 intentos: Bloqueo + HMAC]","Color":"#DC2626","StartMsg":5,"Bg":"#FEF2F2","Kind":"alt"},{"EndMsg":12,"Label":"opt [mfa_habilitado = 1: Validación Doble Factor TOTP]","Color":"#D97706","StartMsg":8,"Bg":"#FFFBEB","Kind":"opt"}],"Messages":[{"Label":"1. Ingresa email y contraseña (TLS 1.3)","T":1,"F":0,"Kind":"sync"},{"Label":"2. POST /api/v1/auth/login {email, password}","T":2,"F":1,"Kind":"sync"},{"Label":"3. obtenerUsuarioPorEmail(email)","T":4,"F":2,"Kind":"sync"},{"Label":"4. Usuario {ID, password_hash, password_salt, mfa, bloqueado}","T":2,"F":4,"Kind":"return"},{"Label":"5. verificarPassword(password, salt, hash) [PBKDF2/bcrypt]","T":3,"F":2,"Kind":"sync"},{"Label":"6a. [ALT: Contraseña inválida] false -\u003e incrementar intentos","T":2,"F":3,"Kind":"return"},{"Label":"6b. [ALT: \u003e=5 fallos] bloquearCuenta(15m) + firma HMAC-SHA256","T":5,"F":2,"Kind":"sync"},{"Label":"7. [ELSE: Hash válido] true (comparación tiempo constante)","T":2,"F":3,"Kind":"return"},{"Label":"8. [OPT: mfa_habilitado=1] HTTP 206 Solicitar código TOTP","T":1,"F":2,"Kind":"return"},{"Label":"9. Ingresa código TOTP 6 dígitos (RFC 6238)","T":1,"F":0,"Kind":"sync"},{"Label":"10. POST /api/v1/auth/mfa-verify {totpCode}","T":2,"F":1,"Kind":"sync"},{"Label":"11. validarTotpRFC6238(mfa_secreto, totpCode) + firmarJWT()","T":3,"F":2,"Kind":"sync"},{"Label":"12. {valido: true, jwtRS256, token_sesion_hash}","T":2,"F":3,"Kind":"return"},{"Label":"13. crearSesionActiva(ID_usuario, token_hash) + cargar RBAC","T":4,"F":2,"Kind":"sync"},{"Label":"14. registrarIntentoLogin(ID_usuario, IP, \"EXITOSO\")","T":5,"F":2,"Kind":"sync"},{"Label":"15. HTTP 200 {jwt, perfil, permisosRBAC}","T":1,"F":2,"Kind":"return"},{"Label":"16. Redirige al Dashboard Protegido","T":0,"F":1,"Kind":"return"}],"Sub":"AMSI (IFE-1005) · Criterio 1.3 (25%) · Autor: José Luis Luna García · Capas: Vista -\u003e Controlador -\u003e Servicio Criptográfico -\u003e Repositorio Datos","Participants":[{"Label":"Usuario\n(Actor)","Color":"#1E3A8A","Fill":"#EFF6FF","Id":"p0","Kind":"actor"},{"Label":"Vista\n(LoginSPA)","Color":"#0369A1","Fill":"#E0F2FE","Id":"p1","Kind":"obj"},{"Label":"Controlador\n(AuthController)","Color":"#4A2574","Fill":"#F3E8FF","Id":"p2","Kind":"obj"},{"Label":"Servicio Criptográfico\n(Hash + TOTP + HMAC)","Color":"#B45309","Fill":"#FEF3C7","Id":"p3","Kind":"obj"},{"Label":"Repositorio Datos\n(seguridad.usuarios)","Color":"#15803D","Fill":"#DCFCE7","Id":"p4","Kind":"obj"},{"Label":"Repositorio Auditoría\n(bitacora_seguridad)","Color":"#334155","Fill":"#F1F5F9","Id":"p5","Kind":"obj"}]},{"Id":"seq-checkout","Color":"#4A2574","Title":"DS-03: CHECKOUT SEGURO, RESERVA 15 MIN, ANTIFRAUDE, PAGO PCI-DSS Y SPLIT MULTIALMACÉN (CU-03)","Name":"2. Checkout y Antifraude (CU-03)","Frames":[{"EndMsg":9,"Label":"opt [score_riesgo_total \u003e= 65: Reto Bancario 3D-Secure]","Color":"#D97706","StartMsg":8,"Bg":"#FFFBEB","Kind":"opt"},{"EndMsg":14,"Label":"alt [Cobro declinado vs Aprobado con Split Multialmacén]","Color":"#6B21A8","StartMsg":9,"Bg":"#FAF5FF","Kind":"alt"}],"Messages":[{"Label":"1. Pulsa \"Proceder al Pago\"","T":1,"F":0,"Kind":"sync"},{"Label":"2. POST /api/v1/checkout/reservar {ID_carrito}","T":3,"F":1,"Kind":"sync"},{"Label":"3. reservarStock15Min() [ventas.reservas_temporales_stock]","T":5,"F":3,"Kind":"sync"},{"Label":"4. Captura tarjeta en iframe PCI-DSS -\u003e tokenizar()","T":2,"F":0,"Kind":"sync"},{"Label":"5. tokenEfimero (\"tok_pci_9a8f\") [Sin PAN/CVV en BD]","T":1,"F":2,"Kind":"return"},{"Label":"6. POST /api/v1/ordenes/confirmar {token, idempotencyKey}","T":3,"F":1,"Kind":"sync"},{"Label":"7. evaluarRiesgoAntifraude() [pagos.reglas_antifraude]","T":4,"F":3,"Kind":"sync"},{"Label":"8. Evaluacion {score_riesgo_total, nivel_riesgo}","T":3,"F":4,"Kind":"return"},{"Label":"9. [OPT: score\u003e=65] Reto 3D-Secure -\u003e ejecutarCobro()","T":2,"F":3,"Kind":"sync"},{"Label":"10. [ALT: Declinado] HTTP 402 -\u003e pagos.intentos_cobro","T":3,"F":2,"Kind":"return"},{"Label":"11. [ELSE: Aprobado] HTTP 200 {codigo_autorizacion}","T":3,"F":2,"Kind":"return"},{"Label":"12. calcularSplitsPorCEDIS(MTY / CDMX) [FEFO]","T":4,"F":3,"Kind":"sync"},{"Label":"13. splits[] (ventas.ordenes_splits_almacen)","T":3,"F":4,"Kind":"return"},{"Label":"14. guardarOrden + Detalles + Splits + pagos.transacciones","T":5,"F":3,"Kind":"sync"},{"Label":"15. HTTP 201 {ID_orden, folio_orden, splits}","T":1,"F":3,"Kind":"return"},{"Label":"16. Confirmación de compra y seguimiento logístico","T":0,"F":1,"Kind":"return"}],"Sub":"AMSI (IFE-1005) · Autor: Sheyla Estefanía Moncada Guel · Tablas: ventas.ordenes, reservas_temporales_stock, pagos.transacciones, evaluaciones_antifraude","Participants":[{"Label":"Cliente\n(Actor)","Color":"#1E3A8A","Fill":"#EFF6FF","Id":"c0","Kind":"actor"},{"Label":"Vista\n(CheckoutUI)","Color":"#0369A1","Fill":"#E0F2FE","Id":"c1","Kind":"obj"},{"Label":"Pasarela SDK\n(PCI-DSS)","Color":"#B45309","Fill":"#FEF3C7","Id":"c2","Kind":"obj"},{"Label":"Controlador\n(OrdenesCtrl)","Color":"#4A2574","Fill":"#F3E8FF","Id":"c3","Kind":"obj"},{"Label":"Antifraude \u0026 Split\n(Servicios)","Color":"#9A3412","Fill":"#FFEDD5","Id":"c4","Kind":"obj"},{"Label":"Repositorios BD\n(ventas / pagos / wms)","Color":"#15803D","Fill":"#DCFCE7","Id":"c5","Kind":"obj"}]},{"Id":"seq-wms","Color":"#14532D","Title":"DS-06: RECEPCIÓN EN CEDIS, TELEMETRÍA IOT (2-8 °C), DICTAMEN QA Y ALTA DE LOTE FEFO (CU-06)","Name":"3. Recepción QA + IoT + FEFO (CU-06)","Frames":[{"EndMsg":5,"Label":"alt [Excursión Térmica \u003e 8 °C: Cuarentena y Destrucción COFEPRIS]","Color":"#DC2626","StartMsg":4,"Bg":"#FEF2F2","Kind":"alt"},{"EndMsg":11,"Label":"else [Cadena de Frío Íntegra + Dictamen QA Aprobado -\u003e Alta FEFO]","Color":"#15803D","StartMsg":6,"Bg":"#F0FDF4","Kind":"alt"}],"Messages":[{"Label":"1. Escanea OC y realiza conteo ciego de tarimas","T":2,"F":0,"Kind":"sync"},{"Label":"2. POST /api/v1/wms/recepciones {ID_orden_compra}","T":3,"F":2,"Kind":"sync"},{"Label":"3. crearRecepcionEnCuarentena() [compras.recepciones]","T":5,"F":3,"Kind":"sync"},{"Label":"4. validarCurvaTermicaIoT(2-8 °C) [wms.monitoreo_temp]","T":4,"F":3,"Kind":"sync"},{"Label":"5. [ALT: \u003e 8 °C] RECHAZADO -\u003e Ruptura cadena de frío","T":3,"F":4,"Kind":"return"},{"Label":"6. registrarMermaCOFEPRIS() [wms.mermas_destruccion]","T":5,"F":3,"Kind":"sync"},{"Label":"7. [ELSE: 2-8 °C OK] Cadena de frío íntegra","T":3,"F":4,"Kind":"return"},{"Label":"8. Captura pH, sellos, COA y dictamen \"APROBADO\"","T":2,"F":1,"Kind":"sync"},{"Label":"9. POST /api/v1/wms/qa-aprobar {ID_recepcion_detalle}","T":3,"F":2,"Kind":"sync"},{"Label":"10. guardarInspeccionQA() + crearLoteFEFO() [wms.lotes]","T":5,"F":3,"Kind":"sync"},{"Label":"11. ubicarStock() + asientoKardex() [wms.kardex]","T":5,"F":3,"Kind":"sync"},{"Label":"12. HTTP 201 \"Lote liberado en WMS estrategia FEFO\"","T":2,"F":3,"Kind":"return"},{"Label":"13. Confirma ubicación física en rack","T":0,"F":2,"Kind":"return"}],"Sub":"AMSI (IFE-1005) · Autor: Eduardo Salazar Martínez · Tablas: compras.recepciones_mercancia, inspecciones_sanitarias_qa, wms.lotes_fabricacion_sanitaria, kardex","Participants":[{"Label":"Operador WMS\n(Actor)","Color":"#14532D","Fill":"#DCFCE7","Id":"w0","Kind":"actor"},{"Label":"Químico QA\n(Actor)","Color":"#9F1239","Fill":"#FFE4E6","Id":"w1","Kind":"actor"},{"Label":"Terminal PDA\n(Vista WMS)","Color":"#0369A1","Fill":"#E0F2FE","Id":"w2","Kind":"obj"},{"Label":"Controlador\n(RecepcionWmsCtrl)","Color":"#166534","Fill":"#ECFDF5","Id":"w3","Kind":"obj"},{"Label":"IoT \u0026 QA\n(Servicios Frío/QA)","Color":"#B45309","Fill":"#FEF3C7","Id":"w4","Kind":"obj"},{"Label":"Repositorio BD\n(compras / wms)","Color":"#334155","Fill":"#F1F5F9","Id":"w5","Kind":"obj"}]}];
+const NS = 'http://www.w3.org/2000/svg';
+const svg = document.getElementById('svgView');
+const tabBar = document.getElementById('tabBar');
+let curIdx = 0, scale = 0.8, tx = 20, ty = 15, dragging = false, sx = 0, sy = 0, curW = 1480, curH = 920;
+
+function el(tag, attrs, parent) {
+  const n = document.createElementNS(NS, tag);
+  for (const [k, v] of Object.entries(attrs || {})) n.setAttribute(k, v);
+  if (parent) parent.appendChild(n);
+  return n;
+}
+function addText(parent, x, y, text, size, weight, fill) {
+  const lines = text.split('\n');
+  const t = el('text', { x, y: y - ((lines.length - 1) * (size + 2)) / 2, 'text-anchor': 'middle', 'font-size': size, 'font-weight': weight, fill }, parent);
+  lines.forEach((ln, i) => { const ts = el('tspan', { x, dy: i === 0 ? 0 : (size + 3) }, t); ts.textContent = ln; });
+}
+
+function renderSeq(idx) {
+  curIdx = idx;
+  const s = SEQS[idx];
+  const colW = 240, padX = 60, nP = s.Participants.length;
+  const msgStartY = 215, stepY = 40;
+  curW = (padX * 2) + (nP - 1) * colW + 170;
+  curH = msgStartY + (s.Messages.length * stepY) + 70;
+  const lifeTopY = 180, lifeBotY = curH - 30;
+
+  svg.innerHTML = '';
+  const defs = el('defs', {}, svg);
+  const ms = el('marker', { id: 'm-sync', viewBox: '0 0 10 10', refX: 9, refY: 5, markerWidth: 8, markerHeight: 8, orient: 'auto' }, defs);
+  el('path', { d: 'M 0 1 L 10 5 L 0 9 Z', fill: '#0F172A' }, ms);
+  const mr = el('marker', { id: 'm-ret', viewBox: '0 0 10 10', refX: 9, refY: 5, markerWidth: 8, markerHeight: 8, orient: 'auto' }, defs);
+  el('path', { d: 'M 1 1 L 9 5 L 1 9', fill: 'none', stroke: '#475569', 'stroke-width': 1.6 }, mr);
+
+  const scene = el('g', { id: 'scene' }, svg);
+  el('rect', { x: 0, y: 0, width: curW, height: curH, fill: '#F8FAFC' }, scene);
+
+  // Banner
+  el('rect', { x: 30, y: 16, width: curW - 60, height: 78, rx: 10, fill: s.Color }, scene);
+  addText(scene, curW / 2, 46, s.Title, 15, '700', '#FFFFFF');
+  addText(scene, curW / 2, 74, s.Sub, 11.5, '400', '#BAE6FD');
+
+  // Frames
+  s.Frames.forEach(fr => {
+    const fy = msgStartY + fr.StartMsg * stepY - 24;
+    const fh = (fr.EndMsg - fr.StartMsg + 1) * stepY + 22;
+    el('rect', { x: 40, y: fy, width: curW - 80, height: fh, rx: 6, fill: fr.Bg, stroke: fr.Color, 'stroke-width': 1.6 }, scene);
+    el('rect', { x: 40, y: fy, width: 390, height: 20, rx: 4, fill: fr.Color }, scene);
+    const ft = el('text', { x: 50, y: fy + 14, fill: '#FFFFFF', 'font-size': 10.5, 'font-weight': '700' }, scene);
+    ft.textContent = fr.Label;
+  });
+
+  // Participants & Lifelines
+  const px = [];
+  s.Participants.forEach((p, i) => {
+    const cx = padX + 85 + i * colW;
+    px.push(cx);
+    el('line', { x1: cx, y1: lifeTopY, x2: cx, y2: lifeBotY, stroke: '#94A3B8', 'stroke-width': 1.4, 'stroke-dasharray': '6,4' }, scene);
+    if (p.Kind === 'actor') {
+      el('circle', { cx, cy: 122, r: 9, fill: p.Fill, stroke: p.Color, 'stroke-width': 2 }, scene);
+      el('line', { x1: cx, y1: 131, x2: cx, y2: 150, stroke: p.Color, 'stroke-width': 2 }, scene);
+      el('line', { x1: cx - 13, y1: 138, x2: cx + 13, y2: 138, stroke: p.Color, 'stroke-width': 2 }, scene);
+      el('line', { x1: cx, y1: 150, x2: cx - 11, y2: 164, stroke: p.Color, 'stroke-width': 2 }, scene);
+      el('line', { x1: cx, y1: 150, x2: cx + 11, y2: 164, stroke: p.Color, 'stroke-width': 2 }, scene);
+      addText(scene, cx, 174, p.Label, 10, '700', '#0F172A');
+    } else {
+      el('rect', { x: cx - 84, y: 112, width: 168, height: 54, rx: 6, fill: p.Fill, stroke: p.Color, 'stroke-width': 2 }, scene);
+      addText(scene, cx, 142, p.Label, 10.5, '700', '#0F172A');
+    }
+  });
+
+  // Messages
+  s.Messages.forEach((m, i) => {
+    const y = msgStartY + i * stepY;
+    const x1 = px[m.F], x2 = px[m.T];
+    const isRet = m.Kind === 'return';
+    const attrs = { x1, y1: y, x2, y2: y, stroke: isRet ? '#475569' : '#0F172A', 'stroke-width': isRet ? 1.4 : 1.7, 'marker-end': isRet ? 'url(#m-ret)' : 'url(#m-sync)' };
+    if (isRet) attrs['stroke-dasharray'] = '6,4';
+    el('line', attrs, scene);
+    const mx = (x1 + x2) / 2;
+    const tw = Math.min(460, m.Label.length * 6.2 + 12);
+    el('rect', { x: mx - tw / 2, y: y - 16, width: tw, height: 14, rx: 3, fill: '#FFFFFF', opacity: 0.92 }, scene);
+    const mt = el('text', { x: mx, y: y - 5, 'text-anchor': 'middle', 'font-size': 10, 'font-weight': isRet ? '500' : '700', fill: isRet ? '#334155' : '#0F172A' }, scene);
+    mt.textContent = m.Label;
+  });
+
+  fitView();
+  document.querySelectorAll('#tabBar button.tab').forEach((b, i) => b.classList.toggle('active', i === idx));
+}
+
+function updateTransform() { const sc = svg.querySelector('#scene'); if (sc) sc.setAttribute('transform', 'translate(' + tx + ',' + ty + ') scale(' + scale + ')'); }
+function fitView() {
+  const r = svg.getBoundingClientRect();
+  scale = Math.min((r.width - 30) / curW, (r.height - 30) / curH);
+  tx = (r.width - curW * scale) / 2; ty = (r.height - curH * scale) / 2;
+  updateTransform();
+}
+function exportSvg() {
+  const s = SEQS[curIdx], clone = svg.cloneNode(true);
+  clone.setAttribute('width', curW); clone.setAttribute('height', curH); clone.setAttribute('viewBox', '0 0 ' + curW + ' ' + curH);
+  clone.querySelector('#scene').setAttribute('transform', 'translate(0,0) scale(1)');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([new XMLSerializer().serializeToString(clone)], { type: 'image/svg+xml;charset=utf-8' }));
+  a.download = 'DERMA_ECOM_UML_' + s.Id.toUpperCase() + '.svg';
+  a.click();
+}
+
+SEQS.forEach((s, i) => {
+  const b = document.createElement('button'); b.className = 'tab'; b.textContent = s.Name; b.onclick = () => renderSeq(i); tabBar.appendChild(b);
+});
+const exBtn = document.createElement('button'); exBtn.className = 'export'; exBtn.textContent = 'Exportar SVG'; exBtn.onclick = exportSvg; tabBar.appendChild(exBtn);
+
+svg.addEventListener('wheel', e => {
+  e.preventDefault();
+  const f = e.deltaY < 0 ? 1.15 : 0.87, r = svg.getBoundingClientRect();
+  const mx = e.clientX - r.left, my = e.clientY - r.top;
+  tx = mx - (mx - tx) * f; ty = my - (my - ty) * f; scale *= f; updateTransform();
+}, { passive: false });
+svg.addEventListener('mousedown', e => { dragging = true; sx = e.clientX - tx; sy = e.clientY - ty; });
+window.addEventListener('mousemove', e => { if (!dragging) return; tx = e.clientX - sx; ty = e.clientY - sy; updateTransform(); });
+window.addEventListener('mouseup', () => dragging = false);
+window.addEventListener('resize', fitView);
+renderSeq(0);
+</script>
+</body>
+</html>
