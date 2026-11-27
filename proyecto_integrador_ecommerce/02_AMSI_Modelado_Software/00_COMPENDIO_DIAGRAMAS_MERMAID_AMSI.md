@@ -810,6 +810,7 @@ sequenceDiagram
         Vista-->>Usuario: Muestra error genérico de autenticación
     else Usuario encontrado
         UserRepo-->>Ctrl: Usuario {ID, password_hash, password_salt, cuenta_bloqueada, intentos_fallidos_consecutivos, mfa_habilitado, mfa_secreto}
+        deactivate UserRepo
         alt cuenta_bloqueada = 1 y (ahora - fecha_bloqueo < 15 min)
             Ctrl->>AuditRepo: registrarIntentoLogin(ID, IP, "BLOQUEADO_FUERZA_BRUTA")
             Ctrl-->>Vista: HTTP 429 "Cuenta bloqueada temporalmente (15 min)"
@@ -826,42 +827,50 @@ sequenceDiagram
                 opt intentos_fallidos_consecutivos >= 5
                     Ctrl->>UserRepo: bloquearCuenta(ID, cuenta_bloqueada=1, fecha_bloqueo=NOW)
                     Ctrl->>Crypto: generarFirmaHMAC_SHA256(payloadEvento)
+                    activate Crypto
                     Crypto-->>Ctrl: firma_integridad_hash
+                    deactivate Crypto
                     Ctrl->>AuditRepo: insertarBitacoraForense(ID, "BLOQUEO_FUERZA_BRUTA", firma_integridad_hash) [auditoria.bitacora_seguridad_global]
                 end
                 Ctrl-->>Vista: HTTP 401 "Credenciales inválidas"
                 Vista-->>Usuario: Solicita reintento o recuperación de contraseña
             else Contraseña correcta
                 Crypto-->>Ctrl: true
+                deactivate Crypto
                 opt mfa_habilitado = 1
                     Ctrl-->>Vista: HTTP 206 "Requiere código MFA TOTP (6 dígitos)"
                     Vista-->>Usuario: Solicita código de app autenticadora
                     Usuario->>Vista: Ingresa totpCode ("849201")
                     Vista->>Ctrl: POST /api/v1/auth/mfa-verify {tempId, totpCode}
                     Ctrl->>Crypto: validarTotpRFC6238(mfa_secreto, totpCode, +-30s)
+                    activate Crypto
                     alt TOTP inválido o expirado
                         Crypto-->>Ctrl: false
+                        deactivate Crypto
                         Ctrl->>AuditRepo: registrarIntentoLogin(ID, IP, "FALLIDO_MFA")
                         Ctrl-->>Vista: HTTP 401 "Código MFA inválido"
                         Vista-->>Usuario: Permite hasta 2 reintentos
                     else TOTP válido
                         Crypto-->>Ctrl: true
+                        deactivate Crypto
                     end
                 end
                 Ctrl->>UserRepo: cargarRolesPermisosRBAC(ID) [seguridad.usuarios_roles + roles_permisos]
                 UserRepo-->>Ctrl: permisosRBAC[]
                 Ctrl->>Crypto: firmarJWT_RS256(ID, permisosRBAC) + hashTokenSesion()
+                activate Crypto
                 Crypto-->>Ctrl: {jwt, token_sesion_hash}
+                deactivate Crypto
                 Ctrl->>UserRepo: resetearIntentosYActualizarUltimoLogin(ID)
                 Ctrl->>UserRepo: crearSesionActiva(ID_usuario=ID, token_sesion_hash, IP) [seguridad.sesiones_activas]
                 Ctrl->>AuditRepo: registrarIntentoLogin(ID, IP, "EXITOSO") [seguridad.intentos_login]
                 Ctrl-->>Vista: HTTP 200 {jwt, perfil, permisosRBAC}
-                deactivate Ctrl
                 Vista-->>Usuario: Redirige al portal según rol RBAC
-                deactivate Vista
             end
         end
     end
+    deactivate Ctrl
+    deactivate Vista
 ```
 
 ### Diagrama 12 — 3. DS-02: DIAGNÓSTICO CLÍNICO CUTÁNEO Y CONSENTIMIENTO EXPRESO LFPDPPP — CU-02
