@@ -366,51 +366,51 @@ flowchart LR
 
 ```mermaid
 flowchart TB
-    subgraph PKG_CORE["<<package>> derma_ecom.core (Transversal)"]
+    subgraph PKG_CORE["&laquo;package&raquo; derma_ecom.core (Transversal)"]
         P_BASE["EntidadAuditable (PK=ID)\nICryptoHashingService\nIDataRepositoryMultiSGBD"]
     end
 
-    subgraph PKG_SM1["<<package>> modulo1_identidad_catalogo — José Luis Luna García (001–050)"]
-        P_SEG["<<package>> seguridad\n(Usuario, Rol, Permiso, BitacoraAcceso)"]
-        P_CLI["<<package>> clientes\n(Cliente, PerfilCutaneo, SolicitudARCO)"]
-        P_CAT["<<package>> catalogo\n(Categoria, ProductoMaestro, VarianteSKU, INCI)"]
-        P_COM["<<package>> comunidad\n(RutinaBelleza, ListaDeseos)"]
-        P_CLI -. "<<import>>" .-> P_SEG
-        P_COM -. "<<import>>" .-> P_CLI
-        P_COM -. "<<import>>" .-> P_CAT
+    subgraph PKG_SM1["&laquo;package&raquo; modulo1_identidad_catalogo — José Luis Luna García (001–050)"]
+        P_SEG["&laquo;package&raquo; seguridad\n(Usuario, Rol, Permiso, BitacoraAcceso)"]
+        P_CLI["&laquo;package&raquo; clientes\n(Cliente, PerfilCutaneo, SolicitudARCO)"]
+        P_CAT["&laquo;package&raquo; catalogo\n(Categoria, ProductoMaestro, VarianteSKU, INCI)"]
+        P_COM["&laquo;package&raquo; comunidad\n(RutinaBelleza, ListaDeseos)"]
+        P_CLI -. "&laquo;import&raquo;" .-> P_SEG
+        P_COM -. "&laquo;import&raquo;" .-> P_CLI
+        P_COM -. "&laquo;import&raquo;" .-> P_CAT
     end
 
-    subgraph PKG_SM2["<<package>> modulo2_comercial_fiscal — Sheyla Estefanía Moncada Guel (051–100)"]
-        P_VEN["<<package>> ventas\n(OrdenVenta, OrdenDetalle, Split, Suscripcion)"]
-        P_PAG["<<package>> pagos\n(TransaccionPago, Antifraude, IPaymentGateway)"]
-        P_FIS["<<package>> fiscal\n(FacturaCFDI, NotaCredito, ITaxStampingPAC)"]
-        P_PRO["<<package>> promos\n(Campania, CuponPromocion, VentaFlash)"]
-        P_PAG -. "<<import>>" .-> P_VEN
-        P_FIS -. "<<import>>" .-> P_VEN
-        P_FIS -. "<<import>>" .-> P_PAG
-        P_VEN -. "<<import>>" .-> P_PRO
+    subgraph PKG_SM2["&laquo;package&raquo; modulo2_comercial_fiscal — Sheyla Estefanía Moncada Guel (051–100)"]
+        P_VEN["&laquo;package&raquo; ventas\n(OrdenVenta, OrdenDetalle, Split, Suscripcion)"]
+        P_PAG["&laquo;package&raquo; pagos\n(TransaccionPago, Antifraude, IPaymentGateway)"]
+        P_FIS["&laquo;package&raquo; fiscal\n(FacturaCFDI, NotaCredito, ITaxStampingPAC)"]
+        P_PRO["&laquo;package&raquo; promos\n(Campania, CuponPromocion, VentaFlash)"]
+        P_PAG -. "&laquo;import&raquo;" .-> P_VEN
+        P_FIS -. "&laquo;import&raquo;" .-> P_VEN
+        P_FIS -. "&laquo;import&raquo;" .-> P_PAG
+        P_VEN -. "&laquo;import&raquo;" .-> P_PRO
     end
 
-    subgraph PKG_SM3["<<package>> modulo3_logistica_forense — Eduardo Salazar Martínez (101–150)"]
-        P_CMP["<<package>> compras\n(Proveedor, OrdenCompraProveedor, InspeccionQA)"]
-        P_WMS["<<package>> wms\n(AlmacenCEDIS, LoteSanitario, TelemetriaIoT, IFefo)"]
-        P_ENV["<<package>> envios\n(DespachoOrden, GuiaRastreo, PuntoPickup)"]
-        P_PVT["<<package>> postventa\n(SolicitudRMA, ReporteFarmacovigilancia)"]
-        P_AUD["<<package>> auditoria & sistema\n(BitacoraSeguridadGlobal, CambiosJSON)"]
-        P_WMS -. "<<import>>" .-> P_CMP
-        P_ENV -. "<<import>>" .-> P_WMS
-        P_PVT -. "<<import>>" .-> P_WMS
+    subgraph PKG_SM3["&laquo;package&raquo; modulo3_logistica_forense — Eduardo Salazar Martínez (101–150)"]
+        P_CMP["&laquo;package&raquo; compras\n(Proveedor, OrdenCompraProveedor, InspeccionQA)"]
+        P_WMS["&laquo;package&raquo; wms\n(AlmacenCEDIS, LoteSanitario, TelemetriaIoT, IFefo)"]
+        P_ENV["&laquo;package&raquo; envios\n(DespachoOrden, GuiaRastreo, PuntoPickup)"]
+        P_PVT["&laquo;package&raquo; postventa\n(SolicitudRMA, ReporteFarmacovigilancia)"]
+        P_AUD["&laquo;package&raquo; auditoria & sistema\n(BitacoraSeguridadGlobal, CambiosJSON)"]
+        P_WMS -. "&laquo;import&raquo;" .-> P_CMP
+        P_ENV -. "&laquo;import&raquo;" .-> P_WMS
+        P_PVT -. "&laquo;import&raquo;" .-> P_WMS
     end
 
-    PKG_SM1 -. "<<import>>" .-> PKG_CORE
-    PKG_SM2 -. "<<import>>" .-> PKG_CORE
-    PKG_SM3 -. "<<import>>" .-> PKG_CORE
-    P_VEN -. "<<access>>" .-> P_CLI
-    P_VEN -. "<<access>>" .-> P_CAT
-    P_WMS -. "<<access>>" .-> P_CAT
-    P_ENV -. "<<access>>" .-> P_VEN
-    P_PVT -. "<<access>>" .-> P_VEN
-    P_AUD -. "<<access>>" .-> P_SEG
+    PKG_SM1 -. "&laquo;import&raquo;" .-> PKG_CORE
+    PKG_SM2 -. "&laquo;import&raquo;" .-> PKG_CORE
+    PKG_SM3 -. "&laquo;import&raquo;" .-> PKG_CORE
+    P_VEN -. "&laquo;access&raquo;" .-> P_CLI
+    P_VEN -. "&laquo;access&raquo;" .-> P_CAT
+    P_WMS -. "&laquo;access&raquo;" .-> P_CAT
+    P_ENV -. "&laquo;access&raquo;" .-> P_VEN
+    P_PVT -. "&laquo;access&raquo;" .-> P_VEN
+    P_AUD -. "&laquo;access&raquo;" .-> P_SEG
 ```
 
 ### Diagrama 8 — 2. DIAGRAMA DE CLASES DEL SUBMÓDULO 1: SEGURIDAD, IDENTIDAD, PERFIL CLÍNICO Y CATÁLOGO INCI
@@ -1148,45 +1148,45 @@ sequenceDiagram
 ```mermaid
 flowchart TD
     subgraph Capa_Cliente["1. Capa de Presentación (Clientes)"]
-        SPA["<<component>>\nWeb SPA Storefront\n(React / Next.js)"]
-        PWA["<<component>>\nPortal Clínico, Fiscal y ARCO\n(Web PWA)"]
-        PDA["<<component>>\nTerminal Móvil WMS / QA\n(Android / Flutter)"]
+        SPA["&laquo;component&raquo;\nWeb SPA Storefront\n(React / Next.js)"]
+        PWA["&laquo;component&raquo;\nPortal Clínico, Fiscal y ARCO\n(Web PWA)"]
+        PDA["&laquo;component&raquo;\nTerminal Móvil WMS / QA\n(Android / Flutter)"]
     end
 
     subgraph Capa_Perimetro["2. Capa Perimetral y Seguridad"]
-        WAF["<<component>>\nWAF & Reverse Proxy\n(TLS 1.3 / OWASP)"]
-        APIGW["<<component>>\nAPI Gateway\n(NGINX / Kong · Rate Limit)"]
-        AUTH_MOD["<<component>>\nCrypto & Auth Service\n(PBKDF2/bcrypt · TOTP · JWT · HMAC)"]
+        WAF["&laquo;component&raquo;\nWAF & Reverse Proxy\n(TLS 1.3 / OWASP)"]
+        APIGW["&laquo;component&raquo;\nAPI Gateway\n(NGINX / Kong · Rate Limit)"]
+        AUTH_MOD["&laquo;component&raquo;\nCrypto & Auth Service\n(PBKDF2/bcrypt · TOTP · JWT · HMAC)"]
     end
 
     subgraph Capa_Dominio["3. Capa de Lógica de Negocio (Microservicios por Submódulo)"]
         subgraph SM1_C["Submódulo 1 — José Luis Luna García"]
-            MS_IAM["<<component>>\nIAM & RBAC Service"]
-            MS_DERMO["<<component>>\nDiagnóstico Cutáneo & ARCO"]
-            MS_CAT["<<component>>\nCatálogo INCI & COFEPRIS"]
+            MS_IAM["&laquo;component&raquo;\nIAM & RBAC Service"]
+            MS_DERMO["&laquo;component&raquo;\nDiagnóstico Cutáneo & ARCO"]
+            MS_CAT["&laquo;component&raquo;\nCatálogo INCI & COFEPRIS"]
         end
         subgraph SM2_C["Submódulo 2 — Sheyla Estefanía Moncada Guel"]
-            MS_ORD["<<component>>\nCheckout, Split & Promos"]
-            MS_PAY["<<component>>\nPagos PCI-DSS & Antifraude"]
-            MS_TAX["<<component>>\nFacturación CFDI 4.0 SAT"]
+            MS_ORD["&laquo;component&raquo;\nCheckout, Split & Promos"]
+            MS_PAY["&laquo;component&raquo;\nPagos PCI-DSS & Antifraude"]
+            MS_TAX["&laquo;component&raquo;\nFacturación CFDI 4.0 SAT"]
         end
         subgraph SM3_C["Submódulo 3 — Eduardo Salazar Martínez"]
-            MS_WMS["<<component>>\nCompras, QA & WMS FEFO"]
-            MS_IOT["<<component>>\nIngesta Telemetría IoT 2-8 C"]
-            MS_RMA["<<component>>\nEnvíos, RMA & Auditoría Forense"]
+            MS_WMS["&laquo;component&raquo;\nCompras, QA & WMS FEFO"]
+            MS_IOT["&laquo;component&raquo;\nIngesta Telemetría IoT 2-8 C"]
+            MS_RMA["&laquo;component&raquo;\nEnvíos, RMA & Auditoría Forense"]
         end
     end
 
     subgraph Capa_Integracion["4. Capa de Integración y Mensajería"]
-        REDIS["<<component>>\nRedis Cluster\n(Sesiones / Rate-Limit / Reservas)"]
-        BROKER["<<component>>\nRabbitMQ / Kafka\n(Eventos Split, CFDI, IoT, COFEPRIS)"]
+        REDIS["&laquo;component&raquo;\nRedis Cluster\n(Sesiones / Rate-Limit / Reservas)"]
+        BROKER["&laquo;component&raquo;\nRabbitMQ / Kafka\n(Eventos Split, CFDI, IoT, COFEPRIS)"]
     end
 
     subgraph Capa_Persistencia["5. Capa de Persistencia Multi-SGBD (Hot-Swap)"]
-        HOTSWAP["<<component>>\nHot-Swap DB Abstraction Layer\n(SQL Server <-> PostgreSQL)"]
-        DB_SS[("<<database>>\nSQL Server 2022\nEcommerceSaludBellezaDB\n(150 Tablas · 183 FKs)")]
-        DB_PG[("<<database>>\nPostgreSQL 17\nEcommerceSaludBellezaDB\n(150 Tablas · 183 FKs)")]
-        OBJ[("<<storage>>\nObject Storage S3/MinIO\n(XML/PDF CFDI, COA, Fotos RMA)")]
+        HOTSWAP["&laquo;component&raquo;\nHot-Swap DB Abstraction Layer\n(SQL Server ↔ PostgreSQL)"]
+        DB_SS[("&laquo;database&raquo;\nSQL Server 2022\nEcommerceSaludBellezaDB\n(150 Tablas · 183 FKs)")]
+        DB_PG[("&laquo;database&raquo;\nPostgreSQL 17\nEcommerceSaludBellezaDB\n(150 Tablas · 183 FKs)")]
+        OBJ[("&laquo;storage&raquo;\nObject Storage S3/MinIO\n(XML/PDF CFDI, COA, Fotos RMA)")]
     end
 
     SPA --> WAF
@@ -1239,39 +1239,39 @@ flowchart TD
 flowchart TD
     subgraph WAN["Red Pública WAN / Servicios Externos"]
         CLI_EXT(["Clientes Web / Móvil\nHTTPS :443 TLS 1.3"])
-        PAS_EXT["<<external>>\nPasarela PCI-DSS\n(Stripe / Mercado Pago)"]
-        SAT_EXT["<<external>>\nPAC Autorizado SAT\n(CFDI 4.0)"]
-        LOG_EXT["<<external>>\nAPI Paqueterías\n(DHL / FedEx / Estafeta)"]
-        COF_EXT["<<external>>\nPortal COFEPRIS\n(Farmacovigilancia)"]
+        PAS_EXT["&laquo;external&raquo;\nPasarela PCI-DSS\n(Stripe / Mercado Pago)"]
+        SAT_EXT["&laquo;external&raquo;\nPAC Autorizado SAT\n(CFDI 4.0)"]
+        LOG_EXT["&laquo;external&raquo;\nAPI Paqueterías\n(DHL / FedEx / Estafeta)"]
+        COF_EXT["&laquo;external&raquo;\nPortal COFEPRIS\n(Farmacovigilancia)"]
     end
 
     subgraph EDGE["Perímetro y Núcleo Jerárquico (10.40.5.128/30 · 10.40.5.132/30)"]
-        FW_EDGE["<<device>>\nFirewall Perimetral / Router Borde\n(Cisco ISR 4331 · ACL + VPN IPsec)"]
-        CORE["<<device>>\nCapa Núcleo & Distribución L3\n(Core-01/02 + Dist-01/02 · HSRP)"]
+        FW_EDGE["&laquo;device&raquo;\nFirewall Perimetral / Router Borde\n(Cisco ISR 4331 · ACL + VPN IPsec)"]
+        CORE["&laquo;device&raquo;\nCapa Núcleo & Distribución L3\n(Core-01/02 + Dist-01/02 · HSRP)"]
     end
 
     subgraph VLAN20["VLAN 20 — DMZ Web y Aplicaciones (10.40.4.0/25 · GW 10.40.4.1)"]
-        LB_WAF["<<executionEnvironment>>\nNGINX / WAF Ingress\n(10.40.4.10 · TLS 1.3)"]
-        APP_N1["<<executionEnvironment>>\nApp Server / Docker Node 01\n(SM1 + SM2 Microservicios · 10.40.4.20)"]
-        APP_N2["<<executionEnvironment>>\nApp Server / Docker Node 02\n(SM3 + Redis + RabbitMQ · 10.40.4.21)"]
+        LB_WAF["&laquo;executionEnvironment&raquo;\nNGINX / WAF Ingress\n(10.40.4.10 · TLS 1.3)"]
+        APP_N1["&laquo;executionEnvironment&raquo;\nApp Server / Docker Node 01\n(SM1 + SM2 Microservicios · 10.40.4.20)"]
+        APP_N2["&laquo;executionEnvironment&raquo;\nApp Server / Docker Node 02\n(SM3 + Redis + RabbitMQ · 10.40.4.21)"]
     end
 
     subgraph VLAN10["VLAN 10 — Granja Base de Datos Multi-SGBD Aislada (10.40.5.0/26 · GW 10.40.5.1)"]
-        DB_S1[("<<device>>\nServidor SQL Server 2022\nPrimario OLTP\n(10.40.5.10 :1433)")]
-        DB_S2[("<<device>>\nServidor PostgreSQL 17\nHot-Swap / SGBD Libre\n(10.40.5.11 :5432)")]
-        SAN[("<<device>>\nAlmacenamiento SAN RAID 10\n+ Object Storage S3/MinIO\n(10.40.5.20)")]
+        DB_S1[("&laquo;device&raquo;\nServidor SQL Server 2022\nPrimario OLTP\n(10.40.5.10 :1433)")]
+        DB_S2[("&laquo;device&raquo;\nServidor PostgreSQL 17\nHot-Swap / SGBD Libre\n(10.40.5.11 :5432)")]
+        SAN[("&laquo;device&raquo;\nAlmacenamiento SAN RAID 10\n+ Object Storage S3/MinIO\n(10.40.5.20)")]
     end
 
     subgraph VLAN30["VLAN 30 — CEDIS WMS, Andén e IoT Cadena de Frío (10.40.2.0/24 · GW 10.40.2.1)"]
-        SW_WMS["<<device>>\nSwitch Acceso Catalyst 2960\n(Port Security Sticky MAC)"]
-        IOT_GW["<<device>>\nGateway Industrial IoT\n(MQTT/TLS · Cámara Fría 2-8 °C)"]
+        SW_WMS["&laquo;device&raquo;\nSwitch Acceso Catalyst 2960\n(Port Security Sticky MAC)"]
+        IOT_GW["&laquo;device&raquo;\nGateway Industrial IoT\n(MQTT/TLS · Cámara Fría 2-8 °C)"]
         PDA_DEV(["Terminales PDA Zebra\nLectura Códigos FEFO"])
         SENS_IOT(["Sensores BLE 5.0\nTemp / Humedad"])
     end
 
     subgraph VLAN40["VLAN 40 — Administración TI, SOC/NOC (10.40.5.64/27) & VLAN 99 Mgmt (10.40.5.96/27)"]
-        BASTION["<<device>>\nHost Bastión SSH / VPN\n(10.40.5.70)"]
-        SIEM["<<device>>\nServidor SIEM / Syslog\n(Wazuh · 10.40.5.71)"]
+        BASTION["&laquo;device&raquo;\nHost Bastión SSH / VPN\n(10.40.5.70)"]
+        SIEM["&laquo;device&raquo;\nServidor SIEM / Syslog\n(Wazuh · 10.40.5.71)"]
     end
 
     subgraph VLAN50_60["VLAN 50 Corporativo / Dermoconsultores (10.40.0.0/23) & VLAN 60 CCTV (10.40.4.128/25)"]
